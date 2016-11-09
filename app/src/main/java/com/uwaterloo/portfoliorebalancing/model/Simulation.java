@@ -22,9 +22,6 @@ public class Simulation extends SugarRecord<Simulation> {
 
     private String strategies; //List of strategy ints separated by commas.
 
-    private String balances;
-    private String timestamps;
-
     private double cppiFloor;
     private double cppiMultiplier;
 
@@ -36,13 +33,11 @@ public class Simulation extends SugarRecord<Simulation> {
     public Simulation(String stock, List<Integer> strategy, double bank, double money, String name) {
         this.account = money;
         this.symbol = stock;
-        this.timestamps = startDate + ",";
         this.bank = bank;
 
         setStrategies(strategy);
 
         this.name = name;
-        this.balances = account + ",";
         this.cppiFloor = 0;
         this.cppiMultiplier = 0;
         this.optionPrice = 0;

@@ -5,42 +5,23 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e4822fef-34ed-4f1f-a60d-9a0ff2f7596e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/util/GraphData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Simulation.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Simulation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Tick.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Tick.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/CPPIDialogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/CPPIDialogFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/ConstantProportionsDialogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/ConstantProportionsDialogFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/CoveredCallWritingDialogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/CoveredCallWritingDialogFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailHistoricalPortfolioInfoActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailHistoricalPortfolioInfoActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailHistoricalSimulationActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailHistoricalSimulationActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailRealTimePortfolioInfoActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailRealTimePortfolioInfoActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailRealTimeSimulationActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailRealTimeSimulationActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/HistoricalSimulationDialogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/HistoricalSimulationDialogFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/HistoricalSimulationFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/HistoricalSimulationFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/PickStrategySimulationFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/PickStrategySimulationFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/RealTimeSimulationDialogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/RealTimeSimulationDialogFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/RealTimeSimulationFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/RealTimeSimulationFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/SimulationAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/SimulationAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/SimulationSelectorActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/SimulationSelectorActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/StopLossDialogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/StopLossDialogFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/extra/ChangeStrategyDialogFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/extra/ChangeStrategyDialogFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/util/AppUtils.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/util/AppUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/util/PortfolioRebalanceUtil.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/util/PortfolioRebalanceUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_portfolio_detail.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_portfolio_detail.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/pick_strategy_simulation_fragment.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/pick_strategy_simulation_fragment.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/pick_stock_simulation_fragment.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/pick_stock_simulation_fragment.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
     </list>
     <ignored path="portfolio-rebalancing-android.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,42 +47,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Simulation.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Simulation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="85" column="18" selection-start-line="85" selection-start-column="18" selection-end-line="85" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GraphData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/util/GraphData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#626#627#0" expanded="true" />
-                <element signature="e#659#660#0" expanded="true" />
-                <element signature="e#726#727#0" expanded="true" />
-                <element signature="e#764#765#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DetailRealTimePortfolioInfoActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailRealTimePortfolioInfoActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="263" column="17" selection-start-line="259" selection-start-column="16" selection-end-line="263" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="DetailRealTimeSimulationActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailRealTimeSimulationActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -132,7 +77,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HistoricalSimulationDialogFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HistoricalSimulationDialogFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/HistoricalSimulationDialogFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-251">
@@ -142,33 +87,58 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DetailHistoricalPortfolioInfoActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailHistoricalPortfolioInfoActivity.java">
+      <file leaf-file-name="SimulationSelectorActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/SimulationSelectorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="61">
-              <caret line="253" column="52" selection-start-line="253" selection-start-column="52" selection-end-line="253" selection-end-column="52" />
+            <state relative-caret-position="106">
+              <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CoveredCallWritingDialogFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/CoveredCallWritingDialogFragment.java">
+      <file leaf-file-name="Simulation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Simulation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="59" column="26" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+            <state relative-caret-position="270">
+              <caret line="20" column="72" selection-start-line="20" selection-start-column="72" selection-end-line="20" selection-end-column="72" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DetailHistoricalSimulationActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailHistoricalSimulationActivity.java">
+      <file leaf-file-name="styles.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="257" column="94" selection-start-line="257" selection-start-column="94" selection-end-line="257" selection-end-column="94" />
+            <state relative-caret-position="244">
+              <caret line="24" column="65" selection-start-line="24" selection-start-column="65" selection-end-line="24" selection-end-column="65" />
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PickStockSimulationFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/PickStockSimulationFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="53" column="68" selection-start-line="53" selection-start-column="68" selection-end-line="53" selection-end-column="68" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pick_stock_simulation_fragment.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/pick_stock_simulation_fragment.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="28">
+              <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
@@ -1791,7 +1761,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/SimulationAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/pick_strategy_simulation_fragment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/PickStrategySimulationFragment.java" />
@@ -1799,7 +1768,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/HistoricalSimulationFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/RealTimeSimulationFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_portfolio_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Simulation.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Tick.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/util/PortfolioRebalanceUtil.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/util/GraphData.java" />
@@ -1815,6 +1783,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/StopLossDialogFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/extra/ChangeStrategyDialogFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/HistoricalSimulationDialogFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Simulation.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/pick_stock_simulation_fragment.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -1975,7 +1947,7 @@
     <property name="device.picker.selection" value="03157df32a180a40" />
     <property name="ignore_missing_gitignore" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="DetailRe&#9;FILE&#9;file:///home/lucas/portfolio-rebalancing-android/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailRealTimePortfolioInfoActivity.java" />
+    <property name="SearchEverywhereHistoryKey" value=".git&#9;FILE&#9;file:///home/lucas/portfolio-rebalancing-android/.gitignore&#10;PickStock&#9;PSI&#9;JAVA://com.uwaterloo.portfoliorebalancing.ui.PickStockSimulationFragment&#10;styles.x&#9;FILE&#9;file:///home/lucas/portfolio-rebalancing-android/app/src/main/res/values/styles.xml&#10;DetailRe&#9;FILE&#9;file:///home/lucas/portfolio-rebalancing-android/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/DetailRealTimePortfolioInfoActivity.java" />
   </component>
   <component name="RunManager" selected="Android App.app">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
@@ -2291,7 +2263,7 @@
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43548387" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -2305,11 +2277,11 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.8548387" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.62903225" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07410359" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16494024" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30322582" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -2330,14 +2302,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/SimulationAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="146">
@@ -2372,14 +2336,6 @@
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/SimulationSelectorActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="110" column="16" selection-start-line="110" selection-start-column="16" selection-end-line="110" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2462,14 +2418,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
           <caret line="60" column="37" selection-start-line="60" selection-start-column="37" selection-end-line="60" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Simulation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="85" column="18" selection-start-line="85" selection-start-column="18" selection-end-line="85" selection-end-column="18" />
           <folding />
         </state>
       </provider>
@@ -2562,6 +2510,67 @@
           <caret line="155" column="23" selection-start-line="155" selection-start-column="23" selection-end-line="155" selection-end-column="23" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/SimulationSelectorActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-v21/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/model/Simulation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="20" column="72" selection-start-line="20" selection-start-column="72" selection-end-line="20" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="24" column="65" selection-start-line="24" selection-start-column="65" selection-end-line="24" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/uwaterloo/portfoliorebalancing/ui/PickStockSimulationFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="53" column="68" selection-start-line="53" selection-start-column="68" selection-end-line="53" selection-end-column="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="22" column="19" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/pick_stock_simulation_fragment.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
   </component>
