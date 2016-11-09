@@ -1,0 +1,36 @@
+<resources>
+
+    <!--<style name="AppTheme" parent="AppTheme.Base"/>-->
+    <!-- Base application theme. -->
+    
+    <style name="AppTheme" parent="AppTheme.Base"/>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/dark_primary_color</item>
+        <item name="colorAccent">@color/accent_color</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColorPrimary">@color/primary_text_color</item>
+        <item name="android:textColorSecondary">@color/secondary_text_color</item>
+    </style>
+
+    <style name="PortfolioRebalancing" parent="AppTheme">
+        <item name="colorPrimary">@color/light_blue</item>
+        <item name="colorPrimaryDark">@color/medium_blue</item>
+        <item name="colorAccent">@color/light_blue</item>
+        <item name="android:colorBackground">@color/background</item>
+
+        <item name="editTextStyle">@style/EditText</item>
+        <item name="android:editTextStyle">@style/EditText</item>
+    </style>
+
+    <style name="InfoPickerActivity" parent="PortfolioRebalancing">
+        <item name="android:homeAsUpIndicator">@drawable/cancel</item>
+    </style>
+
+    <!-- This style is for EditText items, so that the keyboard has a "Done" option. -->
+    <style name="EditText" parent="@android:style/Widget.EditText">
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+</resources>

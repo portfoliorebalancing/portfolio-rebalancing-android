@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/preferences"
+        android:key="pref_settings">
+    <ListPreference
+        android:key="pref_rebalancing_strategy"
+        android:title="@string/pref_rebalancing_strategy"
+        android:dialogTitle="@string/pref_rebalancing_strategy"
+        android:entries="@array/rebalancing_strategies"
+        android:defaultValue="@string/rebalancing_strategy"
+        />
+    </PreferenceCategory>
+</PreferenceScreen>

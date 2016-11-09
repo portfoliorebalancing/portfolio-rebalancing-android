@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="primary_text_color">#212121</color>
+    <color name="secondary_text_color">#727272</color>
+    <color name="divider_color">#B6B6B6</color>
+    <color name="accent_color">#9E9E9E</color>
+    <color name="black">#000000</color>
+
+    <color name="red">#ff0000</color>
+
+    <color name="light_primary_color">#B2DFDB</color>
+    <color name="primary_color">#009688</color>
+    <color name="dark_primary_color">#00796B</color>
+
+    <color name="stock_color1">#58427C</color>
+    <color name="stock_color2">#D3212D</color>
+    <color name="stock_color3">#21ABCD</color>
+    <color name="stock_color4">#FDEE00</color>
+    <color name="stock_color5">#3B7A57</color>
+    <color name="stock_color6">#E0218A</color>
+
+    <color name="light_blue">#4096cf</color>
+    <color name="backuplight_blue">#48a7e6</color>
+    <color name="medium_blue">#34729b</color>
+    <color name="tab_indicator">#ffffff</color>
+    <color name="backgroundbackup">#e6d9d9</color>
+    <color name="background">#d2c8c8</color>
+    <color name="tab_icon_light_gray">#d6c8c8</color>
+    <color name="backupaccent">#999292</color>
+    <color name="stock_item_background_backup">#f1e9e9</color>
+    <color name="stock_item_background">#f9f4f4</color>
+    <color name="stock_item_selected_background">#e6dede</color>
+    <color name="stock_item_border">#dacdcd</color>
+
+    <color name="light_gray">#decfcf</color>
+    <color name="dark_gray">#a79999</color>
+    <color name="very_light_blue">#a8cae1</color>
+
+    <color name="portfolio_color">#4AFF00</color>
+
+    <color name="circle_color1">#a78ad7</color>
+    <color name="circle_color2">#fc939a</color>
+    <color name="circle_color3">#87c3d2</color>
+    <color name="circle_color4">#93dfca</color>
+    <color name="circle_color5">#7cca9f</color>
+    <color name="circle_color6">#d76da7</color>
+    <color name="circle_color7">#f9b970</color>
+    <color name="circle_color8">#98d8d9</color>
+    <color name="circle_color9">#ef90c3</color>
+    <color name="circle_color10">#d4a7fa</color>
+    <color name="circle_color11">#d68fbe</color>
+    <color name="circle_color12">#99b6f1</color>
+    <color name="circle_color13">#f572b9</color>
+    <color name="circle_color14">#adf5b8</color>
+    <color name="circle_color15">#d46987</color>
+</resources>
