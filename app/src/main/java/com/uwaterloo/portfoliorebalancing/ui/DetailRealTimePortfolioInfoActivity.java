@@ -44,7 +44,7 @@ import java.util.List;
  * Created by joyce on 2016-07-21.
  */
 public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
-    private int[] mStockColors = {R.color.stock_color1, R.color.stock_color2, R.color.stock_color3,
+    private int[] mSimulationColors = {R.color.stock_color1, R.color.stock_color2, R.color.stock_color3,
             R.color.stock_color4, R.color.stock_color5, R.color.stock_color6};
     private final int STARTING_INDEX = 1000000;
     private final String API_KEY = "zrLZruHPruMca17gnA-z";
@@ -248,11 +248,11 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
                         portfolioList.add(new Entry((float) graph.second.get(j).getPrice(), j));
                     }
                     LineDataSet balanceSet = new LineDataSet(portfolioList, graph.first.toString());
-                    balanceSet.setColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                    balanceSet.setColor(ContextCompat.getColor(mContext, mSimulationColors[i]));
                     balanceSet.setCircleSize(2f);
                     balanceSet.setDrawHorizontalHighlightIndicator(false);
-                    balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.portfolio_color));
-                    balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                    balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, mSimulationColors[i]));
+                    balanceSet.setCircleColor(ContextCompat.getColor(mContext, mSimulationColors[i]));
                     balanceSet.setDrawValues(false);
                     portfolioSets.add(balanceSet);
                 }
@@ -265,9 +265,9 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
 
                 //TODO: Use these stock colors
                 LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
-                lineDataSet.setColor(ContextCompat.getColor(mContext, mStockColors[0]));
-                lineDataSet.setCircleColor(ContextCompat.getColor(mContext, mStockColors[0]));
-                lineDataSet.setCircleColorHole(ContextCompat.getColor(mContext, mStockColors[0]));
+                lineDataSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
+                lineDataSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
+                lineDataSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
                 lineDataSet.setCircleSize(2f);
                 lineDataSet.setDrawHorizontalHighlightIndicator(false);
                 lineDataSet.setDrawValues(false);

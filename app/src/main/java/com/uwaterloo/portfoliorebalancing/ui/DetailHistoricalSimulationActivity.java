@@ -238,11 +238,11 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                         portfolioList.add(new Entry((float) graph.second.get(j).getPrice(), j));
                     }
                     LineDataSet balanceSet = new LineDataSet(portfolioList, graph.first.toString());
-                    balanceSet.setColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                    balanceSet.setColor(ContextCompat.getColor(mContext, mStockColors[i]));
                     balanceSet.setCircleSize(2f);
                     balanceSet.setDrawHorizontalHighlightIndicator(false);
-                    balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.portfolio_color));
-                    balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                    balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, mStockColors[i]));
+                    balanceSet.setCircleColor(ContextCompat.getColor(mContext, mStockColors[i]));
                     balanceSet.setDrawValues(false);
                     portfolioSets.add(balanceSet);
                 }
@@ -253,9 +253,9 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                     stockEntryList.add(new Entry((float) stockData.get(j).getPrice(), j));
                 }
                 LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
-                lineDataSet.setColor(ContextCompat.getColor(mContext, mStockColors[0]));
-                lineDataSet.setCircleColor(ContextCompat.getColor(mContext, mStockColors[0]));
-                lineDataSet.setCircleColorHole(ContextCompat.getColor(mContext, mStockColors[0]));
+                lineDataSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
+                lineDataSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
+                lineDataSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
                 lineDataSet.setCircleSize(2f);
                 lineDataSet.setDrawHorizontalHighlightIndicator(false);
                 lineDataSet.setDrawValues(false);
