@@ -36,7 +36,6 @@ public class AppUtils {
     }
 
     public static String getCurrentDateString() {
-        DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         Date date = new Date();
         return dateFormat.format(date);
     }
@@ -56,13 +55,4 @@ public class AppUtils {
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         return calendar.getTime();
     }
-
-    /*public static String formatDate(String d) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(d.substring(0,4)).append("-")
-                .append(d.substring(5,7)).append("-")
-                .append(d.substring(8));
-
-        return builder.toString();
-    }*/
 }

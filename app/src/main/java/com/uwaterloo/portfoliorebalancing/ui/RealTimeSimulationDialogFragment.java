@@ -102,31 +102,31 @@ public class RealTimeSimulationDialogFragment extends DialogFragment {
                     mSimulation.setName(name);
                     mSimulation.setAccount(account);
                     mSimulation.setStartDate(AppUtils.formatDate(startDate));
-                    mSimulation.setLastDate(AppUtils.formatDate(startDate));
+                    //mSimulation.setLastDate(AppUtils.formatDate(startDate));
                     mSimulation.setRealTime(true);
                     mSimulation.save();
 
-                    if (mSimulation.getStrategy() == SimulationConstants.CONSTANT_PROPORTIONS) {
+//                    if (mSimulation.getStrategy() == SimulationConstants.CONSTANT_PROPORTIONS) {
                         ConstantProportionsDialogFragment fragment = new ConstantProportionsDialogFragment();
                         Bundle args = new Bundle();
                         args.putLong("simulationId", simulationId);
                         fragment.setArguments(args);
                         fragment.show(getActivity().getSupportFragmentManager(), "simulation_details");
-                    } else if (mSimulation.getStrategy() == SimulationConstants.CPPI) {
-                        CPPIDialogFragment fragment = new CPPIDialogFragment();
-                        Bundle args = new Bundle();
+  //                  } else if (mSimulation.getStrategy() == SimulationConstants.CPPI) {
+      //                  CPPIDialogFragment fragment = new CPPIDialogFragment();
+        //                Bundle args = new Bundle();
                         args.putLong("simulationId", simulationId);
                         fragment.setArguments(args);
                         fragment.show(getActivity().getSupportFragmentManager(), "simulation_details");
-                    } else if (mSimulation.getStrategy() == SimulationConstants.CoveredCallWriting) {
-                        CoveredCallWritingDialogFragment fragment = new CoveredCallWritingDialogFragment();
-                        Bundle args = new Bundle();
+     //               } else if (mSimulation.getStrategy() == SimulationConstants.CoveredCallWriting) {
+          //            CoveredCallWritingDialogFragment fragment = new CoveredCallWritingDialogFragment();
+            //            Bundle args = new Bundle();
                         args.putLong("simulationId", simulationId);
                         fragment.setArguments(args);
                         fragment.show(getActivity().getSupportFragmentManager(), "simulation_details");
-                    } else if (mSimulation.getStrategy() == SimulationConstants.StopLoss) {
-                        StopLossDialogFragment fragment = new StopLossDialogFragment();
-                        Bundle args = new Bundle();
+    //        /        } else if (mSimulation.getStrategy() == SimulationConstants.StopLoss) {
+               //         StopLossDialogFragment fragment = new StopLossDialogFragment();
+                 //       Bundle args = new Bundle();
                         args.putLong("simulationId", simulationId);
                         fragment.setArguments(args);
                         fragment.show(getActivity().getSupportFragmentManager(), "simulation_details");
@@ -134,15 +134,15 @@ public class RealTimeSimulationDialogFragment extends DialogFragment {
                     RealTimeSimulationDialogFragment.this.getDialog().cancel();
 
                 }
-                else if (account <= 0.0) {
-                    errorMessage.setVisibility(View.VISIBLE);
-                    errorMessage.setText(R.string.negative_account_balance_error);
-                }
-                else {
-                    errorMessage.setVisibility(View.VISIBLE);
-                    errorMessage.setText(R.string.real_time_date_error);
-                }
-            }
+                //else if (account <= 0.0) {
+                  //  errorMessage.setVisibility(View.VISIBLE);
+                    //errorMessage.setText(R.string.negative_account_balance_error);
+                //}
+                //else {
+                  //  errorMessage.setVisibility(View.VISIBLE);
+                    //errorMessage.setText(R.string.real_time_date_error);
+                //}
+        //    }
         });
 
         return dialog;

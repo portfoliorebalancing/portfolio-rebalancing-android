@@ -14,8 +14,10 @@ import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.util.AppUtils;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by lucas on 31/10/16.
@@ -49,7 +51,7 @@ public class SimulationSelectorActivity extends AppCompatActivity {
     }
 
     public void stockSelected(String symbol) {
-        simulation = new Simulation(symbol, Collections.singletonList(1.0d), 1, 10000, 10000, "Simulation");
+        simulation = new Simulation(symbol, Collections.singletonList(1), 10000, 10000, "Simulation");
         getSupportActionBar().setTitle("Pick Strategy");
         PickStrategySimulationFragment fragment = new PickStrategySimulationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -58,8 +60,8 @@ public class SimulationSelectorActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void strategySelected(int strategy, int type) {
-        simulation.setStrategy(strategy);
+    public void strategySelected(ArrayList<Integer> strategy, int type) {
+        simulation.setStrategies(strategy);
         simulation.setType(type);
 
         if (type == SimulationConstants.HISTORICAL_DATA) {
@@ -67,7 +69,7 @@ public class SimulationSelectorActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Enter Simulation Info");
 
             Bundle args = new Bundle();
-            args.putInt(SIMULATION_STRATEGY, strategy);
+            args.putIntegerArrayList(SIMULATION_STRATEGY, strategy);
             fragment.setArguments(args);
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -79,7 +81,7 @@ public class SimulationSelectorActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Enter Simulation Info");
 
             Bundle args = new Bundle();
-            args.putInt(SIMULATION_STRATEGY, strategy);
+            args.putIntegerArrayList(SIMULATION_STRATEGY, strategy);
             fragment.setArguments(args);
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -89,69 +91,32 @@ public class SimulationSelectorActivity extends AppCompatActivity {
         }
     }
 
-    public void infoSelectedHistoricalCppi(String name, double account, Date begin, Date end, double floor, double multiplier) {
+    public void infoSelectedHistorical(String name, double account, Date begin, Date end,
+                                       double multiplier, double floor, double optionPrice, double strike) {
         simulation.setName(name);
         simulation.setAccount(account);
+
         simulation.setCppiFloor(floor);
         simulation.setCppiMultiplier(multiplier);
-    //                            mSimulation.setBank(bank);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setEndDate(AppUtils.formatDate(end));
 
-        simulationCreated();
-    }
-
-    public void infoSelectedHistoricalStopLossCovered(String name, double account, Date begin, Date end, double optionPrice, double strike) {
-        simulation.setName(name);
-        simulation.setAccount(account);
         simulation.setStrike(strike);
         simulation.setOptionPrice(optionPrice);
-        //                            mSimulation.setBank(bank);
+
         simulation.setStartDate(AppUtils.formatDate(begin));
         simulation.setEndDate(AppUtils.formatDate(end));
 
         simulationCreated();
     }
 
-    public void infoSelectedHistorical(String name, double account, Date begin, Date end) {
-        simulation.setName(name);
-        simulation.setAccount(account);
-        //                            mSimulation.setBank(bank);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setEndDate(AppUtils.formatDate(end));
-
-        simulationCreated();
-    }
-
-    public void infoSelectedRealTime(String name, double account, Date begin) {
+    public void infoSelectedRealTime(String name, double account, Date begin,
+                                     double multiplier, double floor, double optionPrice, double strike) {
         simulation.setName(name);
         simulation.setAccount(account);
         simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setLastDate(AppUtils.formatDate(begin));
-        simulation.setRealTime(true);
-
-        simulationCreated();
-    }
-
-    public void infoSelectedRealTimeCppi(String name, double account, Date begin, double floor, double multiplier) {
-        simulation.setName(name);
-        simulation.setAccount(account);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setLastDate(AppUtils.formatDate(begin));
         simulation.setRealTime(true);
 
         simulation.setCppiFloor(floor);
         simulation.setCppiMultiplier(multiplier);
-
-        simulationCreated();
-    }
-
-    public void infoSelectedRealTimeStopLossCovered(String name, double account, Date begin, double optionPrice, double strike) {
-        simulation.setName(name);
-        simulation.setAccount(account);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setLastDate(AppUtils.formatDate(begin));
-        simulation.setRealTime(true);
 
         simulation.setStrike(strike);
         simulation.setOptionPrice(optionPrice);

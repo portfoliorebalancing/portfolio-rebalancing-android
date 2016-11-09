@@ -18,6 +18,7 @@ import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.util.AppUtils;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -52,31 +53,35 @@ public class HistoricalSimulationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.historical_simulation_fragment, null);
 
-        final EditText nameText = (EditText)view.findViewById(R.id.simulation_name_edit);
-        final EditText accountText = (EditText)view.findViewById(R.id.simulation_account_balance);
-//        final EditText bankText = (EditText) rootView.findViewById(R.id.simulation_bank_balance);
-        final TextView startEditText = (TextView)view.findViewById(R.id.simulation_start_date);
-        final TextView endEditText = (TextView)view.findViewById(R.id.simulation_end_date);
-        final TextView errorMessage = (TextView)view.findViewById(R.id.dialog_error_message);
-        ImageView startDateCalendar = (ImageView)view.findViewById(R.id.start_date_calendar);
-        ImageView endDateCalendar = (ImageView)view.findViewById(R.id.end_date_calendar);
+        final EditText nameText = (EditText) view.findViewById(R.id.simulation_name_edit);
+        final EditText accountText = (EditText) view.findViewById(R.id.simulation_account_balance);
+        final TextView startEditText = (TextView) view.findViewById(R.id.simulation_start_date);
+        final TextView endEditText = (TextView) view.findViewById(R.id.simulation_end_date);
+        final TextView errorMessage = (TextView) view.findViewById(R.id.dialog_error_message);
+        ImageView startDateCalendar = (ImageView) view.findViewById(R.id.start_date_calendar);
+        ImageView endDateCalendar = (ImageView) view.findViewById(R.id.end_date_calendar);
 
-        final LinearLayout floor = (LinearLayout)view.findViewById(R.id.floor);
-        final LinearLayout multiplier = (LinearLayout)view.findViewById(R.id.multiplier);
-        final LinearLayout optionPrice = (LinearLayout)view.findViewById(R.id.option_price);
-        final LinearLayout strike = (LinearLayout)view.findViewById(R.id.strike);
+        final LinearLayout floor = (LinearLayout) view.findViewById(R.id.floor);
+        final LinearLayout multiplier = (LinearLayout) view.findViewById(R.id.multiplier);
+        final LinearLayout optionPrice = (LinearLayout) view.findViewById(R.id.option_price);
+        final LinearLayout strike = (LinearLayout) view.findViewById(R.id.strike);
 
-        final EditText floorText = (EditText)view.findViewById(R.id.floor_input);
-        final EditText multiplierText = (EditText)view.findViewById(R.id.multiplier_input);
-        final EditText optionPriceText = (EditText)view.findViewById(R.id.option_price_input);
-        final EditText strikeText = (EditText)view.findViewById(R.id.strike_input);
+        final EditText floorText = (EditText) view.findViewById(R.id.floor_input);
+        final EditText multiplierText = (EditText) view.findViewById(R.id.multiplier_input);
+        final EditText optionPriceText = (EditText) view.findViewById(R.id.option_price_input);
+        final EditText strikeText = (EditText) view.findViewById(R.id.strike_input);
 
         Bundle args = getArguments();
-        final int strategy = args.getInt(SimulationSelectorActivity.SIMULATION_STRATEGY);
-        if (strategy == SimulationConstants.CPPI) {
+        final ArrayList<Integer> strategyList = args.getIntegerArrayList(SimulationSelectorActivity.SIMULATION_STRATEGY);
+        final boolean useFloorAndMultiplier = strategyList.contains(SimulationConstants.CPPI);
+        final boolean useOptionPriceAndStrike = strategyList.contains(SimulationConstants.CoveredCallWriting)
+                                || strategyList.contains(SimulationConstants.StopLoss);
+
+        if (useFloorAndMultiplier) {
             floor.setVisibility(View.VISIBLE);
             multiplier.setVisibility(View.VISIBLE);
-        } else if (strategy == SimulationConstants.CoveredCallWriting || strategy == SimulationConstants.StopLoss) {
+        }
+        if (useOptionPriceAndStrike) {
             optionPrice.setVisibility(View.VISIBLE);
             strike.setVisibility(View.VISIBLE);
         }
@@ -129,14 +134,10 @@ public class HistoricalSimulationFragment extends Fragment {
                     account = Double.parseDouble(accountString);
                 }
                 catch (NumberFormatException e) {
-                    //mSimulation.delete();
-                    //Toast toast = Toast.makeText(getContext(), "Account balance must be valid.", Toast.LENGTH_SHORT);
-                    //toast.show();
                     errorMessage.setVisibility(View.VISIBLE);
                     errorMessage.setText(R.string.account_balance_error);
                     return;
                 }
-                //                        double bank = Double.parseDouble(bankText.getText().toString());
 
                 String floorString = floorText.getText().toString();
                 String multiplierString = multiplierText.getText().toString();
@@ -147,7 +148,7 @@ public class HistoricalSimulationFragment extends Fragment {
                 double optionPriceValue = 0.0;
                 double strikeValue = 0.0;
 
-                if (strategy == SimulationConstants.CPPI) {
+                if (useFloorAndMultiplier) {
                     try {
                         floorValue = Double.parseDouble(floorString);
                     }
@@ -164,7 +165,8 @@ public class HistoricalSimulationFragment extends Fragment {
                         errorMessage.setText("Please enter a multiplier.");
                         return;
                     }
-                } else if (strategy == SimulationConstants.CoveredCallWriting || strategy == SimulationConstants.StopLoss) {
+                }
+                if (useOptionPriceAndStrike) {
                     try {
                         optionPriceValue = Double.parseDouble(optionPriceString);
                     }
@@ -184,13 +186,7 @@ public class HistoricalSimulationFragment extends Fragment {
                 }
 
                 if (startDate.before(endDate) && account > 0.0) {
-                    if (strategy == SimulationConstants.CPPI) {
-                        activity.infoSelectedHistoricalCppi(name, account, startDate, endDate, floorValue, multiplierValue);
-                    } else if (strategy == SimulationConstants.CoveredCallWriting || strategy == SimulationConstants.StopLoss) {
-                        activity.infoSelectedHistoricalStopLossCovered(name, account, startDate, endDate, optionPriceValue, strikeValue);
-                    } else {
-                        activity.infoSelectedHistorical(name, account, startDate, endDate);
-                    }
+                    activity.infoSelectedHistorical(name, account, startDate, endDate, multiplierValue, floorValue, optionPriceValue, strikeValue);
                 }
                 else if (account <= 0.0){
                     errorMessage.setVisibility(View.VISIBLE);

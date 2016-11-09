@@ -44,7 +44,7 @@ public class ConstantProportionsDialogFragment extends DialogFragment {
         final RecyclerView weightsView = (RecyclerView) rootView.findViewById(R.id.simulation_weights_list);
         mainActivity = (MainActivity) getActivity();
         weightsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        weightsView.setAdapter(new StockWeightAdapter(mSimulation.getSymbolsList(), mainActivity));
+        //weightsView.setAdapter(new StockWeightAdapter(mSimulation.getSymbolsList(), mainActivity));
 
 
         builder.setView(rootView)
@@ -58,7 +58,7 @@ public class ConstantProportionsDialogFragment extends DialogFragment {
                             weights.add(weightString.equals("") ? 0 : Double.parseDouble(weightString));
                         }
                         // TODO: Check if date is valid instead of matching regex
-                        mSimulation.setWeights(weights);
+                        //mSimulation.setWeights(weights);
                         mSimulation.save();
                         mainActivity.updateSimulationFragment();
                         if (mSimulation.isRealTime()) {

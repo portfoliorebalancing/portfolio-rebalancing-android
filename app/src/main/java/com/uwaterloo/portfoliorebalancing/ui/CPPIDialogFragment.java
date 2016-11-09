@@ -60,7 +60,7 @@ public class CPPIDialogFragment extends DialogFragment{
               // /             weights.add(weightString.equals("") ? 0 : Double.parseDouble(weightString));
                 //        }
                         // TODO: Check if date is valid instead of matching regex
-                        mSimulation.setWeights(weights);
+                        //mSimulation.setWeights(weights);
                         mSimulation.save();
                         mainActivity.updateSimulationFragment();
                         if (mSimulation.isRealTime()) {
