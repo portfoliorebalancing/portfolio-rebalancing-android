@@ -129,7 +129,7 @@ public class HistoricalSimulationDialogFragment extends DialogFragment {
                     mSimulation.setEndDate(AppUtils.formatDate(endDate));
                     mSimulation.save();
 
-                    /*if (mSimulation.getStrategy() == SimulationConstants.CONSTANT_PROPORTIONS) {
+                    if (mSimulation.getStrategy() == SimulationConstants.CONSTANT_PROPORTIONS) {
                         ConstantProportionsDialogFragment fragment = new ConstantProportionsDialogFragment();
                         Bundle args = new Bundle();
                         args.putLong("simulationId", simulationId);
@@ -153,7 +153,7 @@ public class HistoricalSimulationDialogFragment extends DialogFragment {
                         args.putLong("simulationId", simulationId);
                         fragment.setArguments(args);
                         fragment.show(getActivity().getSupportFragmentManager(), "simulation_details");
-                    }*/
+                    }
 
                     HistoricalSimulationDialogFragment.this.getDialog().cancel();
                 }

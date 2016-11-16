@@ -37,6 +37,14 @@
                 android:layout_gravity="center"
                 android:text="Strategy:"
                 android:textColor="@color/primary_text_color"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:id="@+id/simulation_strategy"
+                android:textColor="@color/primary_text_color"/>
         </LinearLayout>
 
         <LinearLayout

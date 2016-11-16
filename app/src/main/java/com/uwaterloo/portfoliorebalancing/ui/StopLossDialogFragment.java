@@ -45,7 +45,7 @@ public class StopLossDialogFragment extends DialogFragment {
         final EditText optionPriceView = (EditText) rootView.findViewById(R.id.stop_loss_option_price_input);
         mainActivity = (MainActivity) getActivity();
         weightsView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //weightsView.setAdapter(new StockWeightAdapter(mSimulation.getSymbolsList(), mainActivity));
+        weightsView.setAdapter(new StockWeightAdapter(mSimulation.getSymbolsList(), mainActivity));
 
         builder.setView(rootView)
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
@@ -60,7 +60,7 @@ public class StopLossDialogFragment extends DialogFragment {
                             weights.add(weightString.equals("") ? 0 : Double.parseDouble(weightString));
                         }
                         // TODO: Check if date is valid instead of matching regex
-                        //mSimulation.setWeights(weights);
+                        mSimulation.setWeights(weights);
                         mSimulation.save();
                         mainActivity.updateSimulationFragment();
                         if (mSimulation.isRealTime()) {

@@ -18,7 +18,6 @@ import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.util.AppUtils;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -66,16 +65,11 @@ public class RealTimeSimulationFragment extends Fragment {
         final EditText strikeText = (EditText)view.findViewById(R.id.strike_input);
 
         Bundle args = getArguments();
-        final ArrayList<Integer> strategyList = args.getIntegerArrayList(SimulationSelectorActivity.SIMULATION_STRATEGY);
-        final boolean useFloorAndMultiplier = strategyList.contains(SimulationConstants.CPPI);
-        final boolean useOptionPriceAndStrike = strategyList.contains(SimulationConstants.CoveredCallWriting)
-                || strategyList.contains(SimulationConstants.StopLoss);
-
-        if (useFloorAndMultiplier) {
+        final int strategy = args.getInt(SimulationSelectorActivity.SIMULATION_STRATEGY);
+        if (strategy == SimulationConstants.CPPI) {
             floor.setVisibility(View.VISIBLE);
             multiplier.setVisibility(View.VISIBLE);
-        }
-        if (useOptionPriceAndStrike) {
+        } else if (strategy == SimulationConstants.CoveredCallWriting || strategy == SimulationConstants.StopLoss) {
             optionPrice.setVisibility(View.VISIBLE);
             strike.setVisibility(View.VISIBLE);
         }
@@ -124,7 +118,7 @@ public class RealTimeSimulationFragment extends Fragment {
                 double optionPriceValue = 0.0;
                 double strikeValue = 0.0;
 
-                if (useFloorAndMultiplier) {
+                if (strategy == SimulationConstants.CPPI) {
                     try {
                         floorValue = Double.parseDouble(floorString);
                     }
@@ -141,8 +135,7 @@ public class RealTimeSimulationFragment extends Fragment {
                         errorMessage.setText("Please enter a multiplier.");
                         return;
                     }
-                }
-                if (useOptionPriceAndStrike) {
+                } else if (strategy == SimulationConstants.CoveredCallWriting || strategy == SimulationConstants.StopLoss) {
                     try {
                         optionPriceValue = Double.parseDouble(optionPriceString);
                     }
@@ -163,7 +156,16 @@ public class RealTimeSimulationFragment extends Fragment {
 
                 // TODO: Check if date is valid instead of matching regex
                 if (startDate.before(new Date()) && account > 0.0) {
-                    activity.infoSelectedRealTime(name, account, startDate, multiplierValue, floorValue, optionPriceValue, strikeValue);
+                    if (strategy == SimulationConstants.CPPI) {
+                        activity.infoSelectedRealTimeCppi(name, account, startDate, floorValue, multiplierValue);
+                    } else if (strategy == SimulationConstants.CoveredCallWriting || strategy == SimulationConstants.StopLoss) {
+                        activity.infoSelectedRealTimeStopLossCovered(name, account, startDate, optionPriceValue, strikeValue);
+                    } else {
+                        activity.infoSelectedRealTime(name, account, startDate);
+                    }
+
+
+                    activity.infoSelectedRealTime(name, account, startDate);
                 }
                 else if (account <= 0.0) {
                     errorMessage.setVisibility(View.VISIBLE);

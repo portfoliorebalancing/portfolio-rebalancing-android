@@ -26,10 +26,10 @@
             android:background="#90909090"
             android:layout_marginBottom="6dp"
             android:layout_marginTop="6dp" />
-        <LinearLayout
-            android:orientation="vertical"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checkedButton="@+id/constant_proportions_radio"
             android:paddingLeft="12dp"
             android:layout_marginBottom="6dp">
             <RadioButton
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="Stop Loss"
                 android:id="@+id/stop_loss_radio"/>
-        </LinearLayout>
+        </RadioGroup>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

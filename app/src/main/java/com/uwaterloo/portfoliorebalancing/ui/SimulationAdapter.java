@@ -47,8 +47,16 @@ public class SimulationAdapter extends RecyclerView.Adapter<SimulationAdapter.Si
     @Override
     public void onBindViewHolder(SimulationItemHolder holder, int i) {
         Simulation simulation = mSimulationList.get(i);
+        String[] symbols = simulation.getSymbols();
+        String list = "";
+        for (int j = 0; j < symbols.length; j++) {
+            if (j > 0) {
+                list += ", ";
+            }
+            list += symbols[j];
+        }
         holder.mName.setText(simulation.getName());
-        holder.mStocks.setText(simulation.getSymbol());
+        holder.mStocks.setText(list);
         holder.mBalance.setText(StockHelper.formatDouble(simulation.getAccount()));
         holder.mCircleItem.setText(StockHelper.getFirstCharacter(simulation.getName()));
 
