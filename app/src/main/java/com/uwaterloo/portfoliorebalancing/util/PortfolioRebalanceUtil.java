@@ -14,25 +14,21 @@ import java.util.List;
  * Created by yuweixu on 2015-11-01.
  */
 public class PortfolioRebalanceUtil {
-    public static List<Tick> calculatePortfolioValue(List<Tick>[] stockData, double[] stockWeights,
+    public static List<Tick> calculatePortfolioValue(List<List<Tick>> stockData, double[] stockWeights,
                                                      int strategy, double bankBalance,
                                                      double accountBalance, int startingIndex,
                                                      double cppi_floor, double multiplier, double optionPrice, double strike) {
         Log.v("SIMULATION STOCKWEIGHTS", Arrays.toString(stockWeights));
-        int portfolioSize = stockData.length - 1;
-        int numTicks = stockData[0].size();
+        int portfolioSize = stockData.size();
+        int numTicks = stockData.get(0).size();
         double bankValue = bankBalance;
         double portfolioValue = accountBalance;
-        long simulationId = stockData[0].get(numTicks - 1).getSimulationId();
-        String startDate = stockData[0].get(0).getDate();
+        long simulationId = stockData.get(0).get(numTicks - 1).getSimulationId();
+        String startDate = stockData.get(0).get(0).getDate();
         List<Tick> portfolioTicks;
         double floor = accountBalance * cppi_floor;
-        if (startingIndex == 0) {
-            portfolioTicks = new ArrayList<>();
-        }
-        else {
-            portfolioTicks = stockData[portfolioSize];
-        }
+
+        portfolioTicks = new ArrayList<>();
 
         if (strategy == SimulationConstants.CONSTANT_PROPORTIONS) {
             double [] shareSizes = new double [portfolioSize];
@@ -47,11 +43,11 @@ public class PortfolioRebalanceUtil {
             for (int i=startingIndex; i<numTicks; i++) {
                 portfolioValue = 0;
                 for (int j = 0; j < portfolioSize; j++) {
-                    portfolioValue += shareSizes[j] * stockData[j].get(i).getPrice();
+                    portfolioValue += shareSizes[j] * stockData.get(j).get(i).getPrice();
                 }
                 Log.v("PORTFOLIO VALUE", portfolioValue + "");
                 rebalance(strategy, portfolioValue, shareSizes, stockWeights, stockData, i);
-                Tick tick = new Tick("portfolio", portfolioValue, stockData[0].get(i).getDate(), simulationId);
+                Tick tick = new Tick("portfolio", portfolioValue, stockData.get(0).get(i).getDate(), simulationId);
                 tick.save();
                 portfolioTicks.add(tick);
             }
@@ -72,9 +68,9 @@ public class PortfolioRebalanceUtil {
                 portfolioValue = 0;
                 for (int j = 0; j < portfolioSize; j++) {
                     if (strike == 0) {
-                        portfolioValue += shareSizes[j] * stockData[j].get(i).getPrice();
+                        portfolioValue += shareSizes[j] * stockData.get(j).get(i).getPrice();
                     } else {
-                        portfolioValue += shareSizes[j] * Math.min(strike, stockData[j].get(i).getPrice());
+                        portfolioValue += shareSizes[j] * Math.min(strike, stockData.get(j).get(i).getPrice());
                     }
                 }
                 portfolioValue += bankValue;
@@ -84,14 +80,14 @@ public class PortfolioRebalanceUtil {
                     portfolioValue = 0;
                     for (int j = 0; j < portfolioSize; j++) {
                         if (strike == 0) {
-                            portfolioValue += shareSizes[j] * stockData[j].get(i).getPrice();
+                            portfolioValue += shareSizes[j] * stockData.get(j).get(i).getPrice();
                         } else {
-                            portfolioValue += shareSizes[j] * Math.min(strike, stockData[j].get(i).getPrice());
+                            portfolioValue += shareSizes[j] * Math.min(strike, stockData.get(j).get(i).getPrice());
                         }
                     }
                     portfolioValue += bankValue;
                 }
-                Tick tick = new Tick("portfolio", portfolioValue, stockData[0].get(i).getDate(), simulationId);
+                Tick tick = new Tick("portfolio", portfolioValue, stockData.get(0).get(i).getDate(), simulationId);
                 tick.save();
                 portfolioTicks.add(tick);
             }
@@ -102,7 +98,7 @@ public class PortfolioRebalanceUtil {
                 bankValue = rebalance(strategy, portfolioValue, shareSizes, stockWeights, stockData, bankValue, 0, strike, optionPrice);
                 portfolioValue = 0;
                 for (int j = 0; j < portfolioSize; j++) {
-                    portfolioValue += shareSizes[j] * Math.min(strike, stockData[j].get(0).getPrice());
+                    portfolioValue += shareSizes[j] * Math.min(strike, stockData.get(j).get(0).getPrice());
                 }
                 portfolioValue += bankValue;
                 Tick start = new Tick("portfolio", portfolioValue, startDate, simulationId);
@@ -114,11 +110,11 @@ public class PortfolioRebalanceUtil {
             for (int i=startingIndex; i<numTicks; i++) {
                 portfolioValue = 0;
                 for (int j = 0; j < portfolioSize; j++) {
-                    portfolioValue += shareSizes[j] * Math.min(strike, stockData[j].get(i).getPrice());
+                    portfolioValue += shareSizes[j] * Math.min(strike, stockData.get(j).get(i).getPrice());
                 }
                 portfolioValue += bankValue;
                 Log.v("PORTFOLIO VALUE", portfolioValue + "");
-                Tick tick = new Tick("portfolio", portfolioValue, stockData[0].get(i).getDate(), simulationId);
+                Tick tick = new Tick("portfolio", portfolioValue, stockData.get(0).get(i).getDate(), simulationId);
                 tick.save();
                 portfolioTicks.add(tick);
             }
@@ -133,24 +129,24 @@ public class PortfolioRebalanceUtil {
             time.add(t.getDate());
         }
         List<Double> stock = new ArrayList<>();
-        for (Tick t : stockData[0]) {
+        for (Tick t : stockData.get(0)) {
             stock.add(t.getPrice());
         }
         return portfolioTicks;
     }
 
     public static void rebalance(int strategy, double portfolioValue, double[] shareSizes,
-                                   double[] stockWeights, List<Tick>[] stockData, int index) {
+                                   double[] stockWeights, List<List<Tick>> stockData, int index) {
         if (strategy == SimulationConstants.CONSTANT_PROPORTIONS) {
             for (int i = 0; i < shareSizes.length; i++) {
                 double investAmount = stockWeights[i] * portfolioValue;
-                shareSizes[i] = investAmount / stockData[i].get(index).getPrice();
+                shareSizes[i] = investAmount / stockData.get(i).get(index).getPrice();
             }
         }
     }
 
     public static double rebalance(int strategy, double portfolioValue, double[] shareSizes,
-                                 double[] stockWeights, List<Tick>[] stockData, double bankBalance, int index, double arg1, double arg2) {
+                                 double[] stockWeights, List<List<Tick>> stockData, double bankBalance, int index, double arg1, double arg2) {
 
          if (strategy == SimulationConstants.CPPI) {
 
@@ -159,7 +155,7 @@ public class PortfolioRebalanceUtil {
              if (index == 0) {
                  double riskyAsset = portfolioValue - floor;
                  for (int i = 0; i < shareSizes.length; i++) {
-                     double currentPrice = stockData[i].get(index).getPrice();
+                     double currentPrice = stockData.get(i).get(index).getPrice();
                      double investAmount = stockWeights[i] * riskyAsset;
                      double shareSize = multiplier * investAmount / currentPrice;
                      shareSizes[i] = shareSize;
@@ -168,7 +164,7 @@ public class PortfolioRebalanceUtil {
              } else {
                  double riskyAsset = Math.max(0, portfolioValue - floor);
                  for (int i = 0; i < shareSizes.length; i++) {
-                     double currentPrice = stockData[i].get(index).getPrice();
+                     double currentPrice = stockData.get(i).get(index).getPrice();
                      double investAmount = stockWeights[i] * riskyAsset;
                      double shareSize = multiplier * investAmount / currentPrice;
                      bankBalance -= (shareSize - shareSizes[i]) * currentPrice;
@@ -183,7 +179,7 @@ public class PortfolioRebalanceUtil {
              if (index == 0) {
                  bankBalance = 0;
                  for (int i = 0; i < shareSizes.length; i++) {
-                     double currentPrice = stockData[i].get(index).getPrice();
+                     double currentPrice = stockData.get(i).get(index).getPrice();
                      double investmentAmount = stockWeights[i] * portfolioValue;
                      double shareSize = investmentAmount / currentPrice;
                      shareSizes[i] = shareSize;
@@ -199,7 +195,7 @@ public class PortfolioRebalanceUtil {
              if (index == 0) {
                  bankBalance = 0;
                  for (int i = 0; i < shareSizes.length; i++) {
-                     double currentPrice = stockData[i].get(index).getPrice();
+                     double currentPrice = stockData.get(i).get(index).getPrice();
                      double investmentAmount = stockWeights[i] * portfolioValue;
                      double shareSize = investmentAmount / strike;
                      if (currentPrice > strike) {
@@ -212,8 +208,8 @@ public class PortfolioRebalanceUtil {
                  }
              } else {
                  for (int i = 0; i < shareSizes.length; i++) {
-                     double lastPrice = stockData[i].get(index-1).getPrice();
-                     double currentPrice = stockData[i].get(index).getPrice();
+                     double lastPrice = stockData.get(i).get(index-1).getPrice();
+                     double currentPrice = stockData.get(i).get(index).getPrice();
                      if (stockWeights[i] != 0) {
                          if (lastPrice < strike && currentPrice > strike) { // buy stock
                              double investmentAmount = stockWeights[i] * bankBalance;

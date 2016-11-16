@@ -44,7 +44,6 @@ public class Simulation extends SugarRecord<Simulation> {
      * @see SimulationStrategies
      */
     private String simulationStrategies;
-    private int strategy;
 
     public Simulation() {}
 
@@ -64,11 +63,21 @@ public class Simulation extends SugarRecord<Simulation> {
             realTime = true;
         }
 
+        SimulationStrategies strategies = new SimulationStrategies(strategy, floor, multiplier, optionPrice, strike);
+        simulationStrategies = null;
+        try {
+            simulationStrategies = SimulationStrategies.toString(strategies);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
         setName(name);
         setAccount(account);
         bank = account;
         setStartDate(AppUtils.formatDate(begin));
-        setEndDate(AppUtils.formatDate(end));
+        if (end != null) {
+            setEndDate(AppUtils.formatDate(end));
+        }
 
         setStrike(strike);
         setOptionPrice(optionPrice);
@@ -100,12 +109,21 @@ public class Simulation extends SugarRecord<Simulation> {
         this.strike = 0;
     }
 
+    public SimulationStrategies getSimulationStrategies() {
+        SimulationStrategies retVal = null;
+        try {
+            retVal = SimulationStrategies.fromString(simulationStrategies);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return retVal;
+    }
+
     public void setRealTime(boolean b){ realTime = b; }
-    public void setName(String n) { if (name.equals("")){return;} name = n; }
+    public void setName(String n) { name = n; }
     public void setAccount(double n) { account = n; }
     public void setBank(double n) { bank = n; }
     public void setType(int n) { type = n; }
-    public void setStrategy(int n) { strategy = n; }
     public void setStartDate(String date) { startDate = date;}
     public void setEndDate(String date) {endDate = date;}
     public void setWeights(List<Double> ratios) {
@@ -136,7 +154,6 @@ public class Simulation extends SugarRecord<Simulation> {
     public boolean isRealTime() {return realTime;}
     public double getBank() {return bank;}
     public double getAccount() {return account;}
-    public int getStrategy() {return strategy;}
     public int getType() {return type;}
     public String getName() {return name;}
     public String getStartDate() {return startDate;}

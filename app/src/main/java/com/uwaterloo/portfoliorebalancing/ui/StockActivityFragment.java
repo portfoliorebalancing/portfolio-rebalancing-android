@@ -44,7 +44,7 @@ public class StockActivityFragment extends Fragment {
     private MainActivity mainActivity;
     private StockActivityAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private List<Stock> stockList;
+    private List<Stock> stockList = new ArrayList<>();
     private List<Tick> tickList;
     private final String STOCK_FILE = "stocklist.txt";
     private final String DATE_FORMAT = "yyyy-MM-dd";

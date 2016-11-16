@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -23,7 +24,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.framework.SettingsActivity;
+import com.uwaterloo.portfoliorebalancing.model.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
+import com.uwaterloo.portfoliorebalancing.model.SimulationStrategies;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
 import com.uwaterloo.portfoliorebalancing.util.PortfolioRebalanceUtil;
 
@@ -162,19 +165,22 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
             return null;
         }
     }
-    public class CalculateHistoricalSimulationAsyncTask extends AsyncTask<Simulation, Void, List<Tick>[]> {
+    public class CalculateHistoricalSimulationAsyncTask extends AsyncTask<Simulation, Void, GraphData> {
         @Override
-        protected List<Tick>[] doInBackground(Simulation... params) {
+        protected GraphData doInBackground(Simulation... params) {
             Simulation simulation = params[0];
             String startDate = simulation.getStartDate();
             String endDate = simulation.getEndDate();
             String[] symbols = simulation.getSymbols();
             long simulationId = simulation.getId();
-            List<Tick>[] stockPrices = new ArrayList[symbols.length + 1];
+
+            List<List<Tick>> simulationTicks = new ArrayList<>();
+            List<List<Tick>> stockTicks = new ArrayList<>();
+
             List<String> dates = new ArrayList<>();
             for (int i=0; i<symbols.length; i++) {
                 String symbol = symbols[i];
-                stockPrices[i] = new ArrayList<Tick>();
+                stockTicks.add(new ArrayList<Tick>());
                 int dateCounter = 0;
                 try {
                     //String url = "https://quandl.com/api/v3/datasets/WIKI/" + symbol + ".csv?api_key=" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate + "&order=asc";
@@ -217,7 +223,7 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                                 for (int d=dateCounter; d<dateIndex; d++) {
                                     Tick copyTick = new Tick(symbol, prevClose, dates.get(d), simulationId);
                                     copyTick.save();
-                                    stockPrices[i].add(copyTick);
+                                    stockTicks.get(i).add(copyTick);
                                     index++;
                                 }
                                 dateCounter = dateIndex;
@@ -226,7 +232,7 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                         // The stock prices are in reverse chronological order.
                         Tick tick = new Tick(symbol, prevClose, date, simulationId);
                         tick.save();
-                        stockPrices[i].add(tick);
+                        stockTicks.get(i).add(tick);
                         dateCounter ++;
                         index++;
                     }
@@ -236,62 +242,64 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                     return null;
                 }
             }
-            Log.v("SIMULATION #symbol", symbols.length + "");
-            String logNumTicks = "";
-            for (int i=0; i<stockPrices.length - 1; i++) {
-                logNumTicks += stockPrices[i].size() + ",";
+
+            SimulationStrategies strategies = simulation.getSimulationStrategies();
+            List<SimulationStrategies.StrategyPair> data = strategies.getData();
+
+            for (int i = 0; i < data.size(); i++) {
+                if (stockTicks.get(0).size() != 0) {
+                    List<Tick> portfolioTicks = PortfolioRebalanceUtil.calculatePortfolioValue(
+                            stockTicks, simulation.getWeights(), data.get(i).first,
+                            simulation.getBank(), simulation.getAccount(), 0, data.get(i).second.getFloor(),
+                            data.get(i).second.getMultiplier(), data.get(i).second.getOptionPrice(), data.get(i).second.getStrike()
+                    );
+                    simulationTicks.add(portfolioTicks);
+                }
             }
-            Log.v("SIMULATION #stock tick", logNumTicks);
-            // Perform rebalancing simulation
-            List<Tick> portfolioTicks = PortfolioRebalanceUtil.calculatePortfolioValue(
-                    stockPrices, simulation.getWeights(), simulation.getStrategy(),
-                    simulation.getBank(), simulation.getAccount(), 0, simulation.getCppiFloor(),
-                    simulation.getCppiMultiplier(), simulation.getOptionPrice(), simulation.getStrike()
-            );
-            stockPrices[symbols.length] = portfolioTicks;
-            Log.v("SIMULATION #port tick", stockPrices[symbols.length].size() +"");
-            return stockPrices;
+
+            return new GraphData(strategies, simulationTicks, stockTicks);
         }
 
         @Override
-        protected void onPostExecute(List<Tick>[] portfolioData) {
+        protected void onPostExecute(GraphData graphData) {
+            if (graphData != null) {
+                List<List<Tick>> stockTicks = graphData.getStockTicks();
+                List<List<Tick>> simulationTicks = graphData.getSimulationTicks();
 
-            if (portfolioData != null) {
-
-                int portfolioSize = portfolioData.length - 1;
-                int numTicks = portfolioData[0].size();
-                List<Tick> portfolioTicks = portfolioData[portfolioSize];
-
-                for (int i = 0; i < portfolioTicks.size(); i++) {
-                    Log.v("PORTFOLIO IS HERE", portfolioTicks.get(i).getPrice()+"");
-                }
+                int portfolioSize = stockTicks.size();
+                int numTicks = stockTicks.get(0).size();
 
                 List<String> xVals = new ArrayList<>();
                 for (int i = 0; i < numTicks; i++) {
-                    xVals.add(portfolioTicks.get(i).getDate());
+                    xVals.add(simulationTicks.get(0).get(i).getDate());
                 }
 
                 List<LineDataSet> portfolioSets = new ArrayList<>();
                 List<LineDataSet> stockSets = new ArrayList<>();
-                List<Entry> portfolioList = new ArrayList<>();
-                for (int i = 0; i < numTicks; i++) {
-                    portfolioList.add(new Entry((float) portfolioTicks.get(i).getPrice(), i));
+
+                for (int j = 0; j < simulationTicks.size(); j++) {
+                    List<Tick> simTicks = simulationTicks.get(j);
+                    List<Entry> portfolioList = new ArrayList<>();
+                    for (int i = 0; i < numTicks; i++) {
+                        portfolioList.add(new Entry((float) simTicks.get(i).getPrice(), i));
+                    }
+                    LineDataSet balanceSet = new LineDataSet(portfolioList, "Portfolio");
+                    balanceSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
+                    balanceSet.setCircleSize(2f);
+                    balanceSet.setDrawHorizontalHighlightIndicator(false);
+                    balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
+                    balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
+                    balanceSet.setDrawValues(false);
+                    portfolioSets.add(balanceSet);
                 }
-                LineDataSet balanceSet = new LineDataSet(portfolioList, "Portfolio");
-                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
-                balanceSet.setCircleSize(2f);
-                balanceSet.setDrawHorizontalHighlightIndicator(false);
-                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
-                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
-                balanceSet.setDrawValues(false);
-                portfolioSets.add(balanceSet);
+
                 // TODO: add a shared preference to allow users to customize number of stocks shown
                 int numStocksShown = portfolioSize > 5 ? 5 : portfolioSize;
                 for (int i = 0; i<numStocksShown; i++) {
                     List<Entry> stockEntryList = new ArrayList<>();
-                    String symbol = portfolioData[i].get(0).getSymbol();
+                    String symbol = stockTicks.get(i).get(0).getSymbol();
                     for (int j = 0; j < numTicks; j++) {
-                        stockEntryList.add(new Entry((float) portfolioData[i].get(j).getPrice(), j));
+                        stockEntryList.add(new Entry((float) stockTicks.get(i).get(j).getPrice(), j));
                     }
 
                     LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);

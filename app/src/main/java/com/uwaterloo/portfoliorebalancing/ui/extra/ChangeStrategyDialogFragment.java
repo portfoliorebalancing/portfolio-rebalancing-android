@@ -116,7 +116,7 @@ public class ChangeStrategyDialogFragment extends DialogFragment {
                             mSimulation.setStrike(Double.parseDouble(strikeText.getText().toString()));
                         }
 
-                        mSimulation.setStrategy(strategy);
+                        //mSimulation.setStrategy(strategy);
                         mSimulation.save();
 
                         ChangeStrategyDialogFragment.this.getDialog().cancel();

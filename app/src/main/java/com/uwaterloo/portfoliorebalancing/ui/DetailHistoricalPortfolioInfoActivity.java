@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -23,7 +24,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.framework.SettingsActivity;
+import com.uwaterloo.portfoliorebalancing.model.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
+import com.uwaterloo.portfoliorebalancing.model.SimulationStrategies;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
 import com.uwaterloo.portfoliorebalancing.util.PortfolioRebalanceUtil;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
@@ -49,17 +52,8 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
     protected Simulation mSimulation;
     protected Context mContext;
     protected boolean newSimulation;
-    protected LinearLayout mMultiplierContainer;
-    protected LinearLayout mFloorContainer;
-    protected LinearLayout mOptionPriceContainer;
-    protected LinearLayout mStrikeContainer;
-    protected TextView mStrategy;
     protected TextView mSimulationType;
-    protected TextView mOptionPrice;
-    protected TextView mStrike;
     protected TextView mTodayValue;
-    protected TextView mFloor;
-    protected TextView mMultiplier;
     protected TextView mStartingBal;
 
 
@@ -72,17 +66,8 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
         long simulationId = -1;
         mContext = this;
 
-        mMultiplierContainer = (LinearLayout) findViewById(R.id.multiplier_container);
-        mFloorContainer = (LinearLayout) findViewById(R.id.floor_container);
-        mOptionPriceContainer = (LinearLayout) findViewById(R.id.option_price_container);
-        mStrikeContainer = (LinearLayout) findViewById(R.id.strike_container);
-        mStrategy = (TextView) findViewById(R.id.simulation_strategy);
         mSimulationType = (TextView) findViewById(R.id.simulation_type);
-        mOptionPrice = (TextView) findViewById(R.id.simulation_option_price);
-        mStrike = (TextView) findViewById(R.id.simulation_strike);
         mTodayValue = (TextView) findViewById(R.id.simulation_today);
-        mFloor = (TextView) findViewById(R.id.simulation_floor);
-        mMultiplier = (TextView) findViewById(R.id.simulation_multiplier);
         mStartingBal = (TextView) findViewById(R.id.simulation_start_bal);
 
         Intent intent = getIntent();
@@ -97,26 +82,8 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
 
         TextView nameView = (TextView) findViewById(R.id.simulation_name);
         nameView.setText(mSimulation.getName());
-        int strategy = mSimulation.getStrategy();
-        if (strategy == SimulationConstants.CONSTANT_PROPORTIONS) {
-            mStrategy.setText("Constant Proportions");
-        } else if (strategy == SimulationConstants.CoveredCallWriting) {
-            mStrategy.setText("Covered Call Writing");
-        } else if (strategy == SimulationConstants.StopLoss) {
-            mStrategy.setText("Stop loss");
-        } else if (strategy == SimulationConstants.CPPI) {
-            mStrategy.setText("CPPI");
-        }
-        mMultiplierContainer.setVisibility(strategy == SimulationConstants.CPPI ? View.VISIBLE : View.GONE);
-        mFloorContainer.setVisibility(strategy == SimulationConstants.CPPI ? View.VISIBLE : View.GONE);
-        mOptionPriceContainer.setVisibility(mSimulation.getOptionPrice() != 0 ? View.VISIBLE : View.GONE);
-        mStrikeContainer.setVisibility(mSimulation.getOptionPrice() != 0 ? View.VISIBLE : View.GONE);
 
         mSimulationType.setText(mSimulation.getType() == SimulationConstants.HISTORICAL_DATA ? "Historical data" : "Real time data");
-        mOptionPrice.setText(mSimulation.getOptionPrice() == 0 ? "N/A" : String.valueOf(mSimulation.getOptionPrice()));
-        mStrike.setText(mSimulation.getStrike() == 0 ? "N/A" : String.valueOf(mSimulation.getStrike()));
-        mFloor.setText(mSimulation.getCppiFloor() == 0 ? "N/A" : String.valueOf(mSimulation.getCppiFloor()));
-        mMultiplier.setText(mSimulation.getCppiMultiplier() == 0 ? "N/A" : String.valueOf(mSimulation.getCppiMultiplier()));
         mStartingBal.setText(String.valueOf(mSimulation.getBank()));
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
@@ -167,19 +134,22 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class CalculateHistoricalSimulationAsyncTask extends AsyncTask<Simulation, Void, List<Tick>[]> {
+    public class CalculateHistoricalSimulationAsyncTask extends AsyncTask<Simulation, Void, GraphData> {
         @Override
-        protected List<Tick>[] doInBackground(Simulation... params) {
+        protected GraphData doInBackground(Simulation... params) {
             Simulation simulation = params[0];
             String startDate = simulation.getStartDate();
             String endDate = simulation.getEndDate();
             String[] symbols = simulation.getSymbols();
             long simulationId = simulation.getId();
-            List<Tick>[] stockPrices = new ArrayList[symbols.length + 1];
+
+            List<List<Tick>> simulationTicks = new ArrayList<>();
+            List<List<Tick>> stockTicks = new ArrayList<>();
+
             List<String> dates = new ArrayList<>();
-            for (int i=0; i<symbols.length; i++) {
+            for (int i = 0; i < symbols.length; i++) {
                 String symbol = symbols[i];
-                stockPrices[i] = new ArrayList<Tick>();
+                stockTicks.add(new ArrayList<Tick>());
                 int dateCounter = 0;
                 try {
                     //String url = "https://quandl.com/api/v3/datasets/WIKI/" + symbol + ".csv?api_key=" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate + "&order=asc";
@@ -210,7 +180,7 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                         if (i != 0 && !date.equals(dates.get(dateCounter))) {
                             Log.v("SIMULATION date", date + " " + dates.get(dateCounter));
                             int dateIndex = -1;
-                            for (int d=dateCounter + 1; d < dates.size(); d++) {
+                            for (int d = dateCounter + 1; d < dates.size(); d++) {
                                 if (dates.get(d) == date) {
                                     dateIndex = d;
                                     break;
@@ -218,12 +188,11 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                             }
                             if (dateIndex < 0) {
                                 continue;
-                            }
-                            else {
-                                for (int d=dateCounter; d<dateIndex; d++) {
+                            } else {
+                                for (int d = dateCounter; d < dateIndex; d++) {
                                     Tick copyTick = new Tick(symbol, prevClose, dates.get(d), simulationId);
                                     copyTick.save();
-                                    stockPrices[i].add(copyTick);
+                                    stockTicks.get(i).add(copyTick);
                                     index++;
                                 }
                                 dateCounter = dateIndex;
@@ -232,8 +201,8 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                         // The stock prices are in reverse chronological order.
                         Tick tick = new Tick(symbol, prevClose, date, simulationId);
                         tick.save();
-                        stockPrices[i].add(tick);
-                        dateCounter ++;
+                        stockTicks.get(i).add(tick);
+                        dateCounter++;
                         index++;
                     }
 
@@ -242,61 +211,64 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                     return null;
                 }
             }
-            Log.v("SIMULATION #symbol", symbols.length + "");
-            String logNumTicks = "";
-            for (int i=0; i<stockPrices.length - 1; i++) {
-                logNumTicks += stockPrices[i].size() + ",";
+
+            SimulationStrategies strategies = simulation.getSimulationStrategies();
+            List<SimulationStrategies.StrategyPair> data = strategies.getData();
+
+            for (int i = 0; i < data.size(); i++) {
+                if (stockTicks.get(0).size() != 0) {
+                    List<Tick> portfolioTicks = PortfolioRebalanceUtil.calculatePortfolioValue(
+                            stockTicks, simulation.getWeights(), data.get(i).first,
+                            simulation.getBank(), simulation.getAccount(), 0, data.get(i).second.getFloor(),
+                            data.get(i).second.getMultiplier(), data.get(i).second.getOptionPrice(), data.get(i).second.getStrike()
+                    );
+                    simulationTicks.add(portfolioTicks);
+                }
             }
-            Log.v("SIMULATION #stock tick", logNumTicks);
-            // Perform rebalancing simulation
-            List<Tick> portfolioTicks = PortfolioRebalanceUtil.calculatePortfolioValue(
-                    stockPrices, simulation.getWeights(), simulation.getStrategy(),
-                    simulation.getBank(), simulation.getAccount(), 0, simulation.getCppiFloor(),
-                    simulation.getCppiMultiplier(), simulation.getOptionPrice(), simulation.getStrike()
-            );
-            stockPrices[symbols.length] = portfolioTicks;
-            Log.v("SIMULATION #port tick", stockPrices[symbols.length].size() +"");
-            return stockPrices;
+
+            return new GraphData(strategies, simulationTicks, stockTicks);
         }
 
         @Override
-        protected void onPostExecute(List<Tick>[] portfolioData) {
-            if (portfolioData != null) {
+        protected void onPostExecute(GraphData graphData) {
+            if (graphData != null) {
+                List<List<Tick>> stockTicks = graphData.getStockTicks();
+                List<List<Tick>> simulationTicks = graphData.getSimulationTicks();
 
-                int portfolioSize = portfolioData.length - 1;
-                int numTicks = portfolioData[0].size();
-                List<Tick> portfolioTicks = portfolioData[portfolioSize];
-
-                for (int i = 0; i < portfolioTicks.size(); i++) {
-                    Log.v("PORTFOLIO IS HERE", portfolioTicks.get(i).getPrice()+"");
-                }
+                int portfolioSize = stockTicks.size();
+                int numTicks = stockTicks.get(0).size();
 
                 List<String> xVals = new ArrayList<>();
                 for (int i = 0; i < numTicks; i++) {
-                    xVals.add(portfolioTicks.get(i).getDate());
+                    xVals.add(simulationTicks.get(0).get(i).getDate());
                 }
 
                 List<LineDataSet> portfolioSets = new ArrayList<>();
                 List<LineDataSet> stockSets = new ArrayList<>();
-                List<Entry> portfolioList = new ArrayList<>();
-                for (int i = 0; i < numTicks; i++) {
-                    portfolioList.add(new Entry((float) portfolioTicks.get(i).getPrice(), i));
+
+                for (int j = 0; j < simulationTicks.size(); j++) {
+                    List<Tick> simTicks = simulationTicks.get(j);
+                    List<Entry> portfolioList = new ArrayList<>();
+                    for (int i = 0; i < numTicks; i++) {
+                        portfolioList.add(new Entry((float) simTicks.get(i).getPrice(), i));
+                    }
+                    LineDataSet balanceSet = new LineDataSet(portfolioList, "Portfolio");
+                    balanceSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
+                    balanceSet.setCircleSize(2f);
+                    balanceSet.setDrawHorizontalHighlightIndicator(false);
+                    balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
+                    balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
+                    balanceSet.setDrawValues(false);
+                    portfolioSets.add(balanceSet);
                 }
-                LineDataSet balanceSet = new LineDataSet(portfolioList, "Portfolio");
-                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
-                balanceSet.setCircleSize(2f);
-                balanceSet.setDrawHorizontalHighlightIndicator(false);
-                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
-                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
-                balanceSet.setDrawValues(false);
-                portfolioSets.add(balanceSet);
+
                 // TODO: add a shared preference to allow users to customize number of stocks shown
                 int numStocksShown = portfolioSize > 5 ? 5 : portfolioSize;
                 for (int i = 0; i<numStocksShown; i++) {
                     List<Entry> stockEntryList = new ArrayList<>();
-                    String symbol = portfolioData[i].get(0).getSymbol();
+                    String symbol = stockTicks.get(i).get(0).getSymbol();
                     for (int j = 0; j < numTicks; j++) {
-                        stockEntryList.add(new Entry((float) portfolioData[i].get(j).getPrice(), j));
+                        stockEntryList.add(new Entry((float) stockTicks.get(i).get(j).getPrice(), j));
                     }
 
                     LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
@@ -314,9 +286,9 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                 mPortfolioChart.setData(new LineData(xVals, portfolioSets));
                 mPortfolioChart.animateXY(2000, 2000);
                 mPortfolioChart.invalidate();
-                if (portfolioTicks != null) {
-                    mTodayValue.setText(String.format("%.02f", portfolioTicks.get(portfolioTicks.size() - 1).getPrice()));
-                }
+                //if (portfolioTicks != null) {
+                //    mTodayValue.setText(String.format("%.02f", portfolioTicks.get(portfolioTicks.size() - 1).getPrice()));
+                //}
             }
             else {
                 Log.e("SIMULATION error", "Failed to fetch data!");

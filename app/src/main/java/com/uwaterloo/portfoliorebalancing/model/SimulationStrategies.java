@@ -5,6 +5,7 @@ package com.uwaterloo.portfoliorebalancing.model;
  */
 
 import android.support.v4.util.Pair;
+import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,9 +19,19 @@ import java.util.List;
 /**
  * This class houses all the data for the multiple strategies that a simulation has.
  */
-class SimulationStrategies implements Serializable {
+public class SimulationStrategies implements Serializable {
 
-    private static class StrategyData {
+    public class StrategyPair implements Serializable {
+        public Integer first;
+        public StrategyData second;
+
+        public StrategyPair(Integer f, StrategyData s) {
+            first = f;
+            second = s;
+        }
+    }
+
+    public static class StrategyData implements Serializable {
         private double floor;
         private double multiplier;
         private double optionPrice;
@@ -32,46 +43,55 @@ class SimulationStrategies implements Serializable {
             this.optionPrice = optionPrice;
             this.strike = strike;
         }
+
+        public double getFloor() {
+            return floor;
+        }
+
+        public double getMultiplier() {
+            return multiplier;
+        }
+
+        public double getOptionPrice() {
+            return optionPrice;
+        }
+
+        public double getStrike() {
+            return strike;
+        }
     }
 
-    private List<Pair<Integer, StrategyData>> data;
+    private List<StrategyPair> data;
 
     public SimulationStrategies(int strategy, double floor, double multiplier, double optionPrice, double strike) {
-        data = Collections.singletonList(new Pair<>(strategy, new StrategyData(floor, multiplier, optionPrice, strike)));
+        data = Collections.singletonList(new StrategyPair(strategy, new StrategyData(floor, multiplier, optionPrice, strike)));
     }
 
     public void addStrategy(int strategy, double floor, double multiplier, double optionPrice, double strike) {
-        data.add(new Pair<>(strategy, new StrategyData(floor, multiplier, optionPrice, strike)));
+        data.add(new StrategyPair(strategy, new StrategyData(floor, multiplier, optionPrice, strike)));
     }
 
-    public List<Pair<Integer, StrategyData>> getData() {
+    public List<StrategyPair> getData() {
         return data;
     }
 
-    /** Read the object from string. */
-    private static SimulationStrategies fromString(String serializedObject) throws IOException, ClassNotFoundException {
-        SimulationStrategies obj = null;
-        try {
-            byte b[] = serializedObject.getBytes();
-            ByteArrayInputStream bi = new ByteArrayInputStream(b);
-            ObjectInputStream si = new ObjectInputStream(bi);
-            obj = (SimulationStrategies) si.readObject();
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
-        return obj;
+    /** Read the object from Base64 string. */
+    public static SimulationStrategies fromString(String s) throws IOException ,
+            ClassNotFoundException {
+        byte [] data = Base64.decode(s, Base64.DEFAULT);
+        ObjectInputStream ois = new ObjectInputStream(
+                new ByteArrayInputStream(  data ) );
+        SimulationStrategies o  = (SimulationStrategies)ois.readObject();
+        ois.close();
+        return o;
     }
 
-    /** Write the object to a string. */
-    private static String toString(Serializable o) {
-        ByteArrayOutputStream bo =new ByteArrayOutputStream();
-        try {
-            ObjectOutputStream so = new ObjectOutputStream(bo);
-            so.writeObject(o);
-            so.flush();
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
-        return bo.toString();
+    /** Write the object to a Base64 string. */
+    public static String toString(Serializable o) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream( baos );
+        oos.writeObject(o);
+        oos.close();
+        return new String(Base64.encode(baos.toByteArray(), Base64.DEFAULT));
     }
 }
