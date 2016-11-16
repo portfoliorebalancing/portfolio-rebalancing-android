@@ -1,10 +1,20 @@
 package com.uwaterloo.portfoliorebalancing.model;
 
-import com.orm.SugarRecord;
+import android.util.Base64;
 
+import com.orm.SugarRecord;
+import com.uwaterloo.portfoliorebalancing.util.AppUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,7 +22,6 @@ import java.util.List;
  */
 public class Simulation extends SugarRecord<Simulation> {
     private int numStocks; // Number of stocks in portfolio
-    private int strategy; // Strategy (Ex. Constant Proportions)
     private int type; // Real time or historical
     private double account; // Amount of money in portfolio account
     private double bank; // Amount of money in bank
@@ -30,22 +39,49 @@ public class Simulation extends SugarRecord<Simulation> {
     private double optionPrice;
     private double strike;
 
+    /**
+     * This string holds a serialized version of a SimulationStrategies object
+     * @see SimulationStrategies
+     */
+    private String simulationStrategies;
+    private int strategy;
+
     public Simulation() {}
 
     // Constructor for backtest simulation
     //TODO: For now, just one stock per simulation.  Perhaps later, multiple stocks will be added to a simulation.
     //TODO: The code for this has been left intact.  However, we enforce that only one stock can be added to a simulation.
     //TODO: Note the use of constructors here.
-    public Simulation(String symbol, List<Double> ratios, int strategy, double bank, double money, String name) {
-        this(Collections.singletonList(symbol), ratios, strategy, bank, money, name);
+    public Simulation(String symbol, int strategy, int type, String name, double account, Date begin, Date end,
+                      double floor, double multiplier, double optionPrice, double strike) {
+        this(Collections.singletonList(symbol), Collections.singletonList(1.0d), strategy, type, name, account, begin, end,
+                floor, multiplier, optionPrice, strike);
     }
 
-    private Simulation(List<String> stockList, List<Double> ratios, int strategy, double bank, double money, String name) {
+    private Simulation(List<String> stockList, List<Double> ratios, int strategy, int type, String name, double account, Date begin, Date end,
+                       double floor, double multiplier, double optionPrice, double strike) {
+        if (end == null) {
+            realTime = true;
+        }
+
+        setName(name);
+        setAccount(account);
+        bank = account;
+        setStartDate(AppUtils.formatDate(begin));
+        setEndDate(AppUtils.formatDate(end));
+
+        setStrike(strike);
+        setOptionPrice(optionPrice);
+
+        setCppiFloor(floor);
+        setCppiMultiplier(multiplier);
+
+        setType(type);
+
         numStocks = stockList.size();
         for (Double d: ratios) {
             totalWeight += d;
         }
-        this.account = money;
 
         StringBuilder weightStringBuilder = new StringBuilder();
         StringBuilder idStringBuilder = new StringBuilder();
@@ -56,8 +92,6 @@ public class Simulation extends SugarRecord<Simulation> {
         this.symbols = idStringBuilder.toString();
         this.weights = weightStringBuilder.toString();
 
-        this.bank = bank;
-        this.strategy = strategy;
         this.name = name;
 
         this.cppiFloor = 0;

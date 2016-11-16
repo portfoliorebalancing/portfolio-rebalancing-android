@@ -23,8 +23,9 @@ import java.util.Date;
 
 public class SimulationSelectorActivity extends AppCompatActivity {
 
-    private FrameLayout frameLayout;
-    private Simulation simulation;
+    private String simulationStockSymbol;
+    private int simulationStrategy;
+    private int simulationType;
 
     public static final String SIMULATION_STRATEGY = "simulationStrategy";
 
@@ -33,7 +34,6 @@ public class SimulationSelectorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         View view = getLayoutInflater().inflate(R.layout.simulation_selector_activity, null);
-        frameLayout = (FrameLayout) view.findViewById(R.id.fragment_holder);
 
         setContentView(view);
 
@@ -49,7 +49,7 @@ public class SimulationSelectorActivity extends AppCompatActivity {
     }
 
     public void stockSelected(String symbol) {
-        simulation = new Simulation(symbol, Collections.singletonList(1.0d), 1, 10000, 10000, "Simulation");
+        simulationStockSymbol = symbol;
         getSupportActionBar().setTitle("Pick Strategy");
         PickStrategySimulationFragment fragment = new PickStrategySimulationFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -59,8 +59,8 @@ public class SimulationSelectorActivity extends AppCompatActivity {
     }
 
     public void strategySelected(int strategy, int type) {
-        simulation.setStrategy(strategy);
-        simulation.setType(type);
+        simulationStrategy = strategy;
+        simulationType = type;
 
         if (type == SimulationConstants.HISTORICAL_DATA) {
             HistoricalSimulationFragment fragment = new HistoricalSimulationFragment();
@@ -91,37 +91,23 @@ public class SimulationSelectorActivity extends AppCompatActivity {
 
     public void infoSelectedHistorical(String name, double account, Date begin, Date end,
                                        double floor, double multiplier, double optionPrice, double strike) {
-        simulation.setName(name);
-        simulation.setAccount(account);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setEndDate(AppUtils.formatDate(end));
+        Simulation simulation = new Simulation(simulationStockSymbol, simulationStrategy, simulationType,
+                name, account, begin, end, floor, multiplier, optionPrice, strike);
 
-        simulation.setStrike(strike);
-        simulation.setOptionPrice(optionPrice);
+        simulation.save();
 
-        simulation.setCppiFloor(floor);
-        simulation.setCppiMultiplier(multiplier);
-
-        simulationCreated();
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(SimulationFragment.SIMULATION_ID, simulation.getId());
+        resultIntent.putExtra(SimulationFragment.SIMULATION_TYPE, simulation.getType());
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
     }
 
     public void infoSelectedRealTime(String name, double account, Date begin,
                                      double floor, double multiplier, double optionPrice, double strike) {
-        simulation.setName(name);
-        simulation.setAccount(account);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setRealTime(true);
+        Simulation simulation = new Simulation(simulationStockSymbol, simulationStrategy, simulationType,
+                name, account, begin, null, floor, multiplier, optionPrice, strike);
 
-        simulation.setCppiFloor(floor);
-        simulation.setCppiMultiplier(multiplier);
-
-        simulation.setStrike(strike);
-        simulation.setOptionPrice(optionPrice);
-
-        simulationCreated();
-    }
-
-    private void simulationCreated() {
         simulation.save();
 
         Intent resultIntent = new Intent();
