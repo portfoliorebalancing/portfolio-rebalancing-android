@@ -156,16 +156,7 @@ public class RealTimeSimulationFragment extends Fragment {
 
                 // TODO: Check if date is valid instead of matching regex
                 if (startDate.before(new Date()) && account > 0.0) {
-                    if (strategy == SimulationConstants.CPPI) {
-                        activity.infoSelectedRealTimeCppi(name, account, startDate, floorValue, multiplierValue);
-                    } else if (strategy == SimulationConstants.CoveredCallWriting || strategy == SimulationConstants.StopLoss) {
-                        activity.infoSelectedRealTimeStopLossCovered(name, account, startDate, optionPriceValue, strikeValue);
-                    } else {
-                        activity.infoSelectedRealTime(name, account, startDate);
-                    }
-
-
-                    activity.infoSelectedRealTime(name, account, startDate);
+                    activity.infoSelectedRealTime(name, account, startDate, floorValue, multiplierValue, optionPriceValue, strikeValue);
                 }
                 else if (account <= 0.0) {
                     errorMessage.setVisibility(View.VISIBLE);

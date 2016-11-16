@@ -188,7 +188,6 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                     int index = 0;
                     double prevClose = 0;
                     while (true) {
-                        System.out.println("Ehhhhhhhhhhhh");
                         String line = br.readLine();
                         if (line == null || line.equals("")) {
                             break;
@@ -216,7 +215,7 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                             }
                             else {
                                 for (int d=dateCounter; d<dateIndex; d++) {
-                                    Tick copyTick = new Tick(symbol, prevClose, dates.get(d), simulationId, index);
+                                    Tick copyTick = new Tick(symbol, prevClose, dates.get(d), simulationId);
                                     copyTick.save();
                                     stockPrices[i].add(copyTick);
                                     index++;
@@ -225,7 +224,7 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                             }
                         }
                         // The stock prices are in reverse chronological order.
-                        Tick tick = new Tick(symbol, prevClose, date, simulationId, index);
+                        Tick tick = new Tick(symbol, prevClose, date, simulationId);
                         tick.save();
                         stockPrices[i].add(tick);
                         dateCounter ++;

@@ -89,56 +89,15 @@ public class SimulationSelectorActivity extends AppCompatActivity {
         }
     }
 
-    public void infoSelectedHistoricalCppi(String name, double account, Date begin, Date end, double floor, double multiplier) {
+    public void infoSelectedHistorical(String name, double account, Date begin, Date end,
+                                       double floor, double multiplier, double optionPrice, double strike) {
         simulation.setName(name);
         simulation.setAccount(account);
-        simulation.setCppiFloor(floor);
-        simulation.setCppiMultiplier(multiplier);
-    //                            mSimulation.setBank(bank);
         simulation.setStartDate(AppUtils.formatDate(begin));
         simulation.setEndDate(AppUtils.formatDate(end));
 
-        simulationCreated();
-    }
-
-    public void infoSelectedHistoricalStopLossCovered(String name, double account, Date begin, Date end, double optionPrice, double strike) {
-        simulation.setName(name);
-        simulation.setAccount(account);
         simulation.setStrike(strike);
         simulation.setOptionPrice(optionPrice);
-        //                            mSimulation.setBank(bank);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setEndDate(AppUtils.formatDate(end));
-
-        simulationCreated();
-    }
-
-    public void infoSelectedHistorical(String name, double account, Date begin, Date end) {
-        simulation.setName(name);
-        simulation.setAccount(account);
-        //                            mSimulation.setBank(bank);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setEndDate(AppUtils.formatDate(end));
-
-        simulationCreated();
-    }
-
-    public void infoSelectedRealTime(String name, double account, Date begin) {
-        simulation.setName(name);
-        simulation.setAccount(account);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setLastDate(AppUtils.formatDate(begin));
-        simulation.setRealTime(true);
-
-        simulationCreated();
-    }
-
-    public void infoSelectedRealTimeCppi(String name, double account, Date begin, double floor, double multiplier) {
-        simulation.setName(name);
-        simulation.setAccount(account);
-        simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setLastDate(AppUtils.formatDate(begin));
-        simulation.setRealTime(true);
 
         simulation.setCppiFloor(floor);
         simulation.setCppiMultiplier(multiplier);
@@ -146,12 +105,15 @@ public class SimulationSelectorActivity extends AppCompatActivity {
         simulationCreated();
     }
 
-    public void infoSelectedRealTimeStopLossCovered(String name, double account, Date begin, double optionPrice, double strike) {
+    public void infoSelectedRealTime(String name, double account, Date begin,
+                                     double floor, double multiplier, double optionPrice, double strike) {
         simulation.setName(name);
         simulation.setAccount(account);
         simulation.setStartDate(AppUtils.formatDate(begin));
-        simulation.setLastDate(AppUtils.formatDate(begin));
         simulation.setRealTime(true);
+
+        simulation.setCppiFloor(floor);
+        simulation.setCppiMultiplier(multiplier);
 
         simulation.setStrike(strike);
         simulation.setOptionPrice(optionPrice);

@@ -174,7 +174,6 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
         @Override
         protected List<Tick>[] doInBackground(Simulation... params) {
             Simulation simulation = params[0];
-            String lastDate = simulation.getLastDate();
             String endDate = AppUtils.getCurrentDateString();
             Log.v("SIMULATION ENDDATE", endDate);
             String[] symbols = simulation.getSymbols();
@@ -182,34 +181,21 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
             List<Tick>[] stockPrices = new ArrayList[symbols.length + 1];
             List<String> dates = new ArrayList<>();
 
-            // Get all the existing data
-            if (lastDate != null && !lastDate.equals(mSimulation.getStartDate())) {
-                for (int i = 0; i < symbols.length; i++) {
-                    String symbol = symbols[i];
-                    String[] whereArgs = {simulationId + "", symbol};
-                    List<Tick> ticks = Tick.find(Tick.class, "simulation_id = ? and symbol = ?", whereArgs, null, "seq ASC", null);
-                    stockPrices[i] = ticks;
-                }
-                String[] portfolioWhereArgs = {simulationId + "", "portfolio"};
-                stockPrices[symbols.length] = Tick.find(Tick.class, "simulation_id = ? and symbol = ?", portfolioWhereArgs, null, "seq ASC", null);
+            for (int i = 0; i < symbols.length; i++) {
+                stockPrices[i] = new ArrayList<>();
             }
-            else {
-                for (int i = 0; i < symbols.length; i++) {
-                    stockPrices[i] = new ArrayList<>();
-                }
-            }
+
             for (int i=0; i<symbols.length; i++) {
                 String symbol = symbols[i];
                 int dateCounter = 0;
                 try {
-                    String url = "https://quandl.com/api/v3/datasets/WIKI/" + symbol + ".csv?api_key=" + API_KEY + "&start_date=" + lastDate + "&end_date=" + endDate + "&order=asc";
+                    String url = "https://quandl.com/api/v3/datasets/WIKI/" + symbol + ".csv?api_key=" + API_KEY + "&start_date=" + simulation.getStartDate() + "&end_date=" + endDate + "&order=asc";
                     Log.v("SIMULATION url", url);
                     URL quandl = new URL(url);
                     URLConnection connection = quandl.openConnection();
                     InputStreamReader is = new InputStreamReader(connection.getInputStream());
                     BufferedReader br = new BufferedReader(is);
                     String[] labels = br.readLine().split(",");
-                    int index = simulation.getLastTickIndex();
                     double prevClose = 0;
                     while (true) {
                         String line = br.readLine();
@@ -239,23 +225,19 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
                             }
                             else {
                                 for (int d=dateCounter; d<dateIndex; d++) {
-                                    Tick copyTick = new Tick(symbol, prevClose, dates.get(d), simulationId, index);
+                                    Tick copyTick = new Tick(symbol, prevClose, dates.get(d), simulationId);
                                     copyTick.save();
                                     stockPrices[i].add(copyTick);
-                                    index++;
                                 }
                                 dateCounter = dateIndex;
                             }
                         }
                         // The stock prices are in reverse chronological order.
-                        Tick tick = new Tick(symbol, prevClose, date, simulationId, index);
+                        Tick tick = new Tick(symbol, prevClose, date, simulationId);
                         tick.save();
                         stockPrices[i].add(tick);
                         dateCounter ++;
-                        index++;
                     }
-                    mSimulation.setLastTickIndex(index);
-                    mSimulation.setLastDate(endDate);
                     mSimulation.save();
                 } catch (IOException e) {
                     return null;

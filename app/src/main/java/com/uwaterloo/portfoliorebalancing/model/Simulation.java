@@ -14,7 +14,6 @@ public class Simulation extends SugarRecord<Simulation> {
     private int numStocks; // Number of stocks in portfolio
     private int strategy; // Strategy (Ex. Constant Proportions)
     private int type; // Real time or historical
-    private int lastTickIndex; // Index of the last tick in the simulation
     private double account; // Amount of money in portfolio account
     private double bank; // Amount of money in bank
     private double totalWeight; // Sum of all the weights (used for constant proportions)
@@ -23,11 +22,7 @@ public class Simulation extends SugarRecord<Simulation> {
     private String weights; // List of stock weights/ratios separated by commas (used for constant proportions)
     private String startDate; // Start date for the simulation
     private String endDate; // End date for the simulation
-    private String lastDate; // Last day the simulation has accounted for (used for real time simulations)
     private boolean realTime = false; // True if simulation is real time
-
-    private String balances;
-    private String timestamps;
 
     private double cppiFloor;
     private double cppiMultiplier;
@@ -60,21 +55,17 @@ public class Simulation extends SugarRecord<Simulation> {
         }
         this.symbols = idStringBuilder.toString();
         this.weights = weightStringBuilder.toString();
-        this.timestamps = startDate + ",";
 
         this.bank = bank;
         this.strategy = strategy;
         this.name = name;
 
-        this.balances = account + ",";
-        this.lastTickIndex = 1000000;
         this.cppiFloor = 0;
         this.cppiMultiplier = 0;
         this.optionPrice = 0;
         this.strike = 0;
     }
 
-    public void setLastTickIndex(int n) {lastTickIndex = n;}
     public void setRealTime(boolean b){ realTime = b; }
     public void setName(String n) { if (name.equals("")){return;} name = n; }
     public void setAccount(double n) { account = n; }
@@ -83,7 +74,6 @@ public class Simulation extends SugarRecord<Simulation> {
     public void setStrategy(int n) { strategy = n; }
     public void setStartDate(String date) { startDate = date;}
     public void setEndDate(String date) {endDate = date;}
-    public void setLastDate(String date) {lastDate = date;}
     public void setWeights(List<Double> ratios) {
         totalWeight = 0;
         for (Double d: ratios) {
@@ -112,31 +102,17 @@ public class Simulation extends SugarRecord<Simulation> {
     public boolean isRealTime() {return realTime;}
     public double getBank() {return bank;}
     public double getAccount() {return account;}
-    public int getLastTickIndex() {return lastTickIndex;}
     public int getStrategy() {return strategy;}
     public int getType() {return type;}
     public String getName() {return name;}
     public String getStartDate() {return startDate;}
     public String getEndDate() {return endDate;}
-    public String getLastDate() {return lastDate;}
     public String[] getSymbols() {
         return symbols.split(",");
     }
     public List<String> getSymbolsList() {
         String [] symbols = getSymbols();
         return new ArrayList<String>(Arrays.asList(symbols));
-    }
-    public float[] getFloatBalances() {
-        String [] arr = balances.split(",");
-        float [] balances = new float[arr.length];
-        for (int i=0; i<arr.length; i++) {
-            balances[i] = Float.parseFloat(arr[i]);
-        }
-        return balances;
-    }
-    public String[] getTimestamps() {
-        String [] ts = timestamps.split(",");
-        return ts;
     }
     public double[] getWeights() {
         String[] stringWeights = weights.split(",");

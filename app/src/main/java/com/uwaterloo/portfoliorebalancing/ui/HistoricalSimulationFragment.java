@@ -184,13 +184,7 @@ public class HistoricalSimulationFragment extends Fragment {
                 }
 
                 if (startDate.before(endDate) && account > 0.0) {
-                    if (strategy == SimulationConstants.CPPI) {
-                        activity.infoSelectedHistoricalCppi(name, account, startDate, endDate, floorValue, multiplierValue);
-                    } else if (strategy == SimulationConstants.CoveredCallWriting || strategy == SimulationConstants.StopLoss) {
-                        activity.infoSelectedHistoricalStopLossCovered(name, account, startDate, endDate, optionPriceValue, strikeValue);
-                    } else {
-                        activity.infoSelectedHistorical(name, account, startDate, endDate);
-                    }
+                    activity.infoSelectedHistorical(name, account, startDate, endDate, floorValue, multiplierValue, optionPriceValue, strikeValue);
                 }
                 else if (account <= 0.0){
                     errorMessage.setVisibility(View.VISIBLE);

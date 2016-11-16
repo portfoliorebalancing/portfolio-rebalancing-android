@@ -38,7 +38,7 @@ public class PortfolioRebalanceUtil {
             double [] shareSizes = new double [portfolioSize];
             if (startingIndex == 0) {
                 rebalance(strategy, portfolioValue, shareSizes, stockWeights, stockData, 0);
-                Tick start = new Tick("portfolio", portfolioValue, startDate, simulationId, 0);
+                Tick start = new Tick("portfolio", portfolioValue, startDate, simulationId);
                 start.save();
                 portfolioTicks.add(start);
                 startingIndex++;
@@ -51,7 +51,7 @@ public class PortfolioRebalanceUtil {
                 }
                 Log.v("PORTFOLIO VALUE", portfolioValue + "");
                 rebalance(strategy, portfolioValue, shareSizes, stockWeights, stockData, i);
-                Tick tick = new Tick("portfolio", portfolioValue, stockData[0].get(i).getDate(), simulationId, i);
+                Tick tick = new Tick("portfolio", portfolioValue, stockData[0].get(i).getDate(), simulationId);
                 tick.save();
                 portfolioTicks.add(tick);
             }
@@ -62,7 +62,7 @@ public class PortfolioRebalanceUtil {
 
             if (startingIndex == 0) {
                 bankValue = rebalance(strategy, portfolioValue, shareSizes, stockWeights, stockData, bankValue, 0, arg1, arg2);
-                Tick start = new Tick("portfolio", portfolioValue, startDate, simulationId, 0);
+                Tick start = new Tick("portfolio", portfolioValue, startDate, simulationId);
                 start.save();
                 portfolioTicks.add(start);
                 startingIndex++;
@@ -91,7 +91,7 @@ public class PortfolioRebalanceUtil {
                     }
                     portfolioValue += bankValue;
                 }
-                Tick tick = new Tick("portfolio", portfolioValue, stockData[0].get(i).getDate(), simulationId, i);
+                Tick tick = new Tick("portfolio", portfolioValue, stockData[0].get(i).getDate(), simulationId);
                 tick.save();
                 portfolioTicks.add(tick);
             }
@@ -105,7 +105,7 @@ public class PortfolioRebalanceUtil {
                     portfolioValue += shareSizes[j] * Math.min(strike, stockData[j].get(0).getPrice());
                 }
                 portfolioValue += bankValue;
-                Tick start = new Tick("portfolio", portfolioValue, startDate, simulationId, 0);
+                Tick start = new Tick("portfolio", portfolioValue, startDate, simulationId);
                 start.save();
                 portfolioTicks.add(start);
                 startingIndex++;
@@ -118,7 +118,7 @@ public class PortfolioRebalanceUtil {
                 }
                 portfolioValue += bankValue;
                 Log.v("PORTFOLIO VALUE", portfolioValue + "");
-                Tick tick = new Tick("portfolio", portfolioValue, stockData[0].get(i).getDate(), simulationId, i);
+                Tick tick = new Tick("portfolio", portfolioValue, stockData[0].get(i).getDate(), simulationId);
                 tick.save();
                 portfolioTicks.add(tick);
             }

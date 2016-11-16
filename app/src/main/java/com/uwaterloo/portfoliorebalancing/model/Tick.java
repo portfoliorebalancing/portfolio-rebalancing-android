@@ -12,7 +12,6 @@ public class Tick extends SugarRecord<Tick> implements Parcelable {
     private double price;
     private String symbol, timestamp;
     private long simulationId;
-    private int seq;
 
     public Tick() {}
 
@@ -22,15 +21,13 @@ public class Tick extends SugarRecord<Tick> implements Parcelable {
         this.timestamp = timestamp;
     }
 
-    public Tick(String symbol, double price, String timestamp, long simulationId, int seq) {
+    public Tick(String symbol, double price, String timestamp, long simulationId) {
         this.symbol = symbol;
         this.price = price;
         this.timestamp = timestamp;
         this.simulationId = simulationId;
-        this.seq = seq;
     }
 
-    public int getIndex(){return seq;}
     public String getSymbol() {return symbol;}
     public String getDate() {return timestamp;}
     public double getPrice() {return price;}
