@@ -26,12 +26,8 @@ public class Simulation extends SugarRecord<Simulation> {
     private String lastDate; // Last day the simulation has accounted for (used for real time simulations)
     private boolean realTime = false; // True if simulation is real time
 
-<<<<<<< HEAD
-    private String strategies; //List of strategy ints separated by commas.
-=======
     private String balances;
     private String timestamps;
->>>>>>> parent of a787e9a... Alter simulation model to only have one stock.  Alter simulation model to have multiple strategies, allow the user to select multiple strategies, and graph all the strategies on a single graph for comparison.
 
     private double cppiFloor;
     private double cppiMultiplier;
@@ -55,9 +51,7 @@ public class Simulation extends SugarRecord<Simulation> {
             totalWeight += d;
         }
         this.account = money;
-<<<<<<< HEAD
-        this.symbol = stock;
-=======
+
         StringBuilder weightStringBuilder = new StringBuilder();
         StringBuilder idStringBuilder = new StringBuilder();
         for (int i=0; i<numStocks; i++) {
@@ -67,15 +61,13 @@ public class Simulation extends SugarRecord<Simulation> {
         this.symbols = idStringBuilder.toString();
         this.weights = weightStringBuilder.toString();
         this.timestamps = startDate + ",";
->>>>>>> parent of a787e9a... Alter simulation model to only have one stock.  Alter simulation model to have multiple strategies, allow the user to select multiple strategies, and graph all the strategies on a single graph for comparison.
+
         this.bank = bank;
         this.strategy = strategy;
         this.name = name;
-<<<<<<< HEAD
-=======
+
         this.balances = account + ",";
         this.lastTickIndex = 1000000;
->>>>>>> parent of a787e9a... Alter simulation model to only have one stock.  Alter simulation model to have multiple strategies, allow the user to select multiple strategies, and graph all the strategies on a single graph for comparison.
         this.cppiFloor = 0;
         this.cppiMultiplier = 0;
         this.optionPrice = 0;

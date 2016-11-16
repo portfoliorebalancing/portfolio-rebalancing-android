@@ -274,11 +274,11 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                     portfolioList.add(new Entry((float) portfolioTicks.get(i).getPrice(), i));
                 }
                 LineDataSet balanceSet = new LineDataSet(portfolioList, "Portfolio");
-                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
                 balanceSet.setCircleSize(2f);
                 balanceSet.setDrawHorizontalHighlightIndicator(false);
-                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.portfolio_color));
-                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
+                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
                 balanceSet.setDrawValues(false);
                 portfolioSets.add(balanceSet);
                 // TODO: add a shared preference to allow users to customize number of stocks shown
@@ -289,32 +289,7 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                     for (int j = 0; j < numTicks; j++) {
                         stockEntryList.add(new Entry((float) portfolioData[i].get(j).getPrice(), j));
                     }
-<<<<<<< HEAD
-                    LineDataSet balanceSet = new LineDataSet(portfolioList, graph.first.toString());
-                    balanceSet.setColor(ContextCompat.getColor(mContext, mStockColors[i]));
-                    balanceSet.setCircleSize(2f);
-                    balanceSet.setDrawHorizontalHighlightIndicator(false);
-                    balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, mStockColors[i]));
-                    balanceSet.setCircleColor(ContextCompat.getColor(mContext, mStockColors[i]));
-                    balanceSet.setDrawValues(false);
-                    portfolioSets.add(balanceSet);
-                }
 
-                List<Entry> stockEntryList = new ArrayList<>();
-                String symbol = stockData.get(0).getSymbol();
-                for (int j = 0; j < numTicks; j++) {
-                    stockEntryList.add(new Entry((float) stockData.get(j).getPrice(), j));
-                }
-                LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
-                lineDataSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
-                lineDataSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
-                lineDataSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
-                lineDataSet.setCircleSize(2f);
-                lineDataSet.setDrawHorizontalHighlightIndicator(false);
-                lineDataSet.setDrawValues(false);
-                stockSets.add(lineDataSet);
-
-=======
                     LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
                     lineDataSet.setColor(ContextCompat.getColor(mContext, mStockColors[i]));
                     lineDataSet.setCircleColor(ContextCompat.getColor(mContext, mStockColors[i]));
@@ -324,7 +299,7 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                     lineDataSet.setDrawValues(false);
                     stockSets.add(lineDataSet);
                 }
->>>>>>> parent of a787e9a... Alter simulation model to only have one stock.  Alter simulation model to have multiple strategies, allow the user to select multiple strategies, and graph all the strategies on a single graph for comparison.
+
                 mStockChart.getAxisLeft().setSpaceTop(35f);
                 mStockChart.getAxisLeft().setSpaceBottom(35f);
                 mStockChart.setData(new LineData(xVals, stockSets));
