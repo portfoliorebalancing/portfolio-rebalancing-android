@@ -42,7 +42,7 @@ import java.util.List;
  * Created by joyce on 2016-07-21.
  */
 public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
-    private int[] mStockColors = {R.color.stock_color1, R.color.stock_color2, R.color.stock_color3,
+    private int[] mSimulationColors = {R.color.stock_color1, R.color.stock_color2, R.color.stock_color3,
             R.color.stock_color4, R.color.stock_color5, R.color.stock_color6};
     private final int STARTING_INDEX = 1000000;
     private final String API_KEY = "zrLZruHPruMca17gnA-z";
@@ -308,11 +308,11 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
                     portfolioList.add(new Entry((float) portfolioTicks.get(i).getPrice(), i));
                 }
                 LineDataSet balanceSet = new LineDataSet(portfolioList, "Portfolio");
-                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
                 balanceSet.setCircleSize(2f);
                 balanceSet.setDrawHorizontalHighlightIndicator(false);
-                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.portfolio_color));
-                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
+                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
                 balanceSet.setDrawValues(false);
                 portfolioSets.add(balanceSet);
                 // TODO: add a shared preference to allow users to customize number of stocks shown
@@ -324,9 +324,9 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
                         stockEntryList.add(new Entry((float) portfolioData[i].get(j).getPrice(), j));
                     }
                     LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
-                    lineDataSet.setColor(ContextCompat.getColor(mContext, mStockColors[i]));
-                    lineDataSet.setCircleColor(ContextCompat.getColor(mContext, mStockColors[i]));
-                    lineDataSet.setCircleColorHole(ContextCompat.getColor(mContext, mStockColors[i]));
+                    lineDataSet.setColor(ContextCompat.getColor(mContext, mSimulationColors[i]));
+                    lineDataSet.setCircleColor(ContextCompat.getColor(mContext, mSimulationColors[i]));
+                    lineDataSet.setCircleColorHole(ContextCompat.getColor(mContext, mSimulationColors[i]));
                     lineDataSet.setCircleSize(2f);
                     lineDataSet.setDrawHorizontalHighlightIndicator(false);
                     lineDataSet.setDrawValues(false);

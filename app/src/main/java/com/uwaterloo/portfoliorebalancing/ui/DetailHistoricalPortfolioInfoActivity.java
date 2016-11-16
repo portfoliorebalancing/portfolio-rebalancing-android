@@ -267,6 +267,10 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                 int numTicks = portfolioData[0].size();
                 List<Tick> portfolioTicks = portfolioData[portfolioSize];
 
+                for (int i = 0; i < portfolioTicks.size(); i++) {
+                    Log.v("PORTFOLIO IS HERE", portfolioTicks.get(i).getPrice()+"");
+                }
+
                 List<String> xVals = new ArrayList<>();
                 for (int i = 0; i < numTicks; i++) {
                     xVals.add(portfolioTicks.get(i).getDate());
@@ -279,11 +283,11 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                     portfolioList.add(new Entry((float) portfolioTicks.get(i).getPrice(), i));
                 }
                 LineDataSet balanceSet = new LineDataSet(portfolioList, "Portfolio");
-                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
                 balanceSet.setCircleSize(2f);
                 balanceSet.setDrawHorizontalHighlightIndicator(false);
-                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.portfolio_color));
-                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
+                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
                 balanceSet.setDrawValues(false);
                 portfolioSets.add(balanceSet);
                 // TODO: add a shared preference to allow users to customize number of stocks shown
@@ -294,6 +298,7 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                     for (int j = 0; j < numTicks; j++) {
                         stockEntryList.add(new Entry((float) portfolioData[i].get(j).getPrice(), j));
                     }
+
                     LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
                     lineDataSet.setColor(ContextCompat.getColor(mContext, mStockColors[i]));
                     lineDataSet.setCircleColor(ContextCompat.getColor(mContext, mStockColors[i]));
@@ -303,6 +308,7 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                     lineDataSet.setDrawValues(false);
                     stockSets.add(lineDataSet);
                 }
+
                 mPortfolioChart.getAxisLeft().setSpaceTop(30f);
                 mPortfolioChart.getAxisLeft().setSpaceBottom(30f);
                 mPortfolioChart.setData(new LineData(xVals, portfolioSets));

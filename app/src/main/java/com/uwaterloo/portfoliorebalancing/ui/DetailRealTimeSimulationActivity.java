@@ -293,11 +293,11 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
                     portfolioList.add(new Entry((float) portfolioTicks.get(i).getPrice(), i));
                 }
                 LineDataSet balanceSet = new LineDataSet(portfolioList, "Portfolio");
-                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                balanceSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
                 balanceSet.setCircleSize(2f);
                 balanceSet.setDrawHorizontalHighlightIndicator(false);
-                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.portfolio_color));
-                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.portfolio_color));
+                balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
+                balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
                 balanceSet.setDrawValues(false);
                 portfolioSets.add(balanceSet);
                 // TODO: add a shared preference to allow users to customize number of stocks shown
@@ -308,6 +308,7 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
                     for (int j = 0; j < numTicks; j++) {
                         stockEntryList.add(new Entry((float) portfolioData[i].get(j).getPrice(), j));
                     }
+
                     LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
                     lineDataSet.setColor(ContextCompat.getColor(mContext, mStockColors[i]));
                     lineDataSet.setCircleColor(ContextCompat.getColor(mContext, mStockColors[i]));
@@ -317,6 +318,7 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
                     lineDataSet.setDrawValues(false);
                     stockSets.add(lineDataSet);
                 }
+
                 mStockChart.getAxisLeft().setSpaceTop(35f);
                 mStockChart.getAxisLeft().setSpaceBottom(35f);
                 mStockChart.setData(new LineData(xVals, stockSets));
