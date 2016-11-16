@@ -51,6 +51,7 @@ public class Simulation extends SugarRecord<Simulation> {
             totalWeight += d;
         }
         this.account = money;
+
         StringBuilder weightStringBuilder = new StringBuilder();
         StringBuilder idStringBuilder = new StringBuilder();
         for (int i=0; i<numStocks; i++) {
@@ -60,9 +61,11 @@ public class Simulation extends SugarRecord<Simulation> {
         this.symbols = idStringBuilder.toString();
         this.weights = weightStringBuilder.toString();
         this.timestamps = startDate + ",";
+
         this.bank = bank;
         this.strategy = strategy;
         this.name = name;
+
         this.balances = account + ",";
         this.lastTickIndex = 1000000;
         this.cppiFloor = 0;
