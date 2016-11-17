@@ -1,10 +1,12 @@
 package com.uwaterloo.portfoliorebalancing.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -27,8 +29,10 @@ import com.uwaterloo.portfoliorebalancing.framework.SettingsActivity;
 import com.uwaterloo.portfoliorebalancing.model.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.SimulationStrategies;
+import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
 import com.uwaterloo.portfoliorebalancing.util.PortfolioRebalanceUtil;
+import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -133,7 +137,33 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton button = (FloatingActionButton)findViewById(R.id.add_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddStrategyActivity.class);
+                startActivityForResult(intent, AddStrategyActivity.ADD_STRATEGY);
+            }
+        });
+
         new CalculateHistoricalSimulationAsyncTask().execute(mSimulation);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (AddStrategyActivity.ADD_STRATEGY) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    int strategy = data.getIntExtra(AddStrategyActivity.STRATEGY, -1);
+                    if (strategy == SimulationConstants.CONSTANT_PROPORTIONS) {
+                        SimulationStrategy simulationStrategy = new SimulationStrategy(mSimulation, strategy, 0, 0, 0, 0);
+                        simulationStrategy.save();
+                    }
+                }
+                break;
+            }
+        }
     }
 
     @Override
@@ -243,15 +273,13 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                 }
             }
 
-            SimulationStrategies strategies = simulation.getSimulationStrategies();
-            List<SimulationStrategies.StrategyPair> data = strategies.getData();
-
-            for (int i = 0; i < data.size(); i++) {
-                if (stockTicks.get(0).size() != 0) {
+            List<SimulationStrategy> strategies = simulation.getSimulationStrategies();
+            if (stockTicks.get(0).size() != 0) {
+                for (SimulationStrategy strategy : strategies) {
                     List<Tick> portfolioTicks = PortfolioRebalanceUtil.calculatePortfolioValue(
-                            stockTicks, simulation.getWeights(), data.get(i).first,
-                            simulation.getBank(), simulation.getAccount(), 0, data.get(i).second.getFloor(),
-                            data.get(i).second.getMultiplier(), data.get(i).second.getOptionPrice(), data.get(i).second.getStrike()
+                            stockTicks, simulation.getWeights(), strategy.getStrategy(),
+                            simulation.getBank(), simulation.getAccount(), 0, strategy.getFloor(),
+                            strategy.getMultiplier(), strategy.getOptionPrice(), strategy.getStrike()
                     );
                     simulationTicks.add(portfolioTicks);
                 }

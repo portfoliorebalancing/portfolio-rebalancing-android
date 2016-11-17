@@ -20,8 +20,6 @@ import com.uwaterloo.portfoliorebalancing.MainActivity;
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
-import com.uwaterloo.portfoliorebalancing.ui.extra.ChangeStrategyDialogFragment;
-import com.uwaterloo.portfoliorebalancing.ui.extra.DividerItemDecoration;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ import java.util.List;
 /**
  * Created by yuweixu on 2015-10-19.
  */
-public class SimulationFragment extends Fragment implements SimulationDelegate {
+public class SimulationFragment extends Fragment {
     private SimulationAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private List<Simulation> simulationList;
@@ -83,7 +81,6 @@ public class SimulationFragment extends Fragment implements SimulationDelegate {
 
         simulationList = Simulation.listAll(Simulation.class);
         mAdapter = new SimulationAdapter(simulationList);
-        mAdapter.setDelegate(this);
         mRecyclerView.setAdapter(mAdapter);
 
         List<String> addTickList = new ArrayList<>();
@@ -123,15 +120,5 @@ public class SimulationFragment extends Fragment implements SimulationDelegate {
             mAdapter.setSimulationList(simulationList);
             mAdapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public boolean showChangeStrategyDialog(long id) {
-        Bundle args = new Bundle();
-        args.putLong("simulationId", id);
-        DialogFragment dialogFragment = new ChangeStrategyDialogFragment();
-        dialogFragment.setArguments(args);
-        dialogFragment.show(getActivity().getSupportFragmentManager(), "change_strategy");
-        return true;
     }
 }

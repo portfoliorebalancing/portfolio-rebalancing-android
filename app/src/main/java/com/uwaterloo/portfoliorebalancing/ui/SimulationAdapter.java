@@ -28,7 +28,6 @@ import java.util.List;
 public class SimulationAdapter extends RecyclerView.Adapter<SimulationAdapter.SimulationItemHolder> {
     private List<Simulation> mSimulationList;
     private Context mContext;
-    private SimulationDelegate mDelegate;
 
     public SimulationAdapter(List<Simulation> simulationList) {
         mSimulationList = simulationList;
@@ -112,18 +111,9 @@ public class SimulationAdapter extends RecyclerView.Adapter<SimulationAdapter.Si
         public void onCreateContextMenu(final ContextMenu menu,
                                         final View v, final ContextMenu.ContextMenuInfo menuInfo) {
             final int position = getPosition();
-            menu.add(0, v.getId(), 0, "Change strategy");
             menu.add(0, v.getId(), 0, "Delete");
 
             menu.getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    Simulation simulation = mSimulationList.get(position);
-                    return mDelegate.showChangeStrategyDialog(simulation.getId());
-                }
-            });
-
-            menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     Simulation simulation = mSimulationList.get(position);
@@ -136,12 +126,4 @@ public class SimulationAdapter extends RecyclerView.Adapter<SimulationAdapter.Si
             });
         }
     }
-
-    public void setDelegate(SimulationDelegate delegate) {
-        this.mDelegate = delegate;
-    }
-}
-
-interface SimulationDelegate {
-    boolean showChangeStrategyDialog(long id);
 }

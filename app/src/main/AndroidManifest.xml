@@ -33,6 +33,11 @@
             android:theme="@style/InfoPickerActivity"
             android:parentActivityName=".MainActivity">
         </activity>
+        <activity android:name=".ui.AddStrategyActivity"
+            android:label="Add Strategy"
+            android:theme="@style/InfoPickerActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
         <activity android:name=".ui.DetailHistoricalSimulationActivity"
             android:label="Simulation Details"
             android:launchMode="singleTop"
@@ -52,7 +57,7 @@
             android:parentActivityName=".ui.DetailRealTimeSimulationActivity" >
         </activity>
         <meta-data android:name="DATABASE" android:value="app.db" />
-        <meta-data android:name="VERSION" android:value="5" />
+        <meta-data android:name="VERSION" android:value="2" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.uwaterloo.portfoliorebalancing.model" />
     </application>

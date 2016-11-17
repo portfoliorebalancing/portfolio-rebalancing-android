@@ -27,6 +27,7 @@ import com.uwaterloo.portfoliorebalancing.framework.SettingsActivity;
 import com.uwaterloo.portfoliorebalancing.model.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.SimulationStrategies;
+import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
 import com.uwaterloo.portfoliorebalancing.util.AppUtils;
 import com.uwaterloo.portfoliorebalancing.util.PortfolioRebalanceUtil;
@@ -232,15 +233,13 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
                 }
             }
 
-            SimulationStrategies strategies = simulation.getSimulationStrategies();
-            List<SimulationStrategies.StrategyPair> data = strategies.getData();
-
-            for (int i = 0; i < data.size(); i++) {
-                if (stockTicks.get(0).size() != 0) {
+            List<SimulationStrategy> strategies = simulation.getSimulationStrategies();
+            if (stockTicks.get(0).size() != 0) {
+                for (SimulationStrategy strategy : strategies) {
                     List<Tick> portfolioTicks = PortfolioRebalanceUtil.calculatePortfolioValue(
-                            stockTicks, simulation.getWeights(), data.get(i).first,
-                            simulation.getBank(), simulation.getAccount(), 0, data.get(i).second.getFloor(),
-                            data.get(i).second.getMultiplier(), data.get(i).second.getOptionPrice(), data.get(i).second.getStrike()
+                            stockTicks, simulation.getWeights(), strategy.getStrategy(),
+                            simulation.getBank(), simulation.getAccount(), 0, strategy.getFloor(),
+                            strategy.getMultiplier(), strategy.getOptionPrice(), strategy.getStrike()
                     );
                     simulationTicks.add(portfolioTicks);
                 }

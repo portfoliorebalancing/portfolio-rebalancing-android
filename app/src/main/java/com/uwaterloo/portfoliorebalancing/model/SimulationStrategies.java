@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class SimulationStrategies implements Serializable {
 
-    public class StrategyPair implements Serializable {
+    public static class StrategyPair implements Serializable {
         public Integer first;
         public StrategyData second;
 
@@ -61,10 +62,10 @@ public class SimulationStrategies implements Serializable {
         }
     }
 
-    private List<StrategyPair> data;
+    private List<StrategyPair> data = new ArrayList<>();
 
     public SimulationStrategies(int strategy, double floor, double multiplier, double optionPrice, double strike) {
-        data = Collections.singletonList(new StrategyPair(strategy, new StrategyData(floor, multiplier, optionPrice, strike)));
+        data.add(new StrategyPair(strategy, new StrategyData(floor, multiplier, optionPrice, strike)));
     }
 
     public void addStrategy(int strategy, double floor, double multiplier, double optionPrice, double strike) {
@@ -76,11 +77,9 @@ public class SimulationStrategies implements Serializable {
     }
 
     /** Read the object from Base64 string. */
-    public static SimulationStrategies fromString(String s) throws IOException ,
-            ClassNotFoundException {
+    public static SimulationStrategies fromString(String s) throws IOException , ClassNotFoundException {
         byte [] data = Base64.decode(s, Base64.DEFAULT);
-        ObjectInputStream ois = new ObjectInputStream(
-                new ByteArrayInputStream(  data ) );
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
         SimulationStrategies o  = (SimulationStrategies)ois.readObject();
         ois.close();
         return o;

@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
+import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
 import com.uwaterloo.portfoliorebalancing.util.AppUtils;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
@@ -91,10 +92,11 @@ public class SimulationSelectorActivity extends AppCompatActivity {
 
     public void infoSelectedHistorical(String name, double account, Date begin, Date end,
                                        double floor, double multiplier, double optionPrice, double strike) {
-        Simulation simulation = new Simulation(simulationStockSymbol, simulationStrategy, simulationType,
-                name, account, begin, end, floor, multiplier, optionPrice, strike);
-
+        Simulation simulation = new Simulation(simulationStockSymbol, simulationType, name, account, begin, end);
         simulation.save();
+
+        SimulationStrategy strategy = new SimulationStrategy(simulation, simulationStrategy, floor, multiplier, optionPrice, strike);
+        strategy.save();
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra(SimulationFragment.SIMULATION_ID, simulation.getId());
@@ -105,10 +107,11 @@ public class SimulationSelectorActivity extends AppCompatActivity {
 
     public void infoSelectedRealTime(String name, double account, Date begin,
                                      double floor, double multiplier, double optionPrice, double strike) {
-        Simulation simulation = new Simulation(simulationStockSymbol, simulationStrategy, simulationType,
-                name, account, begin, null, floor, multiplier, optionPrice, strike);
-
+        Simulation simulation = new Simulation(simulationStockSymbol, simulationType, name, account, begin, null);
         simulation.save();
+
+        SimulationStrategy strategy = new SimulationStrategy(simulation, simulationStrategy, floor, multiplier, optionPrice, strike);
+        strategy.save();
 
         Intent resultIntent = new Intent();
         resultIntent.putExtra(SimulationFragment.SIMULATION_ID, simulation.getId());

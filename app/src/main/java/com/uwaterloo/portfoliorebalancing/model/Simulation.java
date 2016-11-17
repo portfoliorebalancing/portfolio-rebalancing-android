@@ -33,42 +33,19 @@ public class Simulation extends SugarRecord<Simulation> {
     private String endDate; // End date for the simulation
     private boolean realTime = false; // True if simulation is real time
 
-    private double cppiFloor;
-    private double cppiMultiplier;
-
-    private double optionPrice;
-    private double strike;
-
-    /**
-     * This string holds a serialized version of a SimulationStrategies object
-     * @see SimulationStrategies
-     */
-    private String simulationStrategies;
-
     public Simulation() {}
 
     // Constructor for backtest simulation
     //TODO: For now, just one stock per simulation.  Perhaps later, multiple stocks will be added to a simulation.
     //TODO: The code for this has been left intact.  However, we enforce that only one stock can be added to a simulation.
     //TODO: Note the use of constructors here.
-    public Simulation(String symbol, int strategy, int type, String name, double account, Date begin, Date end,
-                      double floor, double multiplier, double optionPrice, double strike) {
-        this(Collections.singletonList(symbol), Collections.singletonList(1.0d), strategy, type, name, account, begin, end,
-                floor, multiplier, optionPrice, strike);
+    public Simulation(String symbol, int type, String name, double account, Date begin, Date end) {
+        this(Collections.singletonList(symbol), Collections.singletonList(1.0d), type, name, account, begin, end);
     }
 
-    private Simulation(List<String> stockList, List<Double> ratios, int strategy, int type, String name, double account, Date begin, Date end,
-                       double floor, double multiplier, double optionPrice, double strike) {
+    private Simulation(List<String> stockList, List<Double> ratios, int type, String name, double account, Date begin, Date end) {
         if (end == null) {
             realTime = true;
-        }
-
-        SimulationStrategies strategies = new SimulationStrategies(strategy, floor, multiplier, optionPrice, strike);
-        simulationStrategies = null;
-        try {
-            simulationStrategies = SimulationStrategies.toString(strategies);
-        } catch (Exception e) {
-            System.out.println(e.toString());
         }
 
         setName(name);
@@ -78,12 +55,6 @@ public class Simulation extends SugarRecord<Simulation> {
         if (end != null) {
             setEndDate(AppUtils.formatDate(end));
         }
-
-        setStrike(strike);
-        setOptionPrice(optionPrice);
-
-        setCppiFloor(floor);
-        setCppiMultiplier(multiplier);
 
         setType(type);
 
@@ -102,21 +73,10 @@ public class Simulation extends SugarRecord<Simulation> {
         this.weights = weightStringBuilder.toString();
 
         this.name = name;
-
-        this.cppiFloor = 0;
-        this.cppiMultiplier = 0;
-        this.optionPrice = 0;
-        this.strike = 0;
     }
 
-    public SimulationStrategies getSimulationStrategies() {
-        SimulationStrategies retVal = null;
-        try {
-            retVal = SimulationStrategies.fromString(simulationStrategies);
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
-        return retVal;
+    public List<SimulationStrategy> getSimulationStrategies() {
+        return SimulationStrategy.find(SimulationStrategy.class, "simulation = ?", String.valueOf(getId()));
     }
 
     public void setRealTime(boolean b){ realTime = b; }
@@ -137,19 +97,6 @@ public class Simulation extends SugarRecord<Simulation> {
         }
         weights = weightStringBuilder.toString();
     }
-    public void setCppiFloor(double cppiFloor) {
-        this.cppiFloor = cppiFloor;
-    }
-    public void setCppiMultiplier(double cppiMultiplier) {
-        this.cppiMultiplier = cppiMultiplier;
-    }
-    public void setOptionPrice(double optionPrice) {
-        this.optionPrice = optionPrice;
-    }
-    public void setStrike(double strike) {
-        this.strike = strike;
-    }
-
 
     public boolean isRealTime() {return realTime;}
     public double getBank() {return bank;}
@@ -172,17 +119,5 @@ public class Simulation extends SugarRecord<Simulation> {
             weights[i] = Double.parseDouble(stringWeights[i]);
         }
         return weights;
-    }
-    public double getCppiFloor() {
-        return cppiFloor;
-    }
-    public double getCppiMultiplier() {
-        return cppiMultiplier;
-    }
-    public double getOptionPrice() {
-        return optionPrice;
-    }
-    public double getStrike() {
-        return strike;
     }
 }

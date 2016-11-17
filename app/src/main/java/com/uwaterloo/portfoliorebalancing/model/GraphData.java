@@ -8,18 +8,18 @@ import java.util.List;
 
 public class GraphData {
     //For each simulation strategy, there is a List<Tick> for the graph
-    private SimulationStrategies simulationStrategies;
+    private List<SimulationStrategy> simulationStrategies;
     private List<List<Tick>> simulationTicks;
 
     private List<List<Tick>> stockTicks;
 
-    public GraphData(SimulationStrategies strategies, List<List<Tick>> simTicks, List<List<Tick>> sTicks) {
+    public GraphData(List<SimulationStrategy> strategies, List<List<Tick>> simTicks, List<List<Tick>> sTicks) {
         simulationStrategies = strategies;
         simulationTicks = simTicks;
         stockTicks = sTicks;
     }
 
-    public SimulationStrategies getSimulationStrategies() {
+    public List<SimulationStrategy> getSimulationStrategies() {
         return simulationStrategies;
     }
 
