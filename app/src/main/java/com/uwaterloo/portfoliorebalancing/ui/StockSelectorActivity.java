@@ -1,3 +1,4 @@
+
 package com.uwaterloo.portfoliorebalancing.ui;
 
 import android.app.Activity;
@@ -114,6 +115,13 @@ public class StockSelectorActivity extends AppCompatActivity {
 
             GradientDrawable bgShape = (GradientDrawable)circleItem.getBackground();
             bgShape.setColor(ContextCompat.getColor(getApplicationContext(), StockHelper.getColorResource(data.getSymbol())));
+
+            //In a list view, child views are recycled. Thus, we have to reset the background color accordingly.
+            if (stocksToAdd.contains(data.getSymbol())) {
+                convertView.setBackground(getResources().getDrawable(R.drawable.stock_item_selected_background));
+            } else {
+                convertView.setBackground(getResources().getDrawable(R.drawable.stock_item_background));
+            }
 
             return convertView;
         }
