@@ -7,16 +7,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.uwaterloo.portfoliorebalancing.R;
-import com.uwaterloo.portfoliorebalancing.model.Simulation;
-import com.uwaterloo.portfoliorebalancing.model.SimulationStrategies;
-import com.uwaterloo.portfoliorebalancing.util.AppUtils;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
-
-import java.util.Collections;
-import java.util.Date;
 
 /**
  * Created by lucas on 16/11/16.
@@ -26,6 +19,7 @@ public class AddStrategyActivity extends AppCompatActivity {
 
     private int simulationStrategy;
 
+    public static final String ADDED_STRATEGY = "strategyAdded";
     public static final int ADD_STRATEGY = 1003;
     public static final String STRATEGY = "addedStrategy";
     public static final String MULTIPLIER = "multiplier";
@@ -42,7 +36,6 @@ public class AddStrategyActivity extends AppCompatActivity {
         setContentView(view);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.add_button);
 
         getSupportActionBar().setTitle("Pick Strategy");
         AddStrategyFragment fragment = new AddStrategyFragment();
@@ -60,8 +53,29 @@ public class AddStrategyActivity extends AppCompatActivity {
             resultIntent.putExtra(STRATEGY, simulationStrategy);
             setResult(Activity.RESULT_OK, resultIntent);
             finish();
-        }
+        } else {
+            Bundle args = new Bundle();
+            args.putInt(ADDED_STRATEGY, simulationStrategy);
 
+            getSupportActionBar().setTitle("Select Strategy Info");
+            AddStrategyInfoFragment fragment = new AddStrategyInfoFragment();
+            fragment.setArguments(args);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+            transaction.replace(R.id.fragment_holder, fragment);
+            transaction.commit();
+        }
+    }
+
+    public void infoSelected(double floorValue, double multiplierValue, double optionPriceValue, double strikeValue) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(STRATEGY, simulationStrategy);
+        resultIntent.putExtra(FLOOR, floorValue);
+        resultIntent.putExtra(MULTIPLIER, multiplierValue);
+        resultIntent.putExtra(OPTION_PRICE, optionPriceValue);
+        resultIntent.putExtra(STRIKE, strikeValue);
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
     }
 
     @Override

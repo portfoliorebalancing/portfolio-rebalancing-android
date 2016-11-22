@@ -1,12 +1,13 @@
 package com.uwaterloo.portfoliorebalancing.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -26,7 +27,6 @@ import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.framework.SettingsActivity;
 import com.uwaterloo.portfoliorebalancing.model.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
-import com.uwaterloo.portfoliorebalancing.model.SimulationStrategies;
 import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
 import com.uwaterloo.portfoliorebalancing.util.AppUtils;
@@ -47,12 +47,14 @@ import java.util.List;
 public class DetailRealTimeSimulationActivity extends AppCompatActivity {
     private int[] mStockColors = {R.color.stock_color1, R.color.stock_color2, R.color.stock_color3,
             R.color.stock_color4, R.color.stock_color5, R.color.stock_color6};
-    private final int STARTING_INDEX = 1000000;
     private final String API_KEY = "zrLZruHPruMca17gnA-z";
     protected LineChart mStockChart, mPortfolioChart;
     protected Simulation mSimulation;
     protected Context mContext;
     protected boolean newSimulation;
+
+    private long simulationId;
+    private LinearLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,6 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_simulation_detail);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        long simulationId = -1;
         mContext = this;
 
         Intent intent = getIntent();
@@ -76,15 +77,30 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
         TextView nameView = (TextView) findViewById(R.id.simulation_name);
         nameView.setText(mSimulation.getName());
 
+        mainLayout = (LinearLayout) findViewById(R.id.layout);
+        setUpStockCharts();
+
+        FloatingActionButton button = (FloatingActionButton)findViewById(R.id.add_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddStrategyActivity.class);
+                startActivityForResult(intent, AddStrategyActivity.ADD_STRATEGY);
+            }
+        });
+    }
+
+    private void setUpStockCharts() {
+        mainLayout.removeAllViews();
+
         mStockChart = new LineChart(this);
-        LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
-        ll.addView(mStockChart);
+        mainLayout.addView(mStockChart);
 
         mStockChart.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f));
 
         mPortfolioChart = new LineChart(this);
-        ll.addView(mPortfolioChart);
+        mainLayout.addView(mPortfolioChart);
         mPortfolioChart.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f));
 
@@ -134,6 +150,28 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
         });
 
         new CalculateRealTimeSimulationAsyncTask().execute(mSimulation);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (AddStrategyActivity.ADD_STRATEGY) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    int strategy = data.getIntExtra(AddStrategyActivity.STRATEGY, 1);
+                    double floor = data.getDoubleExtra(AddStrategyActivity.FLOOR, 0);
+                    double multiplier = data.getDoubleExtra(AddStrategyActivity.MULTIPLIER, 0);
+                    double optionPrice = data.getDoubleExtra(AddStrategyActivity.OPTION_PRICE, 0);
+                    double strike = data.getDoubleExtra(AddStrategyActivity.STRIKE, 0);
+                    SimulationStrategy simulationStrategy = new SimulationStrategy(mSimulation, strategy, floor, multiplier, optionPrice, strike);
+                    simulationStrategy.save();
+
+                    //refresh the graphs because a new simulation has been created
+                    setUpStockCharts();
+                }
+                break;
+            }
+        }
     }
 
     @Override

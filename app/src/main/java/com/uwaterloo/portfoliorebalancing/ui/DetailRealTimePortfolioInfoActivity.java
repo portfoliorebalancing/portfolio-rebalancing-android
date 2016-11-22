@@ -26,7 +26,6 @@ import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.framework.SettingsActivity;
 import com.uwaterloo.portfoliorebalancing.model.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
-import com.uwaterloo.portfoliorebalancing.model.SimulationStrategies;
 import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
 import com.uwaterloo.portfoliorebalancing.util.AppUtils;

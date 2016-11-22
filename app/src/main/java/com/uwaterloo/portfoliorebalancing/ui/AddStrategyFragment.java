@@ -36,7 +36,7 @@ public class AddStrategyFragment extends Fragment {
         final RadioButton coveredCallRadio = (RadioButton)view.findViewById(R.id.covered_call_radio);
         final RadioButton stopLossRadio = (RadioButton)view.findViewById(R.id.stop_loss_radio);
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton)view.findViewById(R.id.next_button);
+        final FloatingActionButton floatingActionButton = (FloatingActionButton)view.findViewById(R.id.next_button);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +56,24 @@ public class AddStrategyFragment extends Fragment {
                 activity.strategySelected(strategy);
             }
         });
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (constantProportionsRadio.isChecked()) {
+                    floatingActionButton.setImageResource(R.drawable.check_mark);
+                } else {
+                    floatingActionButton.setImageResource(R.drawable.next_arrow);
+                }
+            }
+        };
+        constantProportionsRadio.setOnClickListener(listener);
+        cppiRadio.setOnClickListener(listener);
+        stopLossRadio.setOnClickListener(listener);
+        coveredCallRadio.setOnClickListener(listener);
+
+        //Constant proportions initially selected
+        floatingActionButton.setImageResource(R.drawable.check_mark);
 
         return view;
     }
