@@ -4,27 +4,21 @@ package com.uwaterloo.portfoliorebalancing.ui;
  * Created by lucas on 31/10/16.
  */
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.uwaterloo.portfoliorebalancing.R;
-import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
@@ -63,12 +57,6 @@ public class PickStockSimulationFragment extends Fragment {
                 stock = stockList.get(position).getSymbol();
                 selectedItem = position;
                 adapter.notifyDataSetChanged();
-
-//                View previousSelection = listView.getSelectedView();
-  //              previousSelection.setSelected(false);
-                //view.setBackground(getResources().getDrawable(R.drawable.stock_item_background));
-    //            view.setSelected(true);
-      //          view.setBackground(getResources().getDrawable(R.drawable.stock_item_selected_background));
             }
         });
         FloatingActionButton floatingActionButton = (FloatingActionButton)view.findViewById(R.id.next_button);
@@ -112,10 +100,9 @@ public class PickStockSimulationFragment extends Fragment {
             circleItem.setText(StockHelper.getFirstCharacter(data.getName()));
 
             GradientDrawable bgShape = (GradientDrawable)circleItem.getBackground();
-            bgShape.setColor(ContextCompat.getColor(getContext(), StockHelper.getColorResource(data.getSymbol())));
+            bgShape.setColor(ContextCompat.getColor(getContext(), StockHelper.getIndicatorColorResource(data.getSymbol())));
 
             if (position == selectedItem) {
-                convertView.setSelected(true);
                 convertView.setBackground(getResources().getDrawable(R.drawable.stock_item_selected_background));
             } else {
                 convertView.setBackground(getResources().getDrawable(R.drawable.stock_item_background));

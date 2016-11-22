@@ -6,12 +6,10 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +29,7 @@ import com.uwaterloo.portfoliorebalancing.model.Tick;
 import com.uwaterloo.portfoliorebalancing.util.AppUtils;
 import com.uwaterloo.portfoliorebalancing.util.PortfolioRebalanceUtil;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
+import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,9 +44,6 @@ import java.util.List;
  * Created by joyce on 2016-07-21.
  */
 public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
-    private int[] mSimulationColors = {R.color.stock_color1, R.color.stock_color2, R.color.stock_color3,
-            R.color.stock_color4, R.color.stock_color5, R.color.stock_color6};
-    private final int STARTING_INDEX = 1000000;
     private final String API_KEY = "zrLZruHPruMca17gnA-z";
     protected LineChart mPortfolioChart;
     protected Simulation mSimulation;
@@ -67,7 +63,6 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
         mContext = this;
 
         mSimulationType = (TextView) findViewById(R.id.simulation_type);
-        mTodayValue = (TextView) findViewById(R.id.simulation_today);
         mStartingBal = (TextView) findViewById(R.id.simulation_start_bal);
 
         Intent intent = getIntent();
@@ -230,6 +225,7 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
             if (graphData != null) {
                 List<List<Tick>> stockTicks = graphData.getStockTicks();
                 List<List<Tick>> simulationTicks = graphData.getSimulationTicks();
+                List<SimulationStrategy> strategyList = graphData.getSimulationStrategies();
 
                 int portfolioSize = stockTicks.size();
                 int numTicks = stockTicks.get(0).size();
@@ -253,12 +249,12 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
                     for (int i = 0; i < numTicks; i++) {
                         portfolioList.add(new Entry((float) simTicks.get(i).getPrice(), i));
                     }
-                    LineDataSet balanceSet = new LineDataSet(portfolioList, "Portfolio");
-                    balanceSet.setColor(ContextCompat.getColor(mContext, R.color.stock_color));
+                    LineDataSet balanceSet = new LineDataSet(portfolioList, SimulationConstants.getSimulationStrategyInfoShort(strategyList.get(j)));
+                    balanceSet.setColor(ContextCompat.getColor(mContext, StockHelper.getSimulationColorResource(j)));
+                    balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, StockHelper.getSimulationColorResource(j)));
+                    balanceSet.setCircleColor(ContextCompat.getColor(mContext, StockHelper.getSimulationColorResource(j)));
                     balanceSet.setCircleSize(2f);
                     balanceSet.setDrawHorizontalHighlightIndicator(false);
-                    balanceSet.setCircleColorHole(ContextCompat.getColor(mContext, R.color.stock_color));
-                    balanceSet.setCircleColor(ContextCompat.getColor(mContext, R.color.stock_color));
                     balanceSet.setDrawValues(false);
                     portfolioSets.add(balanceSet);
                 }
@@ -272,9 +268,9 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
                         stockEntryList.add(new Entry((float) stockTicks.get(i).get(j).getPrice(), j));
                     }
                     LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
-                    lineDataSet.setColor(ContextCompat.getColor(mContext, mSimulationColors[i]));
-                    lineDataSet.setCircleColor(ContextCompat.getColor(mContext, mSimulationColors[i]));
-                    lineDataSet.setCircleColorHole(ContextCompat.getColor(mContext, mSimulationColors[i]));
+                    lineDataSet.setColor(ContextCompat.getColor(mContext, StockHelper.getStockColorResource(i)));
+                    lineDataSet.setCircleColor(ContextCompat.getColor(mContext, StockHelper.getStockColorResource(i)));
+                    lineDataSet.setCircleColorHole(ContextCompat.getColor(mContext, StockHelper.getStockColorResource(i)));
                     lineDataSet.setCircleSize(2f);
                     lineDataSet.setDrawHorizontalHighlightIndicator(false);
                     lineDataSet.setDrawValues(false);
@@ -285,9 +281,6 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
                 mPortfolioChart.setData(new LineData(xVals, portfolioSets));
                 mPortfolioChart.animateXY(2000, 2000);
                 mPortfolioChart.invalidate();
-                //if (portfolioTicks != null) {
-                //    mTodayValue.setText(String.format("%.02f", portfolioTicks.get(portfolioTicks.size() - 1).getPrice()));
-                //}
             }
             else {
                 Log.e("SIMULATION error", "Failed to fetch data!");

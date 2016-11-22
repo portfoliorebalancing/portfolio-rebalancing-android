@@ -1,19 +1,15 @@
 package com.uwaterloo.portfoliorebalancing.ui;
 
-import android.app.Application;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.uwaterloo.portfoliorebalancing.R;
-import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
@@ -51,7 +47,7 @@ public class StockActivityItemHolder extends RecyclerView.ViewHolder implements 
         mCircleItem.setText(StockHelper.getFirstCharacter(stock.getName()));
 
         GradientDrawable bgShape = (GradientDrawable)mCircleItem.getBackground();
-        bgShape.setColor(ContextCompat.getColor(mContext, StockHelper.getColorResource(stock.getSymbol())));
+        bgShape.setColor(ContextCompat.getColor(mContext, StockHelper.getIndicatorColorResource(stock.getSymbol())));
     }
 
     public void setDelegate(StockActivityAdapter adapter) {

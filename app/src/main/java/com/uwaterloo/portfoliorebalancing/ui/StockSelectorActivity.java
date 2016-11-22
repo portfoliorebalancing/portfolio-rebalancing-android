@@ -114,7 +114,7 @@ public class StockSelectorActivity extends AppCompatActivity {
             circleItem.setText(StockHelper.getFirstCharacter(data.getName()));
 
             GradientDrawable bgShape = (GradientDrawable)circleItem.getBackground();
-            bgShape.setColor(ContextCompat.getColor(getApplicationContext(), StockHelper.getColorResource(data.getSymbol())));
+            bgShape.setColor(ContextCompat.getColor(getApplicationContext(), StockHelper.getIndicatorColorResource(data.getSymbol())));
 
             //In a list view, child views are recycled. Thus, we have to reset the background color accordingly.
             if (stocksToAdd.contains(data.getSymbol())) {

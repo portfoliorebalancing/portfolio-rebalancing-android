@@ -3,8 +3,6 @@ package com.uwaterloo.portfoliorebalancing.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -60,7 +58,7 @@ public class SimulationAdapter extends RecyclerView.Adapter<SimulationAdapter.Si
         holder.mCircleItem.setText(StockHelper.getFirstCharacter(simulation.getName()));
 
         GradientDrawable bgShape = (GradientDrawable)holder.mCircleItem.getBackground();
-        bgShape.setColor(ContextCompat.getColor(mContext, StockHelper.getColorResource(simulation.getName())));
+        bgShape.setColor(ContextCompat.getColor(mContext, StockHelper.getIndicatorColorResource(simulation.getName())));
     }
 
     @Override

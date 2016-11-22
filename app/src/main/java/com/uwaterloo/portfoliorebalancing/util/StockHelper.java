@@ -15,9 +15,12 @@ public class StockHelper {
             R.color.circle_color8, R.color.circle_color9, R.color.circle_color10, R.color.circle_color11,
             R.color.circle_color12, R.color.circle_color13, R.color.circle_color14, R.color.circle_color15};
 
+    private static int[] STOCK_COLORS = {R.color.stock_color1, R.color.stock_color2, R.color.stock_color3,
+            R.color.stock_color4, R.color.stock_color5, R.color.stock_color6};
+
     private static DecimalFormat decimalFormat = new DecimalFormat("#.00");
 
-    public static int getColorResource(String value) {
+    public static int getIndicatorColorResource(String value) {
         int counter = 0;
         for (int i = 0; i < value.length(); i++) {
             counter += value.charAt(i);
@@ -25,6 +28,14 @@ public class StockHelper {
         }
         counter = Math.abs(counter);
         return CIRCLE_COLORS[counter];
+    }
+
+    public static int getSimulationColorResource(int index) {
+        return CIRCLE_COLORS[index % CIRCLE_COLORS.length];
+    }
+
+    public static int getStockColorResource(int index) {
+        return STOCK_COLORS[index % STOCK_COLORS.length];
     }
 
     public static String formatDouble(double x) {
