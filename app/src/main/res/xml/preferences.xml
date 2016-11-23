@@ -6,7 +6,7 @@
     <PreferenceCategory
         android:title="Stocks">
         <ListPreference
-            android:defaultValue="alphabetical_name"
+            android:defaultValue="in_order_added"
             android:entries="@array/stock_ordering_preference"
             android:entryValues="@array/stock_ordering_preference_values"
             android:summary="%s"
@@ -14,11 +14,18 @@
             android:key="stock_ordering_portfolio" />
         <ListPreference
             android:defaultValue="alphabetical_name"
-            android:entries="@array/stock_ordering_preference"
-            android:entryValues="@array/stock_ordering_preference_values"
+            android:entries="@array/stock_ordering_selector_preference"
+            android:entryValues="@array/stock_ordering_selector_preference_values"
             android:summary="%s"
             android:title="Stock Ordering in Selector"
             android:key="stock_ordering_selector" />
+        <ListPreference
+            android:defaultValue="nyse"
+            android:entries="@array/stock_market_preference"
+            android:entryValues="@array/stock_market_preference_values"
+            android:summary="%s"
+            android:title="Stock Market"
+            android:key="stock_market"/>
         <!--<android.support.v7.preference.CheckBoxPreference
             android:key="key3"
             android:title="CheckBox Preference"

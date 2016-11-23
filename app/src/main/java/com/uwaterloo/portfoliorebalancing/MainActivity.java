@@ -48,8 +48,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 getSupportActionBar().setTitle(mTitles[position]);
+                mStockActivityFragment.refresh();
+                mSimulationFragment.refresh();
             }
         });
+
+        //This tells the pager to not recreate fragments when we switch tabs.  We will refresh the
+        //fragments in a tab change (see above) to ensure that changed Preferences are persistent.
+        vpPager.setOffscreenPageLimit(3);
 
         tabLayout.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.light_blue));
         tabLayout.setSelectedTabIndicatorHeight(12);

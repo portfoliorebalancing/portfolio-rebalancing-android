@@ -20,9 +20,12 @@ import com.uwaterloo.portfoliorebalancing.MainActivity;
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
+import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -80,6 +83,13 @@ public class SimulationFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         simulationList = Simulation.listAll(Simulation.class);
+
+        //Based on preferences, sort the list in a particular way.
+        Comparator<Simulation> comparator = PreferenceHelper.getSimulationComparator(getContext());
+        if (comparator != null) {
+            Collections.sort(simulationList, comparator);
+        }
+
         mAdapter = new SimulationAdapter(simulationList);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -116,6 +126,13 @@ public class SimulationFragment extends Fragment {
 
     public void refresh() {
         simulationList = Simulation.listAll(Simulation.class);
+
+        //Based on preferences, sort the list in a particular way.
+        Comparator<Simulation> comparator = PreferenceHelper.getSimulationComparator(getContext());
+        if (comparator != null) {
+            Collections.sort(simulationList, comparator);
+        }
+
         if (mAdapter != null) {
             mAdapter.setSimulationList(simulationList);
             mAdapter.notifyDataSetChanged();

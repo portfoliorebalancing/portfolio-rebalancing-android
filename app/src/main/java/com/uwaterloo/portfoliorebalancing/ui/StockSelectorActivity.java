@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.uwaterloo.portfoliorebalancing.R;
+import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
 import java.io.BufferedReader;
@@ -29,6 +30,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -43,6 +46,12 @@ public class StockSelectorActivity extends AppCompatActivity {
     private StockSelectorAsyncTask loadData = null;
 
     private void showStocksInList() {
+        //Based on preferences, sort the list in a particular way.
+        Comparator<StockData> comparator = PreferenceHelper.getStockSelectorComparator(getApplicationContext());
+        if (comparator != null) {
+            Collections.sort(stockDataArrayList, comparator);
+        }
+
         findViewById(R.id.loading).setVisibility(View.GONE);
         listView.setAdapter(new StockSelectorAdapter(this, stockDataArrayList));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -60,15 +69,19 @@ public class StockSelectorActivity extends AppCompatActivity {
         });
     }
 
-    private class StockData {
+    public static class StockData {
         private String name;
         private String symbol;
-        private String price;
+        private double price;
 
         public StockData(String n, String s, String p) {
             name = n;
             symbol = s;
-            price = p;
+            try {
+                price = Double.parseDouble(p);
+            } catch (Exception e) {
+                price = 0.0;
+            }
         }
 
         public String getName() {
@@ -79,7 +92,7 @@ public class StockSelectorActivity extends AppCompatActivity {
             return symbol;
         }
 
-        public String getPrice() {
+        public double getPrice() {
             return price;
         }
     }
@@ -193,8 +206,10 @@ public class StockSelectorActivity extends AppCompatActivity {
         protected Integer doInBackground(String... params) {
             Integer result = 0;
             try {
-                //URL yahoo = new URL("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nasdaq&render=download");
-                URL yahoo = new URL("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nyse&render=download");
+                //Based on preferences, choose stock market in a particular way.
+                URL yahoo = new URL("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=" +
+                        PreferenceHelper.getStockMarketString(getApplicationContext()) + "&render=download");
+                //URL yahoo = new URL("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nyse&render=download");
                 URLConnection connection = yahoo.openConnection();
                 InputStreamReader is = new InputStreamReader(connection.getInputStream());
                 BufferedReader br = new BufferedReader(is);

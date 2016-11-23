@@ -2,7 +2,6 @@ package com.uwaterloo.portfoliorebalancing.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +19,7 @@ import com.uwaterloo.portfoliorebalancing.MainActivity;
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
+import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
 import java.io.BufferedReader;
@@ -31,6 +31,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -77,12 +79,15 @@ public class StockActivityFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         tickList = new ArrayList<>();
         List<String> addTickList = new ArrayList<>();
-        try {
-            stockList = Stock.listAll(Stock.class);
+
+        stockList = Stock.listAll(Stock.class);
+
+        //Based on preferences, sort the list in a particular way.
+        Comparator<Stock> comparator = PreferenceHelper.getStockComparator(getContext());
+        if (comparator != null) {
+            Collections.sort(stockList, comparator);
         }
-        catch (SQLiteException e) {
-            stockList = new ArrayList<>();
-        }
+
         DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         Date date = new Date();
         String timestamp = dateFormat.format(date);
@@ -107,9 +112,6 @@ public class StockActivityFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), StockSelectorActivity.class);
                 startActivityForResult(intent, STOCK_SELECTED);
-                //Log.v("STOCK LIST", Stock.listAll(Stock.class).toString());
-                //DialogFragment dialogFragment = new AddStockDialogFragment();
-                //dialogFragment.show(getActivity().getSupportFragmentManager(), "add_stock");
             }
         });
         return view;
@@ -243,7 +245,6 @@ public class StockActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer result) {
             if (result == 2) {
-                Toast.makeText(mainActivity, "Success", Toast.LENGTH_SHORT).show();
                 mAdapter.notifyDataSetChanged();
                 Log.v("Data Set Changed", "Notifying data set changed.");
             }
@@ -251,6 +252,21 @@ public class StockActivityFragment extends Fragment {
                 Toast.makeText(mainActivity, "Failure", Toast.LENGTH_SHORT).show();
                 Log.e("Stock Scraping Error", "Failed to fetch data!");
             }
+        }
+    }
+
+    public void refresh() {
+        stockList = Stock.listAll(Stock.class);
+
+        //Based on preferences, sort the list in a particular way.
+        Comparator<Stock> comparator = PreferenceHelper.getStockComparator(getContext());
+        if (comparator != null) {
+            Collections.sort(stockList, comparator);
+        }
+
+        if (mAdapter != null) {
+            mAdapter.setStockList(stockList);
+            mAdapter.notifyDataSetChanged();
         }
     }
 }

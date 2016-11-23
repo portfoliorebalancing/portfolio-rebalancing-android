@@ -2,13 +2,9 @@ package com.uwaterloo.portfoliorebalancing.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
@@ -28,9 +24,8 @@ public class StockActivityAdapter extends RecyclerView.Adapter<StockActivityItem
         mContext = context;
     }
 
-    public void updateStockList(List<Stock> stockList) {
-        mStockList = stockList;
-        notifyDataSetChanged();
+    public void setStockList(List<Stock> list) {
+        mStockList = list;
     }
 
     @Override

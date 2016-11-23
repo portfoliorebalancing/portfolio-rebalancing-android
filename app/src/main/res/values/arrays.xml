@@ -5,11 +5,24 @@
     </string-array>
 
     <string-array name="stock_ordering_preference">
+        <item>In Order Added</item>
         <item>Alphabetical by Name</item>
         <item>Alphabetical by Symbol</item>
         <item>Increasing by Price</item>
     </string-array>
     <string-array name="stock_ordering_preference_values">
+        <item>in_order_added</item>
+        <item>alphabetical_name</item>
+        <item>alphabetical_symbol</item>
+        <item>increasing_price</item>
+    </string-array>
+
+    <string-array name="stock_ordering_selector_preference">
+        <item>Alphabetical by Name</item>
+        <item>Alphabetical by Symbol</item>
+        <item>Increasing by Price</item>
+    </string-array>
+    <string-array name="stock_ordering_selector_preference_values">
         <item>alphabetical_name</item>
         <item>alphabetical_symbol</item>
         <item>increasing_price</item>
@@ -19,13 +32,13 @@
         <item>In Order Added</item>
         <item>Alphabetical by Name</item>
         <item>Alphabetical by Symbol</item>
-        <item>Increasing by Price</item>
+        <item>Increasing by Account Balance</item>
     </string-array>
     <string-array name="simulation_ordering_preference_values">
         <item>in_order_added</item>
         <item>alphabetical_name</item>
         <item>alphabetical_symbol</item>
-        <item>increasing_price</item>
+        <item>increasing_account_balance</item>
     </string-array>
 
     <string-array name="strategy_preference">
