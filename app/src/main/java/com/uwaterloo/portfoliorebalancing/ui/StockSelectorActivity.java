@@ -182,8 +182,7 @@ public class StockSelectorActivity extends AppCompatActivity {
             case android.R.id.home:
                 // click on 'up' button in the action bar, handle it here
                 stopLoadingStocks();
-                return super.onOptionsItemSelected(item);
-
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }

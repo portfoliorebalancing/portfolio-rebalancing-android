@@ -83,9 +83,7 @@ public class AddStrategyActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // click on 'up' button in the action bar, handle it here
-
-                return super.onOptionsItemSelected(item);
-
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }

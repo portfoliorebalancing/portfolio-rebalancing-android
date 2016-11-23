@@ -1,7 +1,5 @@
 package com.uwaterloo.portfoliorebalancing;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.uwaterloo.portfoliorebalancing.model.Stock;
 import com.uwaterloo.portfoliorebalancing.ui.PrefsFragment;
@@ -29,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private static StockActivityFragment mStockActivityFragment = new StockActivityFragment();
     private static SimulationFragment mSimulationFragment = new SimulationFragment();
     private static PrefsFragment mSettings = new PrefsFragment();
-    private static String TAB_INDEX = "mainActivityTabIndex";
-    private static String MY_PREFS_NAME = "myPreferences";
 
     private static int NUM_ITEMS = 3;
     private int[] mIcons = {R.layout.portfolio_tab_icon, R.layout.simulation_tab_icon, R.layout.custom_rebalancing_tab_icon};
@@ -45,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "On Create", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_main);
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
@@ -68,30 +62,8 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.getTabAt(i).setCustomView(myCustomIcon);
         }
 
-        /*if (savedInstanceState != null) {
-            Toast.makeText(this, "Not Null", Toast.LENGTH_SHORT).show();
-            int tabIndex = savedInstanceState.getInt(TAB_INDEX);
-            TabLayout.Tab tab = tabLayout.getTabAt(tabIndex);
-            tab.select();
-        }*/
-
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        int restoredText = prefs.getInt(TAB_INDEX, 0);
-        tabLayout.getTabAt(restoredText).select();
-
-        setUpActionBar(0);
-
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-    }
-
-    @Override
-    public void onPause() {
-        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-        editor.putInt(TAB_INDEX, tabLayout.getSelectedTabPosition());
-        editor.commit();
-
-        super.onPause();
     }
 
     /**

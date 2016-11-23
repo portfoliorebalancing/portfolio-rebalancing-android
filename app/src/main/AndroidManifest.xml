@@ -22,36 +22,29 @@
         </activity>
         <activity android:name=".ui.StockSelectorActivity"
             android:label="Stocks"
-            android:theme="@style/InfoPickerActivity"
-            android:parentActivityName=".MainActivity">
+            android:theme="@style/InfoPickerActivity">
         </activity>
         <activity android:name=".ui.SimulationSelectorActivity"
             android:label="Simulation Info"
-            android:theme="@style/InfoPickerActivity"
-            android:parentActivityName=".MainActivity">
+            android:theme="@style/InfoPickerActivity">
         </activity>
         <activity android:name=".ui.AddStrategyActivity"
             android:label="Add Strategy"
-            android:theme="@style/InfoPickerActivity"
-            android:parentActivityName=".MainActivity">
+            android:theme="@style/InfoPickerActivity">
         </activity>
         <activity android:name=".ui.DetailHistoricalSimulationActivity"
             android:label="Simulation Details"
-            android:launchMode="singleTop"
-            android:parentActivityName=".MainActivity" >
+            android:launchMode="singleTop">
         </activity>
         <activity android:name=".ui.DetailHistoricalPortfolioInfoActivity"
-            android:label="Portfolio Details"
-            android:parentActivityName=".ui.DetailHistoricalSimulationActivity" >
+            android:label="Portfolio Details">
         </activity>
         <activity android:name=".ui.DetailRealTimeSimulationActivity"
             android:label="Simulation Details"
-            android:launchMode="singleTop"
-            android:parentActivityName=".MainActivity" >
+            android:launchMode="singleTop">
         </activity>
         <activity android:name=".ui.DetailRealTimePortfolioInfoActivity"
-            android:label="Portfolio Details"
-            android:parentActivityName=".ui.DetailRealTimeSimulationActivity" >
+            android:label="Portfolio Details">
         </activity>
         <meta-data android:name="DATABASE" android:value="app.db" />
         <meta-data android:name="VERSION" android:value="8" />

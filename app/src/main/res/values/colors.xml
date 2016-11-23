@@ -29,7 +29,7 @@
     <color name="tab_icon_light_gray">#d6c8c8</color>
     <color name="backupaccent">#999292</color>
     <color name="stock_item_background_backup">#f1e9e9</color>
-    <color name="stock_item_background">#f9f4f4</color>
+    <color name="stock_item_background">#ffffff</color>
     <color name="stock_item_selected_background">#e6dede</color>
     <color name="stock_item_border">#dacdcd</color>
 

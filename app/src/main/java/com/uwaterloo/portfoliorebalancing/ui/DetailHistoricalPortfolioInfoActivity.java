@@ -268,4 +268,15 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // click on 'up' button in the action bar, handle it here
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
