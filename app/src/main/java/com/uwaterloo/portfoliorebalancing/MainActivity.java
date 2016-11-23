@@ -21,11 +21,9 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private MainPagerAdapter mViewPagerAdapter;
-
-    private static StockActivityFragment mStockActivityFragment = new StockActivityFragment();
-    private static SimulationFragment mSimulationFragment = new SimulationFragment();
-    private static PrefsFragment mSettings = new PrefsFragment();
+    private StockActivityFragment mStockActivityFragment = new StockActivityFragment();
+    private SimulationFragment mSimulationFragment = new SimulationFragment();
+    private PrefsFragment mSettings = new PrefsFragment();
 
     private static int NUM_ITEMS = 3;
     private int[] mIcons = {R.layout.portfolio_tab_icon, R.layout.simulation_tab_icon, R.layout.custom_rebalancing_tab_icon};
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             // This method will be invoked when a new page becomes selected.
             @Override
             public void onPageSelected(int position) {
-                setUpActionBar(position);
+                getSupportActionBar().setTitle(mTitles[position]);
             }
         });
 
@@ -59,32 +57,19 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(vpPager);
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             ImageView myCustomIcon = (ImageView) LayoutInflater.from(tabLayout.getContext()).inflate(mIcons[i], null);
+            int padding = 40;
+            myCustomIcon.setPadding(padding, padding, padding, padding);
             tabLayout.getTabAt(i).setCustomView(myCustomIcon);
         }
+
+        //First tab is originally selected
+        getSupportActionBar().setTitle(mTitles[0]);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
-    /**
-     * @param position The position of the currently selected tab.
-     */
-    public void setUpActionBar(int position) {
-        getSupportActionBar().setTitle(mTitles[position]);
-        for (int i = 0; i < tabLayout.getTabCount(); i++) {
-            ImageView view = (ImageView) tabLayout.getTabAt(i).getCustomView();
-            if (i == position) {
-                int padding = 40;//30
-                view.setPadding(padding, padding, padding, padding);
-            }
-            else {
-                int padding = 40;//50
-                view.setPadding(padding, padding, padding, padding);
-            }
-        }
-    }
-
-    public static class MainPagerAdapter extends FragmentPagerAdapter {
+    public class MainPagerAdapter extends FragmentPagerAdapter {
         public MainPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
