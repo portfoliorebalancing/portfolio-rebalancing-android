@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/root_title">
+
     <PreferenceCategory
-        android:title="@string/preferences"
-        android:key="pref_settings">
-    <ListPreference
-        android:key="pref_rebalancing_strategy"
-        android:title="@string/pref_rebalancing_strategy"
-        android:dialogTitle="@string/pref_rebalancing_strategy"
-        android:entries="@array/rebalancing_strategies"
-        android:defaultValue="@string/rebalancing_strategy"
-        />
+        android:title="@string/inline_preferences">
+
+        <ListPreference
+            android:defaultValue="popular"
+            android:entries="@array/entries_list_preference"
+            android:entryValues="@array/entryvalues_list_preference"
+            android:summary="%s"
+            android:title="Categories"
+            android:key="movies_key" />
+
+        <android.support.v7.preference.SwitchPreferenceCompat
+            android:key="key1"
+            android:title="Switch Preference"
+            android:summary="Switch Summary"
+            android:defaultValue="true" />
+
+        <android.support.v7.preference.EditTextPreference
+            android:key="key2"
+            android:title="EditText Preference"
+            android:summary="EditText Summary"
+            android:dialogMessage="Dialog Message"
+            android:defaultValue="Default value" />
+        <android.support.v7.preference.CheckBoxPreference
+            android:key="key3"
+            android:title="CheckBox Preference"
+            android:summary="CheckBox Summary"
+            android:defaultValue="true"/>
+
+        <CheckBoxPreference
+            android:key="checkbox_preference"
+            android:title="@string/title_checkbox_preference"
+            android:summary="@string/summary_checkbox_preference" />
+
+        <CheckBoxPreference
+            android:key="checkbox_preference2"
+            android:title="Hi"
+            android:summary="you knowwwww" />
+
+        <DropDownPreference
+            android:key="dropdown_preference"
+            android:title="@string/title_dropdown_preference"
+            android:summary="@string/summary_dropdown_preference"
+            android:entries="@array/entries_list_preference"
+            android:entryValues="@array/entryvalues_list_preference" />
+
     </PreferenceCategory>
+
+    <!--<PreferenceCategory
+        android:title="@string/dialog_based_preferences">
+
+        <EditTextPreference
+            android:key="edittext_preference"
+            android:title="@string/title_edittext_preference"
+            android:summary="@string/summary_edittext_preference"
+            android:dialogTitle="@string/dialog_title_edittext_preference" />
+
+        <ListPreference
+            android:key="list_preference"
+            android:title="@string/title_list_preference"
+            android:summary="@string/summary_list_preference"
+            android:entries="@array/entries_list_preference"
+            android:entryValues="@array/entryvalues_list_preference"
+            android:dialogTitle="@string/dialog_title_list_preference" />
+
+        <MultiSelectListPreference
+            android:key="multi_select_list_preference"
+            android:title="@string/title_multi_list_preference"
+            android:summary="@string/summary_multi_list_preference"
+            android:entries="@array/entries_list_preference"
+            android:entryValues="@array/entryvalues_list_preference"
+            android:dialogTitle="@string/dialog_title_multi_list_preference" />
+
+    </PreferenceCategory>-->
+
+
+
 </PreferenceScreen>

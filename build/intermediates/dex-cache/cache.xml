@@ -3,6 +3,15 @@
 
     <item
         is-multidex="false"
+        jar="/home/lucas/portfolio-rebalancing-android/app/build/intermediates/exploded-aar/com.android.support/preference-v14/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="963b911411d03e6cb87325cdc82c7c905ef0815f">
+        <dex dex="/home/lucas/portfolio-rebalancing-android/app/build/intermediates/pre-dexed/debug/com.android.support-preference-v14-24.0.0_128ccabab564fe160687bc1a2113fab425f77a7b.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/lucas/URAZip/ChengJi/portfolio-rebalancing-android-master/app/libs/mpandroidchartlibrary-2-1-5.jar"
         jumboMode="false"
         optimize="true"
@@ -81,6 +90,15 @@
         revision="22.0.1"
         sha1="516c03b21d50a644d538de0f0369c620989cd8f0">
         <dex dex="/home/lucas/URAZip/ChengJi/portfolio-rebalancing-android-master/app/build/intermediates/pre-dexed/debug/jsr305-2.0.1_1bcb93504830fafe83f163d41c44b30b705b99b6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/lucas/portfolio-rebalancing-android/app/build/intermediates/exploded-aar/com.android.support/preference-v7/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="495666f06bb939a73f6cd6452c704eeda809283d">
+        <dex dex="/home/lucas/portfolio-rebalancing-android/app/build/intermediates/pre-dexed/debug/com.android.support-preference-v7-24.0.0_5c2225ca7d7d4828b12b9af04f808555efd417cd.jar" />
     </item>
     <item
         is-multidex="false"

@@ -3,4 +3,14 @@
     <string-array name="rebalancing_strategies">
         <item>Constant Proportions</item>
     </string-array>
+    <string-array name="entries_list_preference">
+        <item>Hello</item>
+        <item>Sid</item>
+        <item>Kid</item>
+    </string-array>
+    <string-array name="entryvalues_list_preference">
+        <item>Hello1</item>
+        <item>Sid1</item>
+        <item>Kid1</item>
+    </string-array>
 </resources>

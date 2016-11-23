@@ -17,12 +17,21 @@
         <item name="colorPrimary">@color/light_blue</item>
         <item name="colorPrimaryDark">@color/medium_blue</item>
         <item name="colorAccent">@color/light_blue</item>
-        <item name="android:colorBackground">@color/background</item>
+        <item name="android:colorBackground">@color/stock_item_background</item>
 
         <item name="editTextStyle">@style/EditText</item>
         <item name="android:editTextStyle">@style/EditText</item>
 
         <item name="android:windowSoftInputMode">adjustPan</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="SettingsFragmentTheme" parent="PreferenceThemeOverlay">
+        <item name="colorPrimary">@color/light_blue</item>
+        <item name="colorPrimaryDark">@color/medium_blue</item>
+        <item name="colorAccent">@color/light_blue</item>
+        <item name="android:colorBackground">@color/stock_item_background</item>
     </style>
 
     <style name="InfoPickerActivity" parent="PortfolioRebalancing">

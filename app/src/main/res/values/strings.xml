@@ -19,4 +19,13 @@
     <string name="negative_account_balance_error">"Account balance must be greater than 0."</string>
     <string name="historical_date_error">"Start date must be before end date."</string>
     <string name="real_time_date_error">"Start date must be before current date."</string>
+
+    <string name="root_title">"Root title"</string>
+    <string name="inline_preferences">"Inline Preferences"</string>
+    <string name="title_checkbox_preference">"Title checkbox"</string>
+    <string name="summary_checkbox_preference">Summary checkbox</string>
+    <string name="title_dropdown_preference">"Title dropdown"</string>
+    <string name="summary_dropdown_preference">"Summary dropdown"</string>
+
+
 </resources>

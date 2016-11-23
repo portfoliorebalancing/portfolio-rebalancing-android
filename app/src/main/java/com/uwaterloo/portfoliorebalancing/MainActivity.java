@@ -11,14 +11,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.uwaterloo.portfoliorebalancing.framework.SettingsActivity;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
+import com.uwaterloo.portfoliorebalancing.ui.PrefsFragment;
 import com.uwaterloo.portfoliorebalancing.ui.SimulationFragment;
 import com.uwaterloo.portfoliorebalancing.ui.StockActivityFragment;
 
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static StockActivityFragment mStockActivityFragment = new StockActivityFragment();
     private static SimulationFragment mSimulationFragment = new SimulationFragment();
-    private static Fragment mSettings = new Fragment();
+    private static PrefsFragment mSettings = new PrefsFragment();
     private static String TAB_INDEX = "mainActivityTabIndex";
     private static String MY_PREFS_NAME = "myPreferences";
 
@@ -96,21 +94,6 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    /*@Override
-    public void onSaveInstanceState(Bundle outstate) {
-        //Toast.makeText(this, "Save State", Toast.LENGTH_SHORT).show();
-        outstate.putInt(TAB_INDEX, tabLayout.getSelectedTabPosition());
-        super.onSaveInstanceState(outstate);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle instate) {
-        Toast.makeText(this, "Restore State", Toast.LENGTH_SHORT).show();
-        int tabIndex = instate.getInt(TAB_INDEX);
-        tabLayout.getTabAt(tabIndex).select();
-        super.onRestoreInstanceState(instate);
-    }*/
-
     /**
      * @param position The position of the currently selected tab.
      */
@@ -127,29 +110,6 @@ public class MainActivity extends AppCompatActivity {
                 view.setPadding(padding, padding, padding, padding);
             }
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public static class MainPagerAdapter extends FragmentPagerAdapter {
