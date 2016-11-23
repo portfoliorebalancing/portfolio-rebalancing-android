@@ -3,14 +3,59 @@
     <string-array name="rebalancing_strategies">
         <item>Constant Proportions</item>
     </string-array>
-    <string-array name="entries_list_preference">
-        <item>Hello</item>
-        <item>Sid</item>
-        <item>Kid</item>
+
+    <string-array name="stock_ordering_preference">
+        <item>Alphabetical by Name</item>
+        <item>Alphabetical by Symbol</item>
+        <item>Increasing by Price</item>
     </string-array>
-    <string-array name="entryvalues_list_preference">
-        <item>Hello1</item>
-        <item>Sid1</item>
-        <item>Kid1</item>
+    <string-array name="stock_ordering_preference_values">
+        <item>alphabetical_name</item>
+        <item>alphabetical_symbol</item>
+        <item>increasing_price</item>
+    </string-array>
+
+    <string-array name="simulation_ordering_preference">
+        <item>In Order Added</item>
+        <item>Alphabetical by Name</item>
+        <item>Alphabetical by Symbol</item>
+        <item>Increasing by Price</item>
+    </string-array>
+    <string-array name="simulation_ordering_preference_values">
+        <item>in_order_added</item>
+        <item>alphabetical_name</item>
+        <item>alphabetical_symbol</item>
+        <item>increasing_price</item>
+    </string-array>
+
+    <string-array name="strategy_preference">
+        <item>Constant Proportions</item>
+        <item>CPPI</item>
+        <item>Covered Call Writing</item>
+        <item>Stop Loss</item>
+    </string-array>
+    <string-array name="strategy_preference_values">
+        <item>constant_proportions</item>
+        <item>cppi</item>
+        <item>covered_call_writing</item>
+        <item>stop_loss</item>
+    </string-array>
+
+    <string-array name="type_preference">
+        <item>Historical</item>
+        <item>Real Time</item>
+    </string-array>
+    <string-array name="type_preference_values">
+        <item>historical</item>
+        <item>real_time</item>
+    </string-array>
+
+    <string-array name="stock_market_preference">
+        <item>New York Stock Exchange</item>
+        <item>NASDAQ</item>
+    </string-array>
+    <string-array name="stock_market_preference_values">
+        <item>nyse</item>
+        <item>nasdaq</item>
     </string-array>
 </resources>

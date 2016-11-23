@@ -1,15 +1,11 @@
 package com.uwaterloo.portfoliorebalancing.ui;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 
 import com.uwaterloo.portfoliorebalancing.R;
-import com.uwaterloo.portfoliorebalancing.ui.extra.DividerItemDecoration;
 
 /**
  * Created by lucas on 22/11/16.

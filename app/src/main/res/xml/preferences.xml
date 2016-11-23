@@ -5,49 +5,67 @@
 
     <PreferenceCategory
         android:title="Stocks">
-
         <ListPreference
-            android:defaultValue="popular"
-            android:entries="@array/entries_list_preference"
-            android:entryValues="@array/entryvalues_list_preference"
+            android:defaultValue="alphabetical_name"
+            android:entries="@array/stock_ordering_preference"
+            android:entryValues="@array/stock_ordering_preference_values"
             android:summary="%s"
-            android:title="Categories"
-            android:key="movies_key" />
-
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:key="key1"
-            android:title="Switch Preference"
-            android:summary="Switch Summary"
-            android:defaultValue="true" />
-
-        <android.support.v7.preference.EditTextPreference
-            android:key="key2"
-            android:title="EditText Preference"
-            android:summary="EditText Summary"
-            android:dialogMessage="Dialog Message"
-            android:defaultValue="Default value" />
-        <android.support.v7.preference.CheckBoxPreference
+            android:title="Stock Ordering in Portfolio"
+            android:key="stock_ordering_portfolio" />
+        <ListPreference
+            android:defaultValue="alphabetical_name"
+            android:entries="@array/stock_ordering_preference"
+            android:entryValues="@array/stock_ordering_preference_values"
+            android:summary="%s"
+            android:title="Stock Ordering in Selector"
+            android:key="stock_ordering_selector" />
+        <!--<android.support.v7.preference.CheckBoxPreference
             android:key="key3"
             android:title="CheckBox Preference"
             android:summary="CheckBox Summary"
             android:defaultValue="true"/>
-
         <CheckBoxPreference
             android:key="checkbox_preference"
             android:title="@string/title_checkbox_preference"
             android:summary="@string/summary_checkbox_preference" />
-
         <CheckBoxPreference
             android:key="checkbox_preference2"
             android:title="Hi"
-            android:summary="you knowwwww" />
+            android:summary="you knowwwww" />-->
+    </PreferenceCategory>
 
-        <DropDownPreference
-            android:key="dropdown_preference"
-            android:title="@string/title_dropdown_preference"
-            android:summary="@string/summary_dropdown_preference"
-            android:entries="@array/entries_list_preference"
-            android:entryValues="@array/entryvalues_list_preference" />
+    <PreferenceCategory
+        android:title="Simulations">
+        <ListPreference
+            android:defaultValue="in_order_added"
+            android:entries="@array/simulation_ordering_preference"
+            android:entryValues="@array/simulation_ordering_preference_values"
+            android:summary="%s"
+            android:title="Simulation Ordering"
+            android:key="simulation_ordering"/>
 
+        <ListPreference
+            android:defaultValue="constant_proportions"
+            android:entries="@array/strategy_preference"
+            android:entryValues="@array/strategy_preference_values"
+            android:summary="%s"
+            android:title="Preferred Strategy"
+            android:key="preferred_strategy"/>
+
+        <ListPreference
+            android:defaultValue="historical"
+            android:entries="@array/type_preference"
+            android:entryValues="@array/type_preference_values"
+            android:summary="%s"
+            android:title="Preferred Type"
+            android:key="preferred_type"/>
+
+        <!--<EditTextPreference
+            android:inputType="number"
+            android:title="Preferred Multiplier"
+            android:summary="%s"
+            android:dialogMessage="Choose a decimal number."
+            android:defaultValue="2"
+            android:key="key2"/>-->
     </PreferenceCategory>
 </PreferenceScreen>
