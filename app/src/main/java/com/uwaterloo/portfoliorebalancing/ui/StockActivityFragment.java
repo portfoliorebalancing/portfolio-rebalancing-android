@@ -245,7 +245,7 @@ public class StockActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(Integer result) {
             if (result == 2) {
-                mAdapter.notifyDataSetChanged();
+                refresh();
                 Log.v("Data Set Changed", "Notifying data set changed.");
             }
             else if (result == 1){

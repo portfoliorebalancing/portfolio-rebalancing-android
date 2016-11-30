@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/list_view_border_width"
+    android:background="@drawable/list_view_border">
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"

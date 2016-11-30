@@ -40,13 +40,7 @@ public class SimulationFragment extends Fragment {
     public static final int SIMULATION_CREATED = 1;
     public static final String SIMULATION_ID = "newSimulationId";
     public static final String SIMULATION_TYPE = "newSimulationType";
-    //private List<Stock> stockList = new ArrayList<>();
 
-    /*public void onStockAdded() {
-        System.out.println("Stock Added Called with size" + stockList.size());
-        stockList = Stock.listAll(Stock.class);
-        System.out.println("Stock Added Called with size" + stockList.size());
-    }*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -103,18 +97,6 @@ public class SimulationFragment extends Fragment {
                 if (stockList.size() > 0) {
                     Intent intent = new Intent(getContext(), SimulationSelectorActivity.class);
                     startActivityForResult(intent, SIMULATION_CREATED);
-
-                    /*List<Double> ratios = new ArrayList<Double>();
-                    for (int i = 0; i < stockList.size(); i++) {
-                        ratios.add(1.0);
-                    }
-                    Simulation sim = new Simulation(ratios, 1, 10000, 10000, "Simulation");
-                    sim.save();
-                    Bundle args = new Bundle();
-                    args.putLong("simulationId", sim.getId());
-                    DialogFragment dialogFragment = new AddSimulationDialogFragment();
-                    dialogFragment.setArguments(args);
-                    dialogFragment.show(getActivity().getSupportFragmentManager(), "add_simulation");*/
                 } else {
                     Toast.makeText(getContext(), "Portfolio is currently empty.", Toast.LENGTH_SHORT).show();
                     Log.e("StockList", "Size is " + stockList.size());

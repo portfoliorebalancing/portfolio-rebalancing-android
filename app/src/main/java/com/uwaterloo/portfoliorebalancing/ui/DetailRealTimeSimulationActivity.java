@@ -86,6 +86,17 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
                 startActivityForResult(intent, AddStrategyActivity.ADD_STRATEGY);
             }
         });
+
+        FloatingActionButton zoomButton = (FloatingActionButton)findViewById(R.id.zoom_button);
+        zoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DetailRealTimePortfolioInfoActivity.class);
+                intent.putExtra("newSimulation", true);
+                intent.putExtra("simulationId", simulationId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setUpStockCharts() {
@@ -134,18 +145,6 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
         YAxis portfolioYAxis = mPortfolioChart.getAxisLeft();
         portfolioYAxis.setStartAtZero(false);
         portfolioYAxis.setDrawGridLines(false);
-
-        final long finalSimulationId = simulationId;
-        mPortfolioChart.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(mContext, DetailRealTimePortfolioInfoActivity.class);
-                intent.putExtra("newSimulation", true);
-                intent.putExtra("simulationId", finalSimulationId);
-                startActivity(intent);
-                return true;
-            }
-        });
 
         new CalculateRealTimeSimulationAsyncTask().execute(mSimulation);
     }

@@ -51,7 +51,6 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
     protected Context mContext;
     protected boolean newSimulation;
     private long simulationId;
-    protected Bundle mSavedBundle;
 
     private LinearLayout mainLayout;
 
@@ -79,12 +78,24 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
         mainLayout = (LinearLayout) findViewById(R.id.layout);
         setUpStockCharts();
 
-        FloatingActionButton button = (FloatingActionButton)findViewById(R.id.add_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addStrategyButton = (FloatingActionButton)findViewById(R.id.add_button);
+        addStrategyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddStrategyActivity.class);
                 startActivityForResult(intent, AddStrategyActivity.ADD_STRATEGY);
+            }
+        });
+
+        FloatingActionButton zoomButton = (FloatingActionButton)findViewById(R.id.zoom_button);
+        zoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DetailHistoricalPortfolioInfoActivity.class);
+                intent.putExtra("newSimulation", true);
+                intent.putExtra("simulationId", simulationId);
+                startActivity(intent);
+
             }
         });
     }
@@ -135,18 +146,6 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
         YAxis portfolioYAxis = mPortfolioChart.getAxisLeft();
         portfolioYAxis.setStartAtZero(false);
         portfolioYAxis.setDrawGridLines(false);
-
-        final long finalSimulationId = simulationId;
-        mPortfolioChart.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(mContext, DetailHistoricalPortfolioInfoActivity.class);
-                intent.putExtra("newSimulation", true);
-                intent.putExtra("simulationId", finalSimulationId);
-                startActivity(intent);
-                return true;
-            }
-        });
 
         new CalculateHistoricalSimulationAsyncTask().execute(mSimulation);
     }

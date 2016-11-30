@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingRight="85px"
+    android:paddingRight="1dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:paddingLeft="1dp"
@@ -19,7 +19,6 @@
         android:textAlignment="center"
         android:layout_gravity="center_vertical"
         android:gravity="center"
-        android:text="H"
         android:textColor="@color/white"
         android:textSize="20sp"/>
     <LinearLayout
@@ -39,7 +38,6 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="GOOG"
             android:id="@+id/symbol"
             android:textSize="@dimen/item_font_size"
             android:maxLines="1"
@@ -47,7 +45,6 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="$100"
             android:id="@+id/price"
             android:textSize="@dimen/item_font_size"
             android:maxLines="1"

@@ -3,7 +3,7 @@
     <item >
         <shape android:shape="rectangle">
             <stroke
-                android:width="0.5dp"
+                android:width="@dimen/list_view_border_width"
                 android:color="@color/background" />
         </shape>
     </item>

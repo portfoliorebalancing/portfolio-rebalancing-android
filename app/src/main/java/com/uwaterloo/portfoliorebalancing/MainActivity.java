@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private PrefsFragment mSettings = new PrefsFragment();
 
     private static int NUM_ITEMS = 3;
-    private int[] mIcons = {R.layout.portfolio_tab_icon, R.layout.simulation_tab_icon, R.layout.custom_rebalancing_tab_icon};
+    private int[] mIcons = {R.layout.portfolio_tab_icon, R.layout.simulation_tab_icon, R.layout.settings_tab_icon};
     private int[] mTitles = {R.string.portfolio, R.string.simulations, R.string.settings};
 
     private TabLayout tabLayout;
