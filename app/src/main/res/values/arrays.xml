@@ -48,10 +48,10 @@
         <item>Stop Loss</item>
     </string-array>
     <string-array name="strategy_preference_values">
-        <item>constant_proportions</item>
-        <item>cppi</item>
-        <item>covered_call_writing</item>
-        <item>stop_loss</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
 
     <string-array name="type_preference">
@@ -59,8 +59,8 @@
         <item>Real Time</item>
     </string-array>
     <string-array name="type_preference_values">
-        <item>historical</item>
-        <item>real_time</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
     <string-array name="stock_market_preference">

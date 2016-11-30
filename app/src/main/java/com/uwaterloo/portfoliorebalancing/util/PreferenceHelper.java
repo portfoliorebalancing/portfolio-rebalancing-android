@@ -16,6 +16,18 @@ import java.util.Comparator;
 
 public class PreferenceHelper {
 
+    public static int getPreferredType(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String preference = prefs.getString("preferred_type", "1");
+        return Integer.valueOf(preference);
+    }
+
+    public static int getPreferredStrategy(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String preference = prefs.getString("preferred_strategy", "1");
+        return Integer.valueOf(preference);
+    }
+
     public static Comparator<Stock> getStockComparator(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String preference = prefs.getString("stock_ordering_portfolio", "-1");

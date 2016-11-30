@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/root_title">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         android:title="Stocks">
@@ -26,19 +25,6 @@
             android:summary="%s"
             android:title="Stock Market"
             android:key="stock_market"/>
-        <!--<android.support.v7.preference.CheckBoxPreference
-            android:key="key3"
-            android:title="CheckBox Preference"
-            android:summary="CheckBox Summary"
-            android:defaultValue="true"/>
-        <CheckBoxPreference
-            android:key="checkbox_preference"
-            android:title="@string/title_checkbox_preference"
-            android:summary="@string/summary_checkbox_preference" />
-        <CheckBoxPreference
-            android:key="checkbox_preference2"
-            android:title="Hi"
-            android:summary="you knowwwww" />-->
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -52,7 +38,7 @@
             android:key="simulation_ordering"/>
 
         <ListPreference
-            android:defaultValue="constant_proportions"
+            android:defaultValue="1"
             android:entries="@array/strategy_preference"
             android:entryValues="@array/strategy_preference_values"
             android:summary="%s"
@@ -60,19 +46,11 @@
             android:key="preferred_strategy"/>
 
         <ListPreference
-            android:defaultValue="historical"
+            android:defaultValue="1"
             android:entries="@array/type_preference"
             android:entryValues="@array/type_preference_values"
             android:summary="%s"
             android:title="Preferred Type"
             android:key="preferred_type"/>
-
-        <!--<EditTextPreference
-            android:inputType="number"
-            android:title="Preferred Multiplier"
-            android:summary="%s"
-            android:dialogMessage="Choose a decimal number."
-            android:defaultValue="2"
-            android:key="key2"/>-->
     </PreferenceCategory>
 </PreferenceScreen>

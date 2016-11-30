@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.uwaterloo.portfoliorebalancing.R;
+import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
 /**
@@ -31,7 +32,6 @@ public class AddStrategyFragment extends Fragment {
         View view = inflater.inflate(R.layout.add_strategy_fragment, null);
 
         final RadioButton constantProportionsRadio = (RadioButton)view.findViewById(R.id.constant_proportions_radio);
-        //final RadioButton leveragedTwoTimesRadio = (RadioButton)view.findViewById(R.id.leveraged_two_times_radio);
         final RadioButton cppiRadio = (RadioButton)view.findViewById(R.id.cppi_radio);
         final RadioButton coveredCallRadio = (RadioButton)view.findViewById(R.id.covered_call_radio);
         final RadioButton stopLossRadio = (RadioButton)view.findViewById(R.id.stop_loss_radio);
@@ -43,8 +43,6 @@ public class AddStrategyFragment extends Fragment {
                 int strategy = 0, type = 0;
                 if (constantProportionsRadio.isChecked()) {
                     strategy = SimulationConstants.CONSTANT_PROPORTIONS;
-                    //} else if (leveragedTwoTimesRadio.isChecked()) {
-                    // set strategy
                 } else if (cppiRadio.isChecked()) {
                     strategy = SimulationConstants.CPPI;
                 } else if (coveredCallRadio.isChecked()) {
@@ -56,6 +54,29 @@ public class AddStrategyFragment extends Fragment {
                 activity.strategySelected(strategy);
             }
         });
+
+        //Based on preferences, select strategy.
+        int strategy = PreferenceHelper.getPreferredStrategy(getContext());
+        switch (strategy) {
+            case 1:
+                constantProportionsRadio.setChecked(true);
+                floatingActionButton.setImageResource(R.drawable.check_mark);
+                break;
+            case 2:
+                cppiRadio.setChecked(true);
+                floatingActionButton.setImageResource(R.drawable.next_arrow);
+                break;
+            case 3:
+                coveredCallRadio.setChecked(true);
+                floatingActionButton.setImageResource(R.drawable.next_arrow);
+                break;
+            case 4:
+                stopLossRadio.setChecked(true);
+                floatingActionButton.setImageResource(R.drawable.next_arrow);
+                break;
+            default:
+                break;
+        }
 
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -71,9 +92,6 @@ public class AddStrategyFragment extends Fragment {
         cppiRadio.setOnClickListener(listener);
         stopLossRadio.setOnClickListener(listener);
         coveredCallRadio.setOnClickListener(listener);
-
-        //Constant proportions initially selected
-        floatingActionButton.setImageResource(R.drawable.check_mark);
 
         return view;
     }

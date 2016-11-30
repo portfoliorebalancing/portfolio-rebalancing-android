@@ -38,11 +38,6 @@
                 android:layout_height="wrap_content"
                 android:text="Constant Proportions"
                 android:id="@id/constant_proportions_radio"/>
-            <!--<RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Leveraged Two Times Bull"
-                android:id="@+id/leveraged_two_times_radio"/>-->
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
