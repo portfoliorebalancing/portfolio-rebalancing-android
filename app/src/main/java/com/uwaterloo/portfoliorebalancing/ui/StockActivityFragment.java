@@ -239,6 +239,11 @@ public class StockActivityFragment extends Fragment {
                 Log.e("IOException", e.toString());
                 result = 1;
             }
+            catch (ArrayIndexOutOfBoundsException e) {
+                //The stock data was invalid. Fail gracefully.
+                Log.e("ArrayIndexOutOfBounds", e.toString());
+                result = 1;
+            }
             return result;
         }
 

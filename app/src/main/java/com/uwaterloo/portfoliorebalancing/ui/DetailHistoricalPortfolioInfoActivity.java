@@ -182,6 +182,10 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                     Log.e("IOException", e.toString());
                     return null;
                 }
+                catch (ArrayIndexOutOfBoundsException e) {
+                    Log.v("ArrayIndexOutOfBounds", e.toString());
+                    return null;
+                }
             }
 
             List<SimulationStrategy> strategies = simulation.getSimulationStrategies();

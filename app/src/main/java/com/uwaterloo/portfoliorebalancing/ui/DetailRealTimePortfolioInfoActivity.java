@@ -177,6 +177,11 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
                     }
                     mSimulation.save();
                 } catch (IOException e) {
+                    Log.e("IOException", e.toString());
+                    return null;
+                }
+                catch (ArrayIndexOutOfBoundsException e) {
+                    Log.v("ArrayIndexOutOfBounds", e.toString());
                     return null;
                 }
             }

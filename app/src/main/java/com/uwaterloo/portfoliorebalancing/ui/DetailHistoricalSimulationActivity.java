@@ -248,6 +248,10 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                     Log.v("IOException", e.toString());
                     return null;
                 }
+                catch (ArrayIndexOutOfBoundsException e) {
+                    Log.v("ArrayIndexOutOfBounds", e.toString());
+                    return null;
+                }
             }
 
             List<SimulationStrategy> strategies = simulation.getSimulationStrategies();

@@ -243,6 +243,10 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     return null;
                 }
+                catch (ArrayIndexOutOfBoundsException e) {
+                    Log.v("ArrayIndexOutOfBounds", e.toString());
+                    return null;
+                }
             }
 
             List<SimulationStrategy> strategies = simulation.getSimulationStrategies();
