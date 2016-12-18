@@ -6,10 +6,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +28,6 @@ import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -42,15 +38,24 @@ import java.util.List;
 /**
  * Created by joyce on 2016-07-21.
  */
-public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
+public class DetailRealTimePortfolioInfoActivity extends AsyncTaskActivity {
     private final String API_KEY = "zrLZruHPruMca17gnA-z";
     protected LineChart mPortfolioChart;
     protected Simulation mSimulation;
     protected Context mContext;
     protected boolean newSimulation;
     protected TextView mSimulationType;
-    protected TextView mTodayValue;
     protected TextView mStartingBal;
+
+    private CalculateRealTimeSimulationAsyncTask loadData = null;
+
+    @Override
+    protected void stopAsyncTask() {
+        if (loadData != null) {
+            loadData.cancel(true);
+            loadData = null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +109,8 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
         portfolioYAxis.setStartAtZero(false);
         portfolioYAxis.setDrawGridLines(false);
 
-        new CalculateRealTimeSimulationAsyncTask().execute(mSimulation);
+        loadData = new CalculateRealTimeSimulationAsyncTask();
+        loadData.execute(mSimulation);
     }
 
     public class CalculateRealTimeSimulationAsyncTask extends AsyncTask<Simulation, Void, GraphData> {
@@ -264,17 +270,6 @@ public class DetailRealTimePortfolioInfoActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(mContext, "Failed to fetch data!", Toast.LENGTH_SHORT);
                 toast.show();
             }
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // click on 'up' button in the action bar, handle it here
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }

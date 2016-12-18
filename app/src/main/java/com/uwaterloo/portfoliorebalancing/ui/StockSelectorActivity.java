@@ -9,10 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,7 +23,6 @@ import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -38,12 +35,20 @@ import java.util.List;
  * Created by lucas on 15/10/16.
  */
 
-public class StockSelectorActivity extends AppCompatActivity {
+public class StockSelectorActivity extends AsyncTaskActivity {
 
     private ListView listView;
     private ArrayList<String> stocksToAdd = new ArrayList<>();
     private ArrayList<StockData> stockDataArrayList = new ArrayList<>();
     private StockSelectorAsyncTask loadData = null;
+
+    @Override
+    protected void stopAsyncTask() {
+        if (loadData != null) {
+            loadData.cancel(true);
+            loadData = null;
+        }
+    }
 
     private void showStocksInList() {
         //Based on preferences, sort the list in a particular way.
@@ -151,7 +156,7 @@ public class StockSelectorActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stopLoadingStocks();
+                stopAsyncTask();
 
                 Intent resultIntent = new Intent();
                 resultIntent.putStringArrayListExtra(StockActivityFragment.STOCK_SYMBOLS, stocksToAdd);
@@ -168,39 +173,6 @@ public class StockSelectorActivity extends AppCompatActivity {
         loadData.execute();
     }
 
-    //This must be cancelled when leaving this activity.  Otherwise, it will continue to run in the
-    //background.  See onOptionsSelected() and onBackPressed() in this activity.
-    private void stopLoadingStocks() {
-        if (loadData != null) {
-            loadData.cancel(true);
-            loadData = null;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        stopLoadingStocks();
-        super.onBackPressed();
-    }
-
-    @Override
-    public void onDestroy() {
-        stopLoadingStocks();
-        super.onDestroy();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // click on 'up' button in the action bar, handle it here
-                stopLoadingStocks();
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     public class StockSelectorAsyncTask extends AsyncTask<String, Void, Integer> {
         @Override
         protected Integer doInBackground(String... params) {
@@ -209,7 +181,6 @@ public class StockSelectorActivity extends AppCompatActivity {
                 //Based on preferences, choose stock market in a particular way.
                 URL yahoo = new URL("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=" +
                         PreferenceHelper.getStockMarketString(getApplicationContext()) + "&render=download");
-                //URL yahoo = new URL("http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nyse&render=download");
                 URLConnection connection = yahoo.openConnection();
                 InputStreamReader is = new InputStreamReader(connection.getInputStream());
                 BufferedReader br = new BufferedReader(is);

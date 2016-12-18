@@ -6,10 +6,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +27,6 @@ import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -41,17 +37,24 @@ import java.util.List;
 /**
  * Created by joyce on 2016-07-20.
  */
-public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
-    private final int STARTING_INDEX = 1000000;
+public class DetailHistoricalPortfolioInfoActivity extends AsyncTaskActivity {
     private final String API_KEY = "zrLZruHPruMca17gnA-z";
     protected LineChart mPortfolioChart;
     protected Simulation mSimulation;
     protected Context mContext;
     protected boolean newSimulation;
     protected TextView mSimulationType;
-    protected TextView mTodayValue;
     protected TextView mStartingBal;
 
+    private CalculateHistoricalSimulationAsyncTask loadData = null;
+
+    @Override
+    protected void stopAsyncTask() {
+        if (loadData != null) {
+            loadData.cancel(true);
+            loadData = null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +106,8 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
         portfolioYAxis.setStartAtZero(false);
         portfolioYAxis.setDrawGridLines(false);
 
-        new CalculateHistoricalSimulationAsyncTask().execute(mSimulation);
+        loadData = new CalculateHistoricalSimulationAsyncTask();
+        loadData.execute(mSimulation);
     }
 
     public class CalculateHistoricalSimulationAsyncTask extends AsyncTask<Simulation, Void, GraphData> {
@@ -124,7 +128,6 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                 stockTicks.add(new ArrayList<Tick>());
                 int dateCounter = 0;
                 try {
-                    //String url = "https://quandl.com/api/v3/datasets/WIKI/" + symbol + ".csv?api_key=" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate + "&order=asc";
                     String url = "https://quandl.com/api/v3/datasets/WIKI/" + symbol + ".csv?api_key=" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate + "&order=asc";
 
                     Log.v("SIMULATION url", url);
@@ -263,17 +266,6 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(mContext, "Failed to fetch data!", Toast.LENGTH_SHORT);
                 toast.show();
             }
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // click on 'up' button in the action bar, handle it here
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }

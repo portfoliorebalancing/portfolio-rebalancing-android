@@ -8,9 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,7 +31,6 @@ import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -44,7 +41,7 @@ import java.util.List;
 /**
  * Created by yuweixu on 15-11-09.
  */
-public class DetailRealTimeSimulationActivity extends AppCompatActivity {
+public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
     private final String API_KEY = "zrLZruHPruMca17gnA-z";
     protected LineChart mStockChart, mPortfolioChart;
     protected Simulation mSimulation;
@@ -53,6 +50,17 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
 
     private long simulationId;
     private LinearLayout mainLayout;
+
+    private CalculateRealTimeSimulationAsyncTask loadData = null;
+
+    @Override
+    protected void stopAsyncTask() {
+        if (loadData != null) {
+            loadData.cancel(true);
+            loadData = null;
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +154,8 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
         portfolioYAxis.setStartAtZero(false);
         portfolioYAxis.setDrawGridLines(false);
 
-        new CalculateRealTimeSimulationAsyncTask().execute(mSimulation);
+        loadData = new CalculateRealTimeSimulationAsyncTask();
+        loadData.execute(mSimulation);
     }
 
     @Override
@@ -336,17 +345,6 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(mContext, "Failed to fetch data!", Toast.LENGTH_SHORT);
                 toast.show();
             }
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // click on 'up' button in the action bar, handle it here
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 }

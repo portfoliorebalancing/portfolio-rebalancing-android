@@ -251,6 +251,9 @@ public class StockActivityFragment extends Fragment {
             else if (result == 1){
                 Toast.makeText(mainActivity, "Failure", Toast.LENGTH_SHORT).show();
                 Log.e("Stock Scraping Error", "Failed to fetch data!");
+
+                //Some stocks might have been added successfully, so update list to show them.
+                refresh();
             }
         }
     }
