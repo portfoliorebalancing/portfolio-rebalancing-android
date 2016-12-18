@@ -6,7 +6,7 @@ import android.support.v7.preference.PreferenceManager;
 
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
-import com.uwaterloo.portfoliorebalancing.ui.StockSelectorActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.StockSelectorActivity;
 
 import java.util.Comparator;
 

@@ -1,4 +1,4 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +21,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.uwaterloo.portfoliorebalancing.R;
-import com.uwaterloo.portfoliorebalancing.model.GraphData;
+import com.uwaterloo.portfoliorebalancing.ui.PriceMarkerView;
+import com.uwaterloo.portfoliorebalancing.ui.activity.AddStrategyActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.AsyncTaskActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.DetailHistoricalPortfolioInfoActivity;
+import com.uwaterloo.portfoliorebalancing.util.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
 import com.uwaterloo.portfoliorebalancing.model.Tick;

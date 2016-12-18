@@ -1,15 +1,12 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +18,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.uwaterloo.portfoliorebalancing.R;
-import com.uwaterloo.portfoliorebalancing.model.GraphData;
+import com.uwaterloo.portfoliorebalancing.ui.PriceMarkerView;
+import com.uwaterloo.portfoliorebalancing.ui.activity.AsyncTaskActivity;
+import com.uwaterloo.portfoliorebalancing.util.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
-import com.uwaterloo.portfoliorebalancing.util.AppUtils;
 import com.uwaterloo.portfoliorebalancing.util.PortfolioRebalanceUtil;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
@@ -39,19 +37,18 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by yuweixu on 15-11-09.
+ * Created by joyce on 2016-07-20.
  */
-public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
+public class DetailHistoricalPortfolioInfoActivity extends AsyncTaskActivity {
     private final String API_KEY = "zrLZruHPruMca17gnA-z";
-    protected LineChart mStockChart, mPortfolioChart;
+    protected LineChart mPortfolioChart;
     protected Simulation mSimulation;
     protected Context mContext;
     protected boolean newSimulation;
+    protected TextView mSimulationType;
+    protected TextView mStartingBal;
 
-    private long simulationId;
-    private LinearLayout mainLayout;
-
-    private CalculateRealTimeSimulationAsyncTask loadData = null;
+    private CalculateHistoricalSimulationAsyncTask loadData = null;
 
     @Override
     protected void stopAsyncTask() {
@@ -61,14 +58,17 @@ public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simulation_detail);
+        setContentView(R.layout.activity_portfolio_detail);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        long simulationId = -1;
         mContext = this;
+
+        mSimulationType = (TextView) findViewById(R.id.simulation_type);
+        mStartingBal = (TextView) findViewById(R.id.simulation_start_bal);
 
         Intent intent = getIntent();
 
@@ -83,109 +83,41 @@ public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
         TextView nameView = (TextView) findViewById(R.id.simulation_name);
         nameView.setText(mSimulation.getName());
 
-        mainLayout = (LinearLayout) findViewById(R.id.layout);
-        setUpStockCharts();
+        mSimulationType.setText(mSimulation.getType() == SimulationConstants.HISTORICAL_DATA ? "Historical data" : "Real time data");
+        mStartingBal.setText(String.valueOf(mSimulation.getBank()));
 
-        FloatingActionButton button = (FloatingActionButton)findViewById(R.id.add_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddStrategyActivity.class);
-                startActivityForResult(intent, AddStrategyActivity.ADD_STRATEGY);
-            }
-        });
-
-        FloatingActionButton zoomButton = (FloatingActionButton)findViewById(R.id.zoom_button);
-        zoomButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, DetailRealTimePortfolioInfoActivity.class);
-                intent.putExtra("newSimulation", true);
-                intent.putExtra("simulationId", simulationId);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void setUpStockCharts() {
-        mainLayout.removeAllViews();
-
-        mStockChart = new LineChart(this);
-        mainLayout.addView(mStockChart);
-
-        mStockChart.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f));
-
+        LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
         mPortfolioChart = new LineChart(this);
-        mainLayout.addView(mPortfolioChart);
+        ll.addView(mPortfolioChart, 1);
         mPortfolioChart.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f));
 
-        PriceMarkerView mv = new PriceMarkerView(this, R.layout.price_marker_view);
-        mStockChart.setMarkerView(mv);
         PriceMarkerView mv2 = new PriceMarkerView(this, R.layout.price_marker_view);
         mPortfolioChart.setMarkerView(mv2);
 
-        // enable scaling and dragging
-        mStockChart.setDragEnabled(true);
-        mStockChart.setScaleEnabled(true);
-        //mStockChart.setScaleXEnabled(false);
-        mStockChart.setDrawGridBackground(false);
-        mStockChart.getAxisRight().setEnabled(false);
-        mStockChart.setBackgroundColor(Color.rgb(255, 255, 255));
         mPortfolioChart.setDragEnabled(true);
         mPortfolioChart.setScaleEnabled(true);
-        //mPortfolioChart.setScaleXEnabled(false);
         mPortfolioChart.setDrawGridBackground(false);
         mPortfolioChart.getAxisRight().setEnabled(false);
         mPortfolioChart.setBackgroundColor(Color.rgb(255, 255, 255));
 
-        XAxis xStockAxis = mStockChart.getXAxis();
-        xStockAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
         XAxis xPortfolioXAxis = mPortfolioChart.getXAxis();
         xPortfolioXAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        YAxis stockYAxis = mStockChart.getAxisLeft();
-        stockYAxis.setStartAtZero(false);
-        stockYAxis.setDrawGridLines(false);
 
         YAxis portfolioYAxis = mPortfolioChart.getAxisLeft();
         portfolioYAxis.setStartAtZero(false);
         portfolioYAxis.setDrawGridLines(false);
 
-        loadData = new CalculateRealTimeSimulationAsyncTask();
+        loadData = new CalculateHistoricalSimulationAsyncTask();
         loadData.execute(mSimulation);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (AddStrategyActivity.ADD_STRATEGY) : {
-                if (resultCode == Activity.RESULT_OK) {
-                    int strategy = data.getIntExtra(AddStrategyActivity.STRATEGY, 1);
-                    double floor = data.getDoubleExtra(AddStrategyActivity.FLOOR, 0);
-                    double multiplier = data.getDoubleExtra(AddStrategyActivity.MULTIPLIER, 0);
-                    double optionPrice = data.getDoubleExtra(AddStrategyActivity.OPTION_PRICE, 0);
-                    double strike = data.getDoubleExtra(AddStrategyActivity.STRIKE, 0);
-                    SimulationStrategy simulationStrategy = new SimulationStrategy(mSimulation, strategy, floor, multiplier, optionPrice, strike);
-                    simulationStrategy.save();
-
-                    //refresh the graphs because a new simulation has been created
-                    setUpStockCharts();
-                }
-                break;
-            }
-        }
-    }
-
-    public class CalculateRealTimeSimulationAsyncTask extends AsyncTask<Simulation, Void, GraphData> {
+    public class CalculateHistoricalSimulationAsyncTask extends AsyncTask<Simulation, Void, GraphData> {
         @Override
         protected GraphData doInBackground(Simulation... params) {
             Simulation simulation = params[0];
-            String endDate = AppUtils.getCurrentDateString();
-            Log.v("SIMULATION ENDDATE", endDate);
+            String startDate = simulation.getStartDate();
+            String endDate = simulation.getEndDate();
             String[] symbols = simulation.getSymbols();
             long simulationId = simulation.getId();
 
@@ -193,19 +125,20 @@ public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
             List<List<Tick>> stockTicks = new ArrayList<>();
 
             List<String> dates = new ArrayList<>();
-
-            for (int i=0; i<symbols.length; i++) {
-                stockTicks.add(new ArrayList<Tick>());
+            for (int i = 0; i < symbols.length; i++) {
                 String symbol = symbols[i];
+                stockTicks.add(new ArrayList<Tick>());
                 int dateCounter = 0;
                 try {
-                    String url = "https://quandl.com/api/v3/datasets/WIKI/" + symbol + ".csv?api_key=" + API_KEY + "&start_date=" + simulation.getStartDate() + "&end_date=" + endDate + "&order=asc";
+                    String url = "https://quandl.com/api/v3/datasets/WIKI/" + symbol + ".csv?api_key=" + API_KEY + "&start_date=" + startDate + "&end_date=" + endDate + "&order=asc";
+
                     Log.v("SIMULATION url", url);
                     URL quandl = new URL(url);
                     URLConnection connection = quandl.openConnection();
                     InputStreamReader is = new InputStreamReader(connection.getInputStream());
                     BufferedReader br = new BufferedReader(is);
                     String[] labels = br.readLine().split(",");
+                    int index = 0;
                     double prevClose = 0;
                     while (true) {
                         String line = br.readLine();
@@ -224,7 +157,7 @@ public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
                         if (i != 0 && !date.equals(dates.get(dateCounter))) {
                             Log.v("SIMULATION date", date + " " + dates.get(dateCounter));
                             int dateIndex = -1;
-                            for (int d=dateCounter + 1; d < dates.size(); d++) {
+                            for (int d = dateCounter + 1; d < dates.size(); d++) {
                                 if (dates.get(d) == date) {
                                     dateIndex = d;
                                     break;
@@ -232,12 +165,12 @@ public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
                             }
                             if (dateIndex < 0) {
                                 continue;
-                            }
-                            else {
-                                for (int d=dateCounter; d<dateIndex; d++) {
+                            } else {
+                                for (int d = dateCounter; d < dateIndex; d++) {
                                     Tick copyTick = new Tick(symbol, prevClose, dates.get(d), simulationId);
                                     copyTick.save();
                                     stockTicks.get(i).add(copyTick);
+                                    index++;
                                 }
                                 dateCounter = dateIndex;
                             }
@@ -246,9 +179,10 @@ public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
                         Tick tick = new Tick(symbol, prevClose, date, simulationId);
                         tick.save();
                         stockTicks.get(i).add(tick);
-                        dateCounter ++;
+                        dateCounter++;
+                        index++;
                     }
-                    mSimulation.save();
+
                 } catch (Exception e) {
                     Log.e("Exception", e.toString());
                     return null;
@@ -279,12 +213,6 @@ public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
 
                 int portfolioSize = stockTicks.size();
                 int numTicks = stockTicks.get(0).size();
-
-                if (numTicks == 0) {
-                    Toast toast = Toast.makeText(mContext, "No data available since start date!", Toast.LENGTH_SHORT);
-                    toast.show();
-                    return;
-                }
 
                 List<String> xVals = new ArrayList<>();
                 for (int i = 0; i < numTicks; i++) {
@@ -329,11 +257,6 @@ public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
                     stockSets.add(lineDataSet);
                 }
 
-                mStockChart.getAxisLeft().setSpaceTop(35f);
-                mStockChart.getAxisLeft().setSpaceBottom(35f);
-                mStockChart.setData(new LineData(xVals, stockSets));
-                mStockChart.animateXY(2000, 2000);
-                mStockChart.invalidate();
                 mPortfolioChart.getAxisLeft().setSpaceTop(30f);
                 mPortfolioChart.getAxisLeft().setSpaceBottom(30f);
                 mPortfolioChart.setData(new LineData(xVals, portfolioSets));

@@ -1,4 +1,4 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;

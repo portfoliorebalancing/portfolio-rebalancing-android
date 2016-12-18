@@ -1,4 +1,4 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.uwaterloo.portfoliorebalancing.R;
+import com.uwaterloo.portfoliorebalancing.ui.activity.AddStrategyActivity;
 import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
@@ -40,7 +41,7 @@ public class AddStrategyFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int strategy = 0, type = 0;
+                int strategy = 0;
                 if (constantProportionsRadio.isChecked()) {
                     strategy = SimulationConstants.CONSTANT_PROPORTIONS;
                 } else if (cppiRadio.isChecked()) {

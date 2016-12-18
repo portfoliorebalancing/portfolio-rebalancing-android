@@ -1,11 +1,9 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +11,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.uwaterloo.portfoliorebalancing.MainActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.MainActivity;
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
+import com.uwaterloo.portfoliorebalancing.ui.SimulationAdapter;
+import com.uwaterloo.portfoliorebalancing.ui.activity.SimulationSelectorActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.DetailHistoricalSimulationActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.DetailRealTimeSimulationActivity;
 import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 

@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
+import com.uwaterloo.portfoliorebalancing.ui.activity.DetailHistoricalSimulationActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.DetailRealTimeSimulationActivity;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 

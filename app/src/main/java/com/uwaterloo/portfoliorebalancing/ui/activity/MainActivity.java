@@ -1,4 +1,4 @@
-package com.uwaterloo.portfoliorebalancing;
+package com.uwaterloo.portfoliorebalancing.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -12,10 +12,11 @@ import android.view.LayoutInflater;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
-import com.uwaterloo.portfoliorebalancing.ui.PrefsFragment;
-import com.uwaterloo.portfoliorebalancing.ui.SimulationFragment;
-import com.uwaterloo.portfoliorebalancing.ui.StockActivityFragment;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.PrefsFragment;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.SimulationFragment;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.StockActivityFragment;
 
 import java.util.List;
 

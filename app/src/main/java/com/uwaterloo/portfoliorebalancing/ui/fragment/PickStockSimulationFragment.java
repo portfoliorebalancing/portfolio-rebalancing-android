@@ -1,4 +1,4 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.fragment;
 
 /**
  * Created by lucas on 31/10/16.
@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
+import com.uwaterloo.portfoliorebalancing.ui.activity.SimulationSelectorActivity;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
 import java.util.List;

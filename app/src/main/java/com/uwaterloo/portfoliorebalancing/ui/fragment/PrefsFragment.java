@@ -1,4 +1,4 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;

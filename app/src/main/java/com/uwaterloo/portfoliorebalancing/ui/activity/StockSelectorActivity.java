@@ -1,5 +1,5 @@
 
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.uwaterloo.portfoliorebalancing.R;
+import com.uwaterloo.portfoliorebalancing.ui.activity.AsyncTaskActivity;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.StockActivityFragment;
 import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 

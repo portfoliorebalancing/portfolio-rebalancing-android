@@ -1,12 +1,15 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +21,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.uwaterloo.portfoliorebalancing.R;
-import com.uwaterloo.portfoliorebalancing.model.GraphData;
+import com.uwaterloo.portfoliorebalancing.ui.PriceMarkerView;
+import com.uwaterloo.portfoliorebalancing.ui.activity.AddStrategyActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.AsyncTaskActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.DetailRealTimePortfolioInfoActivity;
+import com.uwaterloo.portfoliorebalancing.util.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
@@ -36,16 +43,17 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by joyce on 2016-07-21.
+ * Created by yuweixu on 15-11-09.
  */
-public class DetailRealTimePortfolioInfoActivity extends AsyncTaskActivity {
+public class DetailRealTimeSimulationActivity extends AsyncTaskActivity {
     private final String API_KEY = "zrLZruHPruMca17gnA-z";
-    protected LineChart mPortfolioChart;
+    protected LineChart mStockChart, mPortfolioChart;
     protected Simulation mSimulation;
     protected Context mContext;
     protected boolean newSimulation;
-    protected TextView mSimulationType;
-    protected TextView mStartingBal;
+
+    private long simulationId;
+    private LinearLayout mainLayout;
 
     private CalculateRealTimeSimulationAsyncTask loadData = null;
 
@@ -57,17 +65,14 @@ public class DetailRealTimePortfolioInfoActivity extends AsyncTaskActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_portfolio_detail);
+        setContentView(R.layout.activity_simulation_detail);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        long simulationId = -1;
         mContext = this;
-
-        mSimulationType = (TextView) findViewById(R.id.simulation_type);
-        mStartingBal = (TextView) findViewById(R.id.simulation_start_bal);
 
         Intent intent = getIntent();
 
@@ -82,19 +87,56 @@ public class DetailRealTimePortfolioInfoActivity extends AsyncTaskActivity {
         TextView nameView = (TextView) findViewById(R.id.simulation_name);
         nameView.setText(mSimulation.getName());
 
-        mSimulationType.setText(mSimulation.getType() == SimulationConstants.HISTORICAL_DATA ? "Historical data" : "Real time data");
-        mStartingBal.setText(String.valueOf(mSimulation.getBank()));
+        mainLayout = (LinearLayout) findViewById(R.id.layout);
+        setUpStockCharts();
 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
+        FloatingActionButton button = (FloatingActionButton)findViewById(R.id.add_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddStrategyActivity.class);
+                startActivityForResult(intent, AddStrategyActivity.ADD_STRATEGY);
+            }
+        });
+
+        FloatingActionButton zoomButton = (FloatingActionButton)findViewById(R.id.zoom_button);
+        zoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DetailRealTimePortfolioInfoActivity.class);
+                intent.putExtra("newSimulation", true);
+                intent.putExtra("simulationId", simulationId);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void setUpStockCharts() {
+        mainLayout.removeAllViews();
+
+        mStockChart = new LineChart(this);
+        mainLayout.addView(mStockChart);
+
+        mStockChart.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f));
 
         mPortfolioChart = new LineChart(this);
-        ll.addView(mPortfolioChart, 1);
+        mainLayout.addView(mPortfolioChart);
         mPortfolioChart.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f));
 
+        PriceMarkerView mv = new PriceMarkerView(this, R.layout.price_marker_view);
+        mStockChart.setMarkerView(mv);
         PriceMarkerView mv2 = new PriceMarkerView(this, R.layout.price_marker_view);
         mPortfolioChart.setMarkerView(mv2);
 
+        // enable scaling and dragging
+        mStockChart.setDragEnabled(true);
+        mStockChart.setScaleEnabled(true);
+        //mStockChart.setScaleXEnabled(false);
+        mStockChart.setDrawGridBackground(false);
+        mStockChart.getAxisRight().setEnabled(false);
+        mStockChart.setBackgroundColor(Color.rgb(255, 255, 255));
         mPortfolioChart.setDragEnabled(true);
         mPortfolioChart.setScaleEnabled(true);
         //mPortfolioChart.setScaleXEnabled(false);
@@ -102,8 +144,15 @@ public class DetailRealTimePortfolioInfoActivity extends AsyncTaskActivity {
         mPortfolioChart.getAxisRight().setEnabled(false);
         mPortfolioChart.setBackgroundColor(Color.rgb(255, 255, 255));
 
+        XAxis xStockAxis = mStockChart.getXAxis();
+        xStockAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
         XAxis xPortfolioXAxis = mPortfolioChart.getXAxis();
         xPortfolioXAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        YAxis stockYAxis = mStockChart.getAxisLeft();
+        stockYAxis.setStartAtZero(false);
+        stockYAxis.setDrawGridLines(false);
 
         YAxis portfolioYAxis = mPortfolioChart.getAxisLeft();
         portfolioYAxis.setStartAtZero(false);
@@ -111,6 +160,28 @@ public class DetailRealTimePortfolioInfoActivity extends AsyncTaskActivity {
 
         loadData = new CalculateRealTimeSimulationAsyncTask();
         loadData.execute(mSimulation);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (AddStrategyActivity.ADD_STRATEGY) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    int strategy = data.getIntExtra(AddStrategyActivity.STRATEGY, 1);
+                    double floor = data.getDoubleExtra(AddStrategyActivity.FLOOR, 0);
+                    double multiplier = data.getDoubleExtra(AddStrategyActivity.MULTIPLIER, 0);
+                    double optionPrice = data.getDoubleExtra(AddStrategyActivity.OPTION_PRICE, 0);
+                    double strike = data.getDoubleExtra(AddStrategyActivity.STRIKE, 0);
+                    SimulationStrategy simulationStrategy = new SimulationStrategy(mSimulation, strategy, floor, multiplier, optionPrice, strike);
+                    simulationStrategy.save();
+
+                    //refresh the graphs because a new simulation has been created
+                    setUpStockCharts();
+                }
+                break;
+            }
+        }
     }
 
     public class CalculateRealTimeSimulationAsyncTask extends AsyncTask<Simulation, Void, GraphData> {
@@ -212,6 +283,7 @@ public class DetailRealTimePortfolioInfoActivity extends AsyncTaskActivity {
 
                 int portfolioSize = stockTicks.size();
                 int numTicks = stockTicks.get(0).size();
+
                 if (numTicks == 0) {
                     Toast toast = Toast.makeText(mContext, "No data available since start date!", Toast.LENGTH_SHORT);
                     toast.show();
@@ -250,6 +322,7 @@ public class DetailRealTimePortfolioInfoActivity extends AsyncTaskActivity {
                     for (int j = 0; j < numTicks; j++) {
                         stockEntryList.add(new Entry((float) stockTicks.get(i).get(j).getPrice(), j));
                     }
+
                     LineDataSet lineDataSet = new LineDataSet(stockEntryList, symbol);
                     lineDataSet.setColor(ContextCompat.getColor(mContext, StockHelper.getStockColorResource(i)));
                     lineDataSet.setCircleColor(ContextCompat.getColor(mContext, StockHelper.getStockColorResource(i)));
@@ -259,6 +332,12 @@ public class DetailRealTimePortfolioInfoActivity extends AsyncTaskActivity {
                     lineDataSet.setDrawValues(false);
                     stockSets.add(lineDataSet);
                 }
+
+                mStockChart.getAxisLeft().setSpaceTop(35f);
+                mStockChart.getAxisLeft().setSpaceBottom(35f);
+                mStockChart.setData(new LineData(xVals, stockSets));
+                mStockChart.animateXY(2000, 2000);
+                mStockChart.invalidate();
                 mPortfolioChart.getAxisLeft().setSpaceTop(30f);
                 mPortfolioChart.getAxisLeft().setSpaceBottom(30f);
                 mPortfolioChart.setData(new LineData(xVals, portfolioSets));

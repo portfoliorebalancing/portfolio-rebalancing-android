@@ -1,4 +1,4 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,15 +7,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
-import com.uwaterloo.portfoliorebalancing.util.AppUtils;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.HistoricalSimulationFragment;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.PickStockSimulationFragment;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.PickStrategySimulationFragment;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.RealTimeSimulationFragment;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.SimulationFragment;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
-import java.util.Collections;
 import java.util.Date;
 
 /**

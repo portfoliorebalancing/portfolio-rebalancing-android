@@ -1,4 +1,4 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.uwaterloo.portfoliorebalancing.R;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.AddStrategyFragment;
+import com.uwaterloo.portfoliorebalancing.ui.fragment.AddStrategyInfoFragment;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
 /**

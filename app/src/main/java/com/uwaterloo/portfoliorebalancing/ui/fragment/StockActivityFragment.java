@@ -1,4 +1,4 @@
-package com.uwaterloo.portfoliorebalancing.ui;
+package com.uwaterloo.portfoliorebalancing.ui.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,15 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.uwaterloo.portfoliorebalancing.MainActivity;
+import com.uwaterloo.portfoliorebalancing.ui.activity.MainActivity;
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.model.Stock;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
+import com.uwaterloo.portfoliorebalancing.ui.StockActivityAdapter;
+import com.uwaterloo.portfoliorebalancing.ui.activity.StockSelectorActivity;
 import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;

@@ -1,4 +1,7 @@
-package com.uwaterloo.portfoliorebalancing.model;
+package com.uwaterloo.portfoliorebalancing.util;
+
+import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
+import com.uwaterloo.portfoliorebalancing.model.Tick;
 
 import java.util.List;
 
