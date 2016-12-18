@@ -240,11 +240,8 @@ public class DetailRealTimeSimulationActivity extends AppCompatActivity {
                         dateCounter ++;
                     }
                     mSimulation.save();
-                } catch (IOException e) {
-                    return null;
-                }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    Log.v("ArrayIndexOutOfBounds", e.toString());
+                } catch (Exception e) {
+                    Log.e("Exception", e.toString());
                     return null;
                 }
             }

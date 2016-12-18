@@ -48,7 +48,6 @@ public class StockActivityFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<Stock> stockList = new ArrayList<>();
     private List<Tick> tickList;
-    private final String STOCK_FILE = "stocklist.txt";
     private final String DATE_FORMAT = "yyyy-MM-dd";
 
     @Override
@@ -175,7 +174,7 @@ public class StockActivityFragment extends Fragment {
                     }
                 }
             }
-            catch (IOException e) {
+            catch (Exception e) {
                 result = 1;
             }
             return result;
@@ -235,15 +234,11 @@ public class StockActivityFragment extends Fragment {
                     }
                 }
             }
-            catch (IOException e) {
-                Log.e("IOException", e.toString());
+            catch (Exception e) {
+                Log.e("Exception", e.toString());
                 result = 1;
             }
-            catch (ArrayIndexOutOfBoundsException e) {
-                //The stock data was invalid. Fail gracefully.
-                Log.e("ArrayIndexOutOfBounds", e.toString());
-                result = 1;
-            }
+
             return result;
         }
 

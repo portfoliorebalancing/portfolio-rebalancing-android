@@ -232,8 +232,8 @@ public class StockSelectorActivity extends AppCompatActivity {
                     }
                 }
             }
-            catch (IOException e) {
-                Log.e("IOException", e.toString());
+            catch (Exception e) {
+                Log.e("Exception", e.toString());
                 result = 1;
             }
             return result;

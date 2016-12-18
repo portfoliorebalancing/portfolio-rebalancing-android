@@ -178,12 +178,8 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                         index++;
                     }
 
-                } catch (IOException e) {
-                    Log.e("IOException", e.toString());
-                    return null;
-                }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    Log.v("ArrayIndexOutOfBounds", e.toString());
+                } catch (Exception e) {
+                    Log.e("Exception", e.toString());
                     return null;
                 }
             }
@@ -261,9 +257,6 @@ public class DetailHistoricalPortfolioInfoActivity extends AppCompatActivity {
                 mPortfolioChart.setData(new LineData(xVals, portfolioSets));
                 mPortfolioChart.animateXY(2000, 2000);
                 mPortfolioChart.invalidate();
-                //if (portfolioTicks != null) {
-                //    mTodayValue.setText(String.format("%.02f", portfolioTicks.get(portfolioTicks.size() - 1).getPrice()));
-                //}
             }
             else {
                 Log.e("SIMULATION error", "Failed to fetch data!");

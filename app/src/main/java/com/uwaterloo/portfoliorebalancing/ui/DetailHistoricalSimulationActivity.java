@@ -244,12 +244,8 @@ public class DetailHistoricalSimulationActivity extends AppCompatActivity {
                         index++;
                     }
 
-                } catch (IOException e) {
-                    Log.v("IOException", e.toString());
-                    return null;
-                }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    Log.v("ArrayIndexOutOfBounds", e.toString());
+                } catch (Exception e) {
+                    Log.v("Exception", e.toString());
                     return null;
                 }
             }
