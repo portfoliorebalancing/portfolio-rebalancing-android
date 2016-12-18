@@ -21,6 +21,7 @@ import com.uwaterloo.portfoliorebalancing.model.Stock;
 import com.uwaterloo.portfoliorebalancing.model.Tick;
 import com.uwaterloo.portfoliorebalancing.ui.StockActivityAdapter;
 import com.uwaterloo.portfoliorebalancing.ui.activity.StockSelectorActivity;
+import com.uwaterloo.portfoliorebalancing.util.ActivityResult;
 import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.StockHelper;
 
@@ -41,7 +42,6 @@ import java.util.List;
  * Created by yuweixu on 2015-10-05.
  */
 public class StockActivityFragment extends Fragment {
-    public static final int STOCK_SELECTED = 1;
     public static final String STOCK_SYMBOLS = "StockSymbols";
 
     private MainActivity mainActivity;
@@ -55,7 +55,7 @@ public class StockActivityFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
-            case (STOCK_SELECTED) : {
+            case (ActivityResult.STOCK_SELECTED) : {
                 if (resultCode == Activity.RESULT_OK) {
                     ArrayList<String> list = data.getExtras().getStringArrayList(STOCK_SYMBOLS);
                     String[] array = new String[list.size()];
@@ -111,7 +111,7 @@ public class StockActivityFragment extends Fragment {
         addStockButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), StockSelectorActivity.class);
-                startActivityForResult(intent, STOCK_SELECTED);
+                startActivityForResult(intent, ActivityResult.STOCK_SELECTED);
             }
         });
         return view;

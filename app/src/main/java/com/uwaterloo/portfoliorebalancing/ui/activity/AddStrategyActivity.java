@@ -22,7 +22,6 @@ public class AddStrategyActivity extends AppCompatActivity {
     private int simulationStrategy;
 
     public static final String ADDED_STRATEGY = "strategyAdded";
-    public static final int ADD_STRATEGY = 1003;
     public static final String STRATEGY = "addedStrategy";
     public static final String MULTIPLIER = "multiplier";
     public static final String FLOOR = "floor";

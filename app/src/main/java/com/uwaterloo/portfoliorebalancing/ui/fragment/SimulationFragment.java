@@ -21,6 +21,7 @@ import com.uwaterloo.portfoliorebalancing.ui.SimulationAdapter;
 import com.uwaterloo.portfoliorebalancing.ui.activity.SimulationSelectorActivity;
 import com.uwaterloo.portfoliorebalancing.ui.activity.DetailHistoricalSimulationActivity;
 import com.uwaterloo.portfoliorebalancing.ui.activity.DetailRealTimeSimulationActivity;
+import com.uwaterloo.portfoliorebalancing.util.ActivityResult;
 import com.uwaterloo.portfoliorebalancing.util.PreferenceHelper;
 import com.uwaterloo.portfoliorebalancing.util.SimulationConstants;
 
@@ -38,7 +39,6 @@ public class SimulationFragment extends Fragment {
     private List<Simulation> simulationList;
     private MainActivity mainActivity;
 
-    public static final int SIMULATION_CREATED = 1;
     public static final String SIMULATION_ID = "newSimulationId";
     public static final String SIMULATION_TYPE = "newSimulationType";
 
@@ -46,7 +46,7 @@ public class SimulationFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
-            case (SIMULATION_CREATED) : {
+            case (ActivityResult.SIMULATION_CREATED) : {
                 if (resultCode == Activity.RESULT_OK) {
                     mainActivity.updateSimulationFragment();
                     long simulationId = data.getExtras().getLong(SIMULATION_ID);
@@ -97,7 +97,7 @@ public class SimulationFragment extends Fragment {
                 List<Stock> stockList = mainActivity.getStockList();
                 if (stockList.size() > 0) {
                     Intent intent = new Intent(getContext(), SimulationSelectorActivity.class);
-                    startActivityForResult(intent, SIMULATION_CREATED);
+                    startActivityForResult(intent, ActivityResult.SIMULATION_CREATED);
                 } else {
                     Toast.makeText(getContext(), "Portfolio is currently empty.", Toast.LENGTH_SHORT).show();
                     Log.e("StockList", "Size is " + stockList.size());

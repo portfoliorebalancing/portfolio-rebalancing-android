@@ -22,9 +22,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.uwaterloo.portfoliorebalancing.R;
 import com.uwaterloo.portfoliorebalancing.ui.PriceMarkerView;
-import com.uwaterloo.portfoliorebalancing.ui.activity.AddStrategyActivity;
-import com.uwaterloo.portfoliorebalancing.ui.activity.AsyncTaskActivity;
-import com.uwaterloo.portfoliorebalancing.ui.activity.DetailHistoricalPortfolioInfoActivity;
+import com.uwaterloo.portfoliorebalancing.util.ActivityResult;
 import com.uwaterloo.portfoliorebalancing.util.GraphData;
 import com.uwaterloo.portfoliorebalancing.model.Simulation;
 import com.uwaterloo.portfoliorebalancing.model.SimulationStrategy;
@@ -93,7 +91,7 @@ public class DetailHistoricalSimulationActivity extends AsyncTaskActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddStrategyActivity.class);
-                startActivityForResult(intent, AddStrategyActivity.ADD_STRATEGY);
+                startActivityForResult(intent, ActivityResult.ADD_STRATEGY);
             }
         });
 
@@ -165,7 +163,7 @@ public class DetailHistoricalSimulationActivity extends AsyncTaskActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
-            case (AddStrategyActivity.ADD_STRATEGY) : {
+            case (ActivityResult.ADD_STRATEGY) : {
                 if (resultCode == Activity.RESULT_OK) {
                     int strategy = data.getIntExtra(AddStrategyActivity.STRATEGY, 1);
                     double floor = data.getDoubleExtra(AddStrategyActivity.FLOOR, 0);
